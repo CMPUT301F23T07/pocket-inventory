@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -66,6 +67,12 @@ public class ItemAddActivity extends AppCompatActivity {
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
 
+                // if any field other than comment is empty, display a toast dialog and return
+                if (make.isEmpty() || model.isEmpty() || serialNumber.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 Item item = new Item(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
                 Intent intent = new Intent();
                 intent.putExtra("item", item);
@@ -113,6 +120,11 @@ public class ItemAddActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * This method is called when the user clicks on the date of purchase text field. It opens a
+     * date picker dialog.
+     * @param v
+     */
     public void showDatePickerDialog(View v) {
         final Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
