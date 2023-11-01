@@ -78,7 +78,5 @@ public class HomePageActivity extends AppCompatActivity {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             addItemLauncher.launch(intent);
         });
-
     }
-
 }

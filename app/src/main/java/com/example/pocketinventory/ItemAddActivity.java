@@ -2,13 +2,21 @@ package com.example.pocketinventory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
+import android.widget.DatePicker;
 
+
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.Calendar;
 
 /**
  * This class is the activity that allows the user to add a new item to the inventory.
@@ -58,8 +66,6 @@ public class ItemAddActivity extends AppCompatActivity {
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
 
-                Log.d("ItemAddActivity", "onClick: " + make + " " + model + " " + serialNumber + " " + estimatedValue + " " + dateOfPurchase + " " + description + " " + comment);
-
                 Item item = new Item(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
                 Intent intent = new Intent();
                 intent.putExtra("item", item);
@@ -67,5 +73,62 @@ public class ItemAddActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        estimatedValueInput.getEditText().addTextChangedListener(new TextWatcher() {
+            boolean isEditing = false;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // do nothing
+            }
+
+            /**
+             * This method is called when the text is changed. It ensures that the estimated value
+             * is formatted correctly to two decimal places.
+             * @param s
+             */
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isEditing) return;
+                isEditing = true;
+                String value = s.toString();
+                if (value.contains(".")) {
+                    String[] parts = value.split("\\.");
+                    if (parts.length > 1) {
+                        String decimal = parts[1];
+                        if (decimal.length() > 2) {
+                            decimal = decimal.substring(0, 2);
+                            value = parts[0] + "." + decimal;
+                            estimatedValueInput.getEditText().setText(value);
+                            estimatedValueInput.getEditText().setSelection(value.length());
+                        }
+                    }
+                }
+                isEditing = false;
+            }
+        });
+    }
+
+    public void showDatePickerDialog(View v) {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+                // Do something with the selected date
+                String selectedDate = (selectedMonth + 1) + "/" + selectedDayOfMonth + "/" + selectedYear;
+                TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
+                dateOfPurchaseInput.getEditText().setText(selectedDate);
+            }
+        }, year, month, day);
+
+        datePickerDialog.show();
     }
 }
