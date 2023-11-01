@@ -15,7 +15,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class is the main activity of the app. It displays a list of items and allows the user to
+ * add new items to the list.
+ */
 public class HomePageActivity extends AppCompatActivity {
     private double total;
     private ArrayAdapter<Item> item_adapter;
@@ -24,6 +27,14 @@ public class HomePageActivity extends AppCompatActivity {
     private TextView totalValueText;
 
 
+    /**
+     * This method is called when the activity is created. It sets up the recycler view and
+     * initializes the list of items.
+     * @param savedInstanceState If the activity is being re-initialized after
+     *     previously being shut down then this Bundle contains the data it most
+     *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
+     *
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
