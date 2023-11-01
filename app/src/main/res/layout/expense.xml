@@ -1,16 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/transparent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/expenseTextView"
+        android:id="@+id/makeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/modelTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/makeTextView"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/modelTextView"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/descriptionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dateTextView"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/valueTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/descriptionTextView"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/commentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/valueTextView"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="16sp" />
 
 </RelativeLayout>
