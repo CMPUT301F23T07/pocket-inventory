@@ -15,7 +15,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainListActivity extends AppCompatActivity {
     private double total;
     private ArrayAdapter<Expense> expense_adapter;
 
