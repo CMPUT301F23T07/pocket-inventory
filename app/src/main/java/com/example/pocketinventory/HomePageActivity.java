@@ -66,7 +66,7 @@ public class HomePageActivity extends AppCompatActivity {
         ActivityResultLauncher<Intent> addItemLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    if (result != null) {
+                    if (result != null && result.getResultCode() == RESULT_OK) {
                         Log.d("MainListActivity", "Received result from ItemAddActivity");
                         Item item = result.getData().getParcelableExtra("item");
                         dataList.add(item);
