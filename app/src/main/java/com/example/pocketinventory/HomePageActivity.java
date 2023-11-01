@@ -15,13 +15,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+
 public class HomePageActivity extends AppCompatActivity {
     private double total;
-    private ArrayAdapter<Item> expense_adapter;
-
+    private ArrayAdapter<Item> item_adapter;
     private ArrayList<Item> dataList;
     private RecyclerView log_list;
-    private TextView subtotal;
+    private TextView totalValueText;
 
 
     @Override
@@ -30,7 +30,7 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         Item item_1 = new Item("2023-09","apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
-        subtotal = (TextView) findViewById(R.id.Subtotal);
+        totalValueText = (TextView) findViewById(R.id.total_value_text);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
         ItemAdapter adapter = new ItemAdapter(this, dataList);
@@ -38,26 +38,26 @@ public class HomePageActivity extends AppCompatActivity {
         total = total + item_1.getValue();
         dataList.add(item_1);
 
-        subtotal.setText(String.format("$ %.2f", total));
+        totalValueText.setText(String.format("$ %.2f", total));
         adapter.notifyDataSetChanged();
 
         Item item_2 = new Item("2020-08","Asus","A15","RTX 2060", 4000,"NEw", "xxxxxx");
         total = total + item_2.getValue();
         dataList.add(item_2);
 
-        subtotal.setText(String.format("$ %.2f", total));
+        totalValueText.setText(String.format("$ %.2f", total));
         adapter.notifyDataSetChanged();
 
-        Button addItemButton = findViewById(R.id.add_expense);
+        Button addItemButton = findViewById(R.id.add_item);
 
         // TEMPORARY CODE: Replace once we have a database
-        // ActivityResultLauncher for the ItemAddActivity which returns an expense object in the intent
+        // ActivityResultLauncher for the ItemAddActivity which returns an item object in the intent
         ActivityResultLauncher<Intent> addItemLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result != null) {
                         Log.d("MainListActivity", "Received result from ItemAddActivity");
-                        Item item = result.getData().getParcelableExtra("expense");
+                        Item item = result.getData().getParcelableExtra("item");
                         dataList.add(item);
                         adapter.notifyDataSetChanged();
                     }

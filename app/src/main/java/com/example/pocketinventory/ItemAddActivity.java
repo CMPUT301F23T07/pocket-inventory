@@ -35,7 +35,7 @@ public class ItemAddActivity extends AppCompatActivity {
             }
         });
 
-        // Read in all of the text fields (some may be empty) and create an expense object
+        // Read in all of the text fields (some may be empty) and create an item object
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,7 @@ public class ItemAddActivity extends AppCompatActivity {
 
                 Item item = new Item(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
                 Intent intent = new Intent();
-                intent.putExtra("expense", item);
+                intent.putExtra("item", item);
                 setResult(RESULT_OK, intent);
                 finish();
             }

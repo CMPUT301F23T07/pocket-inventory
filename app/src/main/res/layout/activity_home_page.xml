@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_dark_background"
-
-    tools:context=".MainActivity">
+    >
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -50,7 +49,7 @@
         app:srcCompat="@android:drawable/ic_menu_agenda" />
 
     <TextView
-        android:id="@+id/total_value"
+        android:id="@+id/total_value_prompt"
         android:layout_width="158dp"
         android:layout_height="59dp"
         android:layout_marginStart="4dp"
@@ -62,7 +61,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/Subtotal"
+        android:id="@+id/total_value_text"
         android:layout_width="148dp"
         android:layout_height="51dp"
         android:layout_marginStart="4dp"
@@ -70,14 +69,14 @@
         android:text="@string/subtotal"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/total_value"
+        app:layout_constraintStart_toEndOf="@+id/total_value_prompt"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/add_expense"
+        android:id="@+id/add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Add Expense"
+        android:text="+ Add Item"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

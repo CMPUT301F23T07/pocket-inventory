@@ -13,8 +13,6 @@ public class Item implements Parcelable {
     private double value;
     private String comment;
 
-    // Constructor to initialize an expense object
-
 
     public Item(String date, String make, String model, String description, double value, String comment, String serialNumber) {
 
@@ -77,7 +75,7 @@ public class Item implements Parcelable {
         this.model = model;
     }
 
-    // Parcelable implementation for passing expense objects between activities
+    // Parcelable implementation for passing item objects between activities
     //Citation: https://medium.com/techmacademy/how-to-implement-and-use-a-parcelable-class-in-android-part-1-28cca73fc2d1
     protected Item(Parcel in) {
         make = in.readString();
@@ -117,7 +115,7 @@ public class Item implements Parcelable {
         dest.writeString(comment);
     }
 
-    // Generate a string representation of an expense
+    // Generate a string representation of an item
     public String toString() {
         return "Make: " + make + ", Model: "+model+", value: $" + value + ", Date Purchased: "+date +
                 ", Description: "+description+", Comment: "+comment;
