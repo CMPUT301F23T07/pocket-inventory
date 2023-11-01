@@ -3,10 +3,10 @@ package com.example.pocketinventory;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -47,9 +47,11 @@ public class ItemAddActivity extends AppCompatActivity {
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
 
-                Expense expense = new Expense(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment);
+                Log.d("ItemAddActivity", "onClick: " + make + " " + model + " " + serialNumber + " " + estimatedValue + " " + dateOfPurchase + " " + description + " " + comment);
+
+                Item item = new Item(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
                 Intent intent = new Intent();
-                intent.putExtra("expense", expense);
+                intent.putExtra("expense", item);
                 setResult(RESULT_OK, intent);
                 finish();
             }

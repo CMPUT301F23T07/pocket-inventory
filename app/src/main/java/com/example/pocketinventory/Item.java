@@ -3,11 +3,12 @@ package com.example.pocketinventory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Expense implements Parcelable {
+public class Item implements Parcelable {
     private String date;
     private String make;
     private String model;
     private String description;
+    private String serialNumber;
 
     private double value;
     private String comment;
@@ -15,13 +16,13 @@ public class Expense implements Parcelable {
     // Constructor to initialize an expense object
 
 
-    public Expense(String date, String make, String model, String description, double value, String comment) {
+    public Item(String date, String make, String model, String description, double value, String comment, String serialNumber) {
 
         this.make = make;
         this.model = model;
         this.date = date;
         this.description = description;
-
+        this.serialNumber = serialNumber;
         this.value = value;
         this.comment = comment;
     }
@@ -78,27 +79,25 @@ public class Expense implements Parcelable {
 
     // Parcelable implementation for passing expense objects between activities
     //Citation: https://medium.com/techmacademy/how-to-implement-and-use-a-parcelable-class-in-android-part-1-28cca73fc2d1
-    protected Expense(Parcel in) {
-
-
-        date = in.readString();
+    protected Item(Parcel in) {
         make = in.readString();
-        value = in.readFloat();
         model = in.readString();
+        date = in.readString();
         description = in.readString();
+        serialNumber = in.readString();
+        value = in.readDouble();
         comment = in.readString();
-
     }
 
-    public static final Creator<Expense> CREATOR = new Creator<Expense>() {
+    public static final Creator<Item> CREATOR = new Creator<Item>() {
         @Override
-        public Expense createFromParcel(Parcel in) {
-            return new Expense(in);
+        public Item createFromParcel(Parcel in) {
+            return new Item(in);
         }
 
         @Override
-        public Expense[] newArray(int size) {
-            return new Expense[size];
+        public Item[] newArray(int size) {
+            return new Item[size];
         }
     };
 
@@ -109,12 +108,13 @@ public class Expense implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(date);
-        dest.writeDouble(value);
-        dest.writeString(comment);
         dest.writeString(make);
         dest.writeString(model);
+        dest.writeString(date);
         dest.writeString(description);
+        dest.writeString(serialNumber);
+        dest.writeDouble(value);
+        dest.writeString(comment);
     }
 
     // Generate a string representation of an expense

@@ -16,7 +16,7 @@
             android:name=".ItemAddActivity"
             android:exported="false" />
         <activity
-            android:name=".MainListActivity"
+            android:name=".HomePageActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

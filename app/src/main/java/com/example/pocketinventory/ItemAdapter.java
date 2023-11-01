@@ -8,31 +8,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.pocketinventory.Expense;
-import com.example.pocketinventory.R;
-
 import java.util.List;
 
-public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private List<Expense> data;
+    private List<Item> data;
     private Context context;
 
-    public ExpenseAdapter(Context context, List<Expense> data) {
+    public ItemAdapter(Context context, List<Item> data) {
         this.context = context;
         this.data = data;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.expense, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_list_fragment, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Expense expense = data.get(position);
-        holder.bind(expense);
+        Item item = data.get(position);
+        holder.bind(item);
     }
 
     @Override
@@ -58,13 +55,13 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             commentTextView = itemView.findViewById(R.id.commentTextView);
         }
 
-        public void bind(Expense expense) {
-            dateTextView.setText("Date: " + expense.getDate());
-            makeTextView.setText("Make: " + expense.getMake());
-            modelTextView.setText("Model: " + expense.getModel());
-            descriptionTextView.setText("Description: " + expense.getDescription());
-            valueTextView.setText("Value: $" + expense.getValue());
-            commentTextView.setText("Comment: " + expense.getComment());
+        public void bind(Item item) {
+            dateTextView.setText("Date: " + item.getDate());
+            makeTextView.setText("Make: " + item.getMake());
+            modelTextView.setText("Model: " + item.getModel());
+            descriptionTextView.setText("Description: " + item.getDescription());
+            valueTextView.setText("Value: $" + item.getValue());
+            commentTextView.setText("Comment: " + item.getComment());
         }
     }
 }

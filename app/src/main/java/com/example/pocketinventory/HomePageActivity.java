@@ -1,7 +1,6 @@
 package com.example.pocketinventory;
 
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,23 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
-
-import com.example.pocketinventory.Expense;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
-public class MainListActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity {
     private double total;
-    private ArrayAdapter<Expense> expense_adapter;
+    private ArrayAdapter<Item> expense_adapter;
 
-    private ArrayList<Expense> dataList;
+    private ArrayList<Item> dataList;
     private RecyclerView log_list;
     private TextView subtotal;
 
@@ -34,23 +27,23 @@ public class MainListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_list);
-        Expense expense_1 = new Expense("2023-09","apple","iphone","New 15 pro max", 1836,"Fav");
+        setContentView(R.layout.activity_home_page);
+        Item item_1 = new Item("2023-09","apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
         subtotal = (TextView) findViewById(R.id.Subtotal);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
-        ExpenseAdapter adapter = new ExpenseAdapter(this, dataList);
+        ItemAdapter adapter = new ItemAdapter(this, dataList);
         log_list.setAdapter(adapter);
-        total = total + expense_1.getValue();
-        dataList.add(expense_1);
+        total = total + item_1.getValue();
+        dataList.add(item_1);
 
         subtotal.setText(String.format("$ %.2f", total));
         adapter.notifyDataSetChanged();
 
-        Expense expense_2 = new Expense("2020-08","Asus","A15","RTX 2060", 4000,"NEw");
-        total = total + expense_2.getValue();
-        dataList.add(expense_2);
+        Item item_2 = new Item("2020-08","Asus","A15","RTX 2060", 4000,"NEw", "xxxxxx");
+        total = total + item_2.getValue();
+        dataList.add(item_2);
 
         subtotal.setText(String.format("$ %.2f", total));
         adapter.notifyDataSetChanged();
@@ -64,14 +57,14 @@ public class MainListActivity extends AppCompatActivity {
                 result -> {
                     if (result != null) {
                         Log.d("MainListActivity", "Received result from ItemAddActivity");
-                        Expense expense = result.getData().getParcelableExtra("expense");
-                        dataList.add(expense);
+                        Item item = result.getData().getParcelableExtra("expense");
+                        dataList.add(item);
                         adapter.notifyDataSetChanged();
                     }
                 }
         );
         addItemButton.setOnClickListener(v -> {
-            Intent intent = new Intent(MainListActivity.this, ItemAddActivity.class);
+            Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             addItemLauncher.launch(intent);
         });
 
