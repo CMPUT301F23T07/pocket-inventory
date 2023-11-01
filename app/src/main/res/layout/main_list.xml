@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_theme_dark_background"
+
+    tools:context=".MainActivity">
+
+
+    <ListView
+        android:id="@+id/log_list"
+        android:layout_width="426dp"
+        android:layout_height="480dp"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:cacheColorHint="@color/md_theme_dark_inverseSurface"
+        android:foregroundTint="@color/md_theme_dark_inverseSurface"
+        android:longClickable="true"
+        android:scrollbars="vertical"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.327" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@android:style/Widget.Holo.Light.ImageButton"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:background="@color/md_theme_dark_background"
+        android:contentDescription="sort"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="60dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/md_theme_dark_background"
+        android:contentDescription="Filter"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_agenda" />
+
+    <TextView
+        android:id="@+id/total_value"
+        android:layout_width="158dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="Total Value:"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Subtotal"
+        android:layout_width="148dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/subtotal"
+        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/total_value"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Add_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+ Add Expense"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/log_list"
+        app:layout_constraintVertical_bias="0.32" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

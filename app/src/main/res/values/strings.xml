@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PocketInventory</string>
+    <string name="subtotal" />
 </resources>
