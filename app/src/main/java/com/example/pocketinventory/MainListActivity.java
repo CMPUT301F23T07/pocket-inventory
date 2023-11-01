@@ -1,11 +1,18 @@
 package com.example.pocketinventory;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,9 +55,25 @@ public class MainListActivity extends AppCompatActivity {
         subtotal.setText(String.format("$ %.2f", total));
         adapter.notifyDataSetChanged();
 
+        Button addItemButton = findViewById(R.id.add_expense);
 
-
-
+        // TEMPORARY CODE: Replace once we have a database
+        // ActivityResultLauncher for the ItemAddActivity which returns an expense object in the intent
+        ActivityResultLauncher<Intent> addItemLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result != null) {
+                        Log.d("MainListActivity", "Received result from ItemAddActivity");
+                        Expense expense = result.getData().getParcelableExtra("expense");
+                        dataList.add(expense);
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+        );
+        addItemButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainListActivity.this, ItemAddActivity.class);
+            addItemLauncher.launch(intent);
+        });
 
     }
 
