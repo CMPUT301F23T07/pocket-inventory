@@ -110,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:contentDescription="Add Tag"
+            android:contentDescription="Add Tags to Selected Items"
             app:backgroundTint="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/deleteSelectedButton"
@@ -123,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:contentDescription="Delete"
+            android:contentDescription="Delete the Selected Items"
             app:backgroundTint="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -141,7 +141,8 @@
             app:layout_constraintEnd_toStartOf="@id/selectedItemNumberTextView"
             app:layout_constraintStart_toEndOf="@id/removeSelectionButton"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="?attr/actionModeSelectAllDrawable" />
+            app:srcCompat="?attr/actionModeSelectAllDrawable"
+            android:contentDescription="Select all the Items" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
