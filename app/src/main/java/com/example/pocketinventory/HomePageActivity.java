@@ -71,6 +71,7 @@ public class HomePageActivity extends AppCompatActivity {
                         Item item = result.getData().getParcelableExtra("item");
                         dataList.add(item);
                         total = total + item.getValue();
+                        totalValueText.setText(String.format("$ %.2f", total));
                         dataList.add(item);
                         adapter.notifyDataSetChanged();
                     }
