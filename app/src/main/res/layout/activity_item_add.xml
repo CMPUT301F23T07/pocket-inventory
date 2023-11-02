@@ -60,7 +60,7 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/serial_number_input"
+            android:id="@+id/serial_number_text"
             style="@style/TextInputLayoutStyle"
             android:layout_width="409dp"
             android:layout_height="wrap_content"
@@ -96,13 +96,17 @@
             app:placeholderText="$0.00"
             app:expandedHintEnabled="false"
             android:layout_weight="1"
-            android:layout_marginRight="20dp"
-            >
+            android:layout_marginRight="20dp">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
+                android:contentDescription="Estimated Value"/>
+
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/TextInputLayoutStyle"
@@ -112,14 +116,16 @@
             android:hint="Date Of Purchase"
             app:placeholderText="MM/DD/YYYY"
             android:layout_weight="1"
-            app:expandedHintEnabled="false"
-            android:onClick="showDatePickerDialog"
-            >
+            app:expandedHintEnabled="false">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:onClick="showDatePickerDialog"
+                android:focusable="false"
+            />
         </com.google.android.material.textfield.TextInputLayout>
+
     </LinearLayout>
 
     <!-- Fourth Row: Description -->
@@ -132,7 +138,7 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/description_text_input"
+            android:id="@+id/description_text"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -158,7 +164,7 @@
         >
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/comment_text_input"
+            android:id="@+id/comment_text"
             style="@style/TextInputLayoutStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
