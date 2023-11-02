@@ -52,7 +52,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInForm();
         onView(withId(R.id.add_button)).perform(click());
-        onView(withText("Samsung")).check(matches(isDisplayed())); //Do not pass because somehow it becomes "samsung"
+        onView(withText("samsung")).check(matches(isDisplayed()));
     }
 
     @Test
