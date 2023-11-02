@@ -27,9 +27,14 @@ import java.util.Date;
 public class ItemFilterFragment extends DialogFragment {
     private ItemAdapter itemAdapter;
     private ArrayList<Item> list;
+    private HomePageActivity homePageActivity;
     private View view;
     private String current = "";
     RecyclerView recyclerView;
+
+    public ItemFilterFragment(HomePageActivity hpa) {
+        this.homePageActivity = hpa;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -102,6 +107,7 @@ public class ItemFilterFragment extends DialogFragment {
             itemAdapter = new ItemAdapter(getContext(), filteredList);
             recyclerView.setAdapter(itemAdapter);
             itemAdapter.update();
+            homePageActivity.onFiltered(itemAdapter, filteredList);
         }
     }
 
