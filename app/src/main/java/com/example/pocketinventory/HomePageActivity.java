@@ -30,12 +30,10 @@ import java.util.List;
  * add new items to the list.
  */
 public class HomePageActivity extends AppCompatActivity {
-    private ArrayAdapter<Item> item_adapter; // Not sure why it is here, delete it?
     private ItemAdapter adapter;
     private ArrayList<Item> dataList;
     private ArrayList<Item> dataListCopy; // Copy of the original list to restore filtering.
     private RecyclerView log_list;
-    private TextView totalValueText;
     private ItemFilterFragment itemFilterFragment;
 
 
@@ -53,7 +51,6 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
         Item item_1 = new Item(new Date(),"apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
-        totalValueText = (TextView) findViewById(R.id.total_value_text);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ItemAdapter(this, dataList);
@@ -85,19 +82,23 @@ public class HomePageActivity extends AppCompatActivity {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             addItemLauncher.launch(intent);
         });
+
         //Filter button
         final ImageButton filterButton = findViewById(R.id.filterButton);
         filterButton.setOnClickListener(v -> {
-            if (dataListCopy == null) {
+            if (filterButton.getColorFilter() == null) {
                 dataListCopy = new ArrayList<Item>(dataList);
                 itemFilterFragment = new ItemFilterFragment();
                 itemFilterFragment.show(getSupportFragmentManager(), "ADD_EXPENSE");
+
             } else {
                 //restore the original list
                 dataList = new ArrayList<Item>(dataListCopy);
                 adapter = new ItemAdapter(this, dataList);
                 log_list.setAdapter(adapter);
+                adapter.update();
                 dataListCopy = null;
+                filterButton.setColorFilter(null);
             }
 
         });

@@ -76,6 +76,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     /**
      * This method updates the total value text view, and call notifyDataSetChanged()
+     * Call this instead of notifyDataSetChanged() :)
      */
     public void update(){
         double total = 0;

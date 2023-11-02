@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -67,6 +68,7 @@ public class ItemFilterFragment extends DialogFragment {
      * Filter after pressing OK. It's called by the button's onClickListener
      */
     public void onOkPressed() {
+        boolean changed = false;
         //Get all the inputs
         String after = ((Button) view.findViewById(R.id.buttonAfter)).getText().toString();
         String before = ((Button) view.findViewById(R.id.buttonBefore)).getText().toString();
@@ -79,21 +81,28 @@ public class ItemFilterFragment extends DialogFragment {
         if (!after.isEmpty() && after.compareTo("(Optional)") != 0) {
             Date afterDate = parseDate(after);
             filteredList.removeIf(expense -> expense.getDate().compareTo(afterDate) < 0);
+            changed = true;
         }
         if (!before.isEmpty() && before.compareTo("(Optional)") != 0) {
             Date beforeDate = parseDate(before);
             filteredList.removeIf(expense -> expense.getDate().compareTo(beforeDate) > 0);
+            changed = true;
         }
         if (description != null && !description.toString().isEmpty()) {
             filteredList.removeIf(expense -> !expense.getDescription().toLowerCase().contains(description.toString().toLowerCase()));
+            changed = true;
         }
         if (make != null && !make.toString().isEmpty()) {
             filteredList.removeIf(expense -> expense.getMake().toLowerCase().compareTo(make.toString().toLowerCase()) != 0);
+            changed = true;
         }
-
-        itemAdapter = new ItemAdapter(getContext(), filteredList);
-        recyclerView.setAdapter(itemAdapter);
-        itemAdapter.update();
+        if (changed) {
+            final ImageButton filterButton = getActivity().findViewById(R.id.filterButton);
+            filterButton.setColorFilter(R.color.md_theme_dark_onError);
+            itemAdapter = new ItemAdapter(getContext(), filteredList);
+            recyclerView.setAdapter(itemAdapter);
+            itemAdapter.update();
+        }
     }
 
     /**
