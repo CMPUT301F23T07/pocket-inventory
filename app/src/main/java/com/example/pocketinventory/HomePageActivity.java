@@ -70,6 +70,8 @@ public class HomePageActivity extends AppCompatActivity {
                         Log.d("MainListActivity", "Received result from ItemAddActivity");
                         Item item = result.getData().getParcelableExtra("item");
                         dataList.add(item);
+                        total = total + item.getValue();
+                        dataList.add(item);
                         adapter.notifyDataSetChanged();
                     }
                 }
