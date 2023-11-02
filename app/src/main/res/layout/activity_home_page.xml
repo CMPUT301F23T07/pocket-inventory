@@ -27,7 +27,7 @@
         app:layout_constraintVertical_bias="0.327" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/sorterButton"
         style="@android:style/Widget.Holo.Light.ImageButton"
         android:layout_width="50dp"
         android:layout_height="45dp"
@@ -44,7 +44,7 @@
         android:background="@color/md_theme_dark_background"
         android:contentDescription="Filter"
         android:id = "@+id/filterButton"
-        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintEnd_toStartOf="@+id/sorterButton"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_agenda" />
 

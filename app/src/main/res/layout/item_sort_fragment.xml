@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="350dp"
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Sortby"
+        android:textSize="25dp"
+        android:text="    Sort by\n    __________________________" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Date"
+        android:text="   Date"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/Sortby" />
+
+    <Button
+        android:id="@+id/Date_btn_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Sortby"
+        android:layout_toLeftOf="@id/Date_btn_des"
+        android:text="↑"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"/>
+
+    <Button
+        android:id="@+id/Date_btn_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Sortby"
+        android:layout_alignEnd="@id/Sortby"
+        android:layout_marginRight="10dp"
+        android:text="↓"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Description"
+        android:text="   Description"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/Date"/>
+
+    <Button
+        android:id="@+id/Description_btn_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Date_btn_asc"
+        android:layout_toLeftOf="@id/Description_btn_des"
+        android:text="↑"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"/>
+        />
+
+    <Button
+        android:id="@+id/Description_btn_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Date_btn_des"
+        android:layout_alignEnd="@id/Sortby"
+        android:layout_marginRight="10dp"
+        android:text="↓"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"
+      />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Make"
+        android:text="   Make"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/Description"/>
+
+    <Button
+        android:id="@+id/Make_btn_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Description_btn_asc"
+        android:layout_toLeftOf="@id/Description_btn_des"
+        android:text="↑"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"/>
+         />
+
+    <Button
+        android:id="@+id/Make_btn_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Description_btn_des"
+        android:layout_alignEnd="@id/Sortby"
+        android:layout_marginRight="10dp"
+        android:text="↓"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Value"
+        android:text="   Value"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/Make"/>
+
+    <Button
+        android:id="@+id/Value_btn_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Make_btn_asc"
+        android:layout_toLeftOf="@id/Value_btn_des"
+        android:text="↑"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"/>
+
+
+    <Button
+        android:id="@+id/Value_btn_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Make_btn_des"
+        android:layout_alignEnd="@id/Sortby"
+        android:layout_marginRight="10dp"
+        android:text="↓"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"
+        />
+
+
+</RelativeLayout>

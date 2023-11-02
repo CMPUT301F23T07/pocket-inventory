@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,6 +64,16 @@ public class HomePageActivity extends AppCompatActivity {
         dataList.add(item_2);
         adapter.update();
 
+        Item item_3 = new Item(new Date(),"Samsung","Neo QLED 4k","TV", 4400,"Expensive", "xxxxx");
+        dataList.add(item_3);
+        adapter.update();
+
+        Item item_4 = new Item(new Date(),"Nokia","X30","Cellphone", 1500,"Durable", "xxxxx");
+        dataList.add(item_4);
+        adapter.update();
+
+
+
         Button addItemButton = findViewById(R.id.add_item);
 
         // TEMPORARY CODE: Replace once we have a database
@@ -83,6 +95,15 @@ public class HomePageActivity extends AppCompatActivity {
             addItemLauncher.launch(intent);
         });
 
+        //Sort button
+        final ImageButton sorterButton = findViewById(R.id.sorterButton);
+        sorterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new ItemSorterFragment(dataList, adapter).show(getSupportFragmentManager(),"SORT_ITEM");
+            }
+        });
+
         //Filter button
         final ImageButton filterButton = findViewById(R.id.filterButton);
         filterButton.setOnClickListener(v -> {
@@ -102,6 +123,9 @@ public class HomePageActivity extends AppCompatActivity {
             }
 
         });
+
+
+
     }
 
     /**
