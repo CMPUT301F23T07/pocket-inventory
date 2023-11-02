@@ -6,25 +6,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 
 /**
  * This class is the main activity of the app. It displays a list of items and allows the user to
  * add new items to the list.
  */
 public class HomePageActivity extends AppCompatActivity {
-    private double total;
-    private ArrayAdapter<Item> item_adapter;
+    private ItemAdapter adapter;
     private ArrayList<Item> dataList;
+    private ArrayList<Item> dataListCopy; // Copy of the original list to restore filtering.
     private RecyclerView log_list;
-    private TextView totalValueText;
+    private ItemFilterFragment itemFilterFragment;
 
 
     /**
@@ -39,25 +49,18 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Item item_1 = new Item("2023-09","apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
+        Item item_1 = new Item(new Date(),"apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
-        totalValueText = (TextView) findViewById(R.id.total_value_text);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
-        ItemAdapter adapter = new ItemAdapter(this, dataList);
+        adapter = new ItemAdapter(this, dataList);
         log_list.setAdapter(adapter);
-        total = total + item_1.getValue();
         dataList.add(item_1);
+        adapter.update();
 
-        totalValueText.setText(String.format("$ %.2f", total));
-        adapter.notifyDataSetChanged();
-
-        Item item_2 = new Item("2020-08","Asus","A15","RTX 2060", 4000,"NEw", "xxxxxx");
-        total = total + item_2.getValue();
+        Item item_2 = new Item(new Date(new Long("1664590319000")),"Asus","A15","RTX 2060", 4000,"NEw", "xxxxxx");
         dataList.add(item_2);
-
-        totalValueText.setText(String.format("$ %.2f", total));
-        adapter.notifyDataSetChanged();
+        adapter.update();
 
         Button addItemButton = findViewById(R.id.add_item);
 
@@ -70,6 +73,7 @@ public class HomePageActivity extends AppCompatActivity {
                         Log.d("MainListActivity", "Received result from ItemAddActivity");
                         Item item = result.getData().getParcelableExtra("item");
                         dataList.add(item);
+                        adapter.update();
                         adapter.notifyDataSetChanged();
                     }
                 }
@@ -78,5 +82,64 @@ public class HomePageActivity extends AppCompatActivity {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             addItemLauncher.launch(intent);
         });
+
+        //Filter button
+        final ImageButton filterButton = findViewById(R.id.filterButton);
+        filterButton.setOnClickListener(v -> {
+            if (filterButton.getColorFilter() == null) {
+                dataListCopy = new ArrayList<Item>(dataList);
+                itemFilterFragment = new ItemFilterFragment();
+                itemFilterFragment.show(getSupportFragmentManager(), "ADD_EXPENSE");
+
+            } else {
+                //restore the original list
+                dataList = new ArrayList<Item>(dataListCopy);
+                adapter = new ItemAdapter(this, dataList);
+                log_list.setAdapter(adapter);
+                adapter.update();
+                dataListCopy = null;
+                filterButton.setColorFilter(null);
+            }
+
+        });
+    }
+
+    /**
+     * Filter after pressing OK. It's called by the AfterDate button's onClickListener
+     */
+
+    public void onClick1 (View view) {
+        Button button = (Button) view;
+        if (button.getText().toString().compareTo("(Optional)") != 0) {
+            button.setText("(Optional)");
+        } else {
+            Calendar myCalendar = Calendar.getInstance();
+            DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                itemFilterFragment.setDate(myCalendar, "after");
+            };
+            new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        }
+
+    }
+    /**
+     * Filter after pressing OK. It's called by the Before Datebutton's onClickListener
+     */
+    public void onClick2 (View view) {
+        Button button = (Button) view;
+        if (button.getText().toString().compareTo("(Optional)") != 0) {
+            button.setText("(Optional)");
+        } else {
+            Calendar myCalendar = Calendar.getInstance();
+            DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, month);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                itemFilterFragment.setDate(myCalendar, "before");
+            };
+            new DatePickerDialog(HomePageActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        }
     }
 }

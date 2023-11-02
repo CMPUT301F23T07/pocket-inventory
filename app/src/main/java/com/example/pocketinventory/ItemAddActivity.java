@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.DatePicker;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 
@@ -18,6 +19,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * This class is the activity that allows the user to add a new item to the inventory.
@@ -74,7 +76,7 @@ public class ItemAddActivity extends AppCompatActivity {
                     return;
                 }
 
-                Item item = new Item(dateOfPurchase, make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
+                Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
                 Intent intent = new Intent();
                 intent.putExtra("item", item);
                 setResult(RESULT_OK, intent);
@@ -143,5 +145,20 @@ public class ItemAddActivity extends AppCompatActivity {
         }, year, month, day);
 
         datePickerDialog.show();
+    }
+
+    /**
+     * This method parses a string to a date object
+     * @param date
+     * @return Date Object
+     */
+    private Date parseDate(String date) {
+        String[] dateList = date.split("/");
+        int month = Integer.parseInt(dateList[0]);
+        int day = Integer.parseInt(dateList[1]);
+        int year = Integer.parseInt(dateList[2]);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day);
+        return calendar.getTime();
     }
 }
