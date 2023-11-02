@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/add_tag_icon"
+        android:title="Add Tag"
+        android:icon="@drawable/tag_icon"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/delete_icon"
+        android:icon="@drawable/delete_icon"
+        android:title="Delete"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/select_all_icon"
+        android:title="Select All"
+        android:icon="@drawable/select_all_icon"
+        app:showAsAction="always" />
+
+
+
+</menu>

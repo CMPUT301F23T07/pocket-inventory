@@ -5,6 +5,7 @@ import android.content.Context;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Item> data;
     private Context context;
     private SelectionViewModel selectionViewModel;
-    private ConstraintLayout constraintSelectionLayout;
     private boolean isEnable = false;
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
@@ -42,10 +40,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
      * Constructor for the adapter
      * @param context
      * @param data
-     * @param constraintSelectionLayout
      */
-    public ItemAdapter(Context context, List<Item> data, ConstraintLayout constraintSelectionLayout) {
-        this.constraintSelectionLayout = constraintSelectionLayout;
+    public ItemAdapter(Context context, List<Item> data) {
         this.context = context;
         this.data = data;
     }
@@ -91,133 +87,80 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-
-                // ActionMode is not enabled yet because we haven't created one
                 if (!isEnable){
-                    // Create an ActionMode for item selection
                     ActionMode.Callback callback = new ActionMode.Callback() {
-                        // Implement ActionMode callback methods
                         @Override
-                        // onCreateActionMode: Setup ActionMode UI and behavior
                         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-                            // Make the selection options visible
-                            constraintSelectionLayout.setVisibility(View.VISIBLE);
-
-                            //Initiate the buttons and Textviews presented within the selection layout
-                            FloatingActionButton removeSelectionButton = constraintSelectionLayout.findViewById(R.id.removeSelectionButton);
-                            TextView selectedItemNumberTextView = constraintSelectionLayout.findViewById(R.id.selectedItemNumberTextView);
-                            FloatingActionButton tagSelectedButton = constraintSelectionLayout.findViewById(R.id.tagSelectedButton);
-                            FloatingActionButton deleteSelectedButton = constraintSelectionLayout.findViewById(R.id.deleteSelectedButton);
-                            FloatingActionButton selectAllButton = constraintSelectionLayout.findViewById(R.id.selectAllButton);
-                            /*
-                            mode.setCustomView(constraintSelectionLayout);
-                            */
-
-                            // Set a clickListerner for removeSelectionButton
-                            removeSelectionButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mode.finish(); // End ActionMode
-                                }
-                            });
-                            // Set a clickListener for deleteSelectedButton
-                            deleteSelectedButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // Remove the selected item (stored in selectItems) from data
-                                    for (Item item : selectItems){
-                                        data.remove(item);
-                                    }
-                                    mode.finish(); // End ActionMode
-                                }
-                            });
-                            // Set a clickListener for selectAllButton
-                            selectAllButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    // If the selectItems already has all of the items
-                                    if (selectItems.size() == data.size()){
-                                        isSelectAll = false;
-                                        // Clear all the items (stored in selectItems)
-                                        selectItems.clear();
-                                    }
-                                    else{ // If the selectItems has less items in it compared to data
-                                        // SelectAll has a function to do here
-                                        isSelectAll = true;
-                                        // Update the selectItems with having all of the items from data while avoiding duplication
-                                        selectItems.clear();
-                                        selectItems.addAll(data);
-                                    }
-                                    // Update the number of selected items
-                                    selectionViewModel.setText(String.valueOf(selectItems.size()));
-                                    // Notify the context
-                                    notifyDataSetChanged();
-                                }
-                            });
-
-                            // Need to implement the add_tag_icon in the near future
-                            /*
-                            tagSelectedButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
-                             */
+                            MenuInflater menuInflater = mode.getMenuInflater();
+                            menuInflater.inflate(R.menu.menu, menu);
                             return true;
                         }
 
-
-
-                        // onPrepareActionMode: Handle ActionMode preparation
                         @Override
                         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                            // To prepare Action Mode:
-                            // ActionMode is Enabled
                             isEnable = true;
-                            // Make the checkbox appear for the holder
                             ClickItem(holder);
 
-                            // Initiate the Textview where number of selected items is displayed
-                            TextView selectedItemNumberTextView = constraintSelectionLayout.findViewById(R.id.selectedItemNumberTextView);
-
-                            // Observe changes in the 'selectionViewModel.getText()' LiveData.
-                            // When the data in the LiveData changes, the 'onChanged' callback is invoked.
                             selectionViewModel.getText().observe((LifecycleOwner) context, new Observer<String>() {
                                 @Override
                                 public void onChanged(String s) {
-                                    // Update the 'selectedItemNumberTextView' with the count of selected items.
-                                    // The count is represented by the 's' parameter, and it's displayed as "X Selected".
-                                    selectedItemNumberTextView.setText(String.format("%s Selected", s));
+                                    mode.setTitle(String.format("%s Selected", s));
                                 }
                             });
                             return true;
                         }
-                        // onActionItemClicked: Handle ActionMode item clicks
+
+
+
                         @Override
                         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-                            // Menu not used so nothing to put here
-                            return false;
+                            int menuItem = item.getItemId();
+                            if (menuItem == R.id.delete_icon){
+                                for (Item item1 : selectItems){
+                                    data.remove(item1);
+                                }
+
+                                mode.finish();
+                            }
+                            // Need to implement the add_tag_icon in the future
+
+                            /*
+                            if (menuItem == R.id.add_tag_icon){
+
+                            }
+                            */
+
+                            if (menuItem == R.id.select_all_icon){
+                                if (selectItems.size() == data.size()){
+                                    isSelectAll = false;
+                                    selectItems.clear();
+                                }
+                                else{
+                                    isSelectAll = true;
+                                    selectItems.clear();
+                                    selectItems.addAll(data);
+                                }
+                                selectionViewModel.setText(String.valueOf(selectItems.size()));
+                                notifyDataSetChanged();
+                            }
+
+                            return true;
                         }
 
-                        // onDestroyActionMode: Handle ActionMode cleanup
                         @Override
                         public void onDestroyActionMode(ActionMode mode) {
-                            isEnable = false; //ActionMode is not enabled
-                            isSelectAll = false; //SelectAll items is false as well when go out of the ActionMode
-                            selectItems.clear(); //Clear the list of selected items for fresh start upon next long-press on item
-                            constraintSelectionLayout.setVisibility(View.GONE); //Make the selection layout disappear
+                            isEnable = false;
+                            isSelectAll = false;
+                            selectItems.clear();
                             notifyDataSetChanged();
+
                         }
                     };
 
-                    // Start ActionMode using the callback
                     ((AppCompatActivity) v.getContext()).startActionMode(callback);
 
                 }
-
                 else {
-                    // Handle item selection when ActionMode is already enabled
                     ClickItem(holder);
                 }
                 return true;

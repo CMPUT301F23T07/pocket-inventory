@@ -23,7 +23,6 @@ import java.util.ArrayList;
 public class HomePageActivity extends AppCompatActivity {
     private double total;
     private ArrayAdapter<Item> item_adapter;
-    private ConstraintLayout constraintSlectionLayout;
     private ArrayList<Item> dataList;
     private RecyclerView log_list;
     private TextView totalValueText;
@@ -42,14 +41,13 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
-        constraintSlectionLayout = findViewById(R.id.constraintSelectionLayout);
 
         Item item_1 = new Item("2023-09","apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
         totalValueText = (TextView) findViewById(R.id.total_value_text);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
-        ItemAdapter adapter = new ItemAdapter(this, dataList, constraintSlectionLayout);
+        ItemAdapter adapter = new ItemAdapter(this, dataList);
         log_list.setAdapter(adapter);
         total = total + item_1.getValue();
         dataList.add(item_1);
