@@ -37,7 +37,7 @@ public class HomePageActivity extends AppCompatActivity {
     private ArrayList<Item> dataListCopy; // Copy of the original list to restore filtering.
     private RecyclerView log_list;
     private ItemFilterFragment itemFilterFragment;
-
+    private boolean filtered = false;
 
     /**
      * This method is called when the activity is created. It sets up the recycler view and
@@ -87,6 +87,9 @@ public class HomePageActivity extends AppCompatActivity {
                         dataList.add(item);
                         adapter.update();
                         adapter.notifyDataSetChanged();
+                        if (filtered) {
+                            dataListCopy.add(item);
+                        }
                     }
                 }
         );
@@ -107,9 +110,9 @@ public class HomePageActivity extends AppCompatActivity {
         //Filter button
         final ImageButton filterButton = findViewById(R.id.filterButton);
         filterButton.setOnClickListener(v -> {
-            if (filterButton.getColorFilter() == null) {
+            if (!filtered) {
                 dataListCopy = new ArrayList<Item>(dataList);
-                itemFilterFragment = new ItemFilterFragment();
+                itemFilterFragment = new ItemFilterFragment(this);
                 itemFilterFragment.show(getSupportFragmentManager(), "ADD_EXPENSE");
 
             } else {
@@ -120,6 +123,7 @@ public class HomePageActivity extends AppCompatActivity {
                 adapter.update();
                 dataListCopy = null;
                 filterButton.setColorFilter(null);
+                filtered = false;
             }
 
         });
@@ -166,4 +170,15 @@ public class HomePageActivity extends AppCompatActivity {
             new DatePickerDialog(HomePageActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         }
     }
+    /**
+     * Update some fields after filtered
+     * @param adapter: the new adapter after filtered
+     * @param dataList: the new list after filtered
+     */
+    public void onFiltered(ItemAdapter adapter, ArrayList<Item> dataList) {
+        this.filtered = true;
+        this.adapter = adapter;
+        this.dataList = dataList;
+    }
+
 }
