@@ -143,6 +143,10 @@ public class HomePageActivity extends AppCompatActivity {
             new DatePickerDialog(HomePageActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
         }
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     /**
      * Update some fields after filtered
      * @param adapter: the new adapter after filtered
@@ -153,5 +157,8 @@ public class HomePageActivity extends AppCompatActivity {
         this.adapter = adapter;
         this.dataList = dataList;
     }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
 }
