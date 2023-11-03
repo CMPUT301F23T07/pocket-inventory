@@ -20,7 +20,11 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -61,19 +65,7 @@ public class HomePageActivity extends AppCompatActivity {
         dataList.add(item_1);
         adapter.update();
 
-        Item item_2 = new Item(new Date(new Long("1664590319000")),"Asus","A15","RTX 2060", 4000,"NEw", "xxxxxx");
-        dataList.add(item_2);
-        adapter.update();
-
-        Item item_3 = new Item(new Date(),"Samsung","Neo QLED 4k","TV", 4400,"Expensive", "xxxxx");
-        dataList.add(item_3);
-        adapter.update();
-
-        Item item_4 = new Item(new Date(),"Nokia","X30","Cellphone", 1500,"Durable", "xxxxx");
-        dataList.add(item_4);
-        adapter.update();
-
-
+        addfromtext(99999);//Add some test items
 
         Button addItemButton = findViewById(R.id.add_item);
 
@@ -181,6 +173,32 @@ public class HomePageActivity extends AppCompatActivity {
         this.adapter = adapter;
         this.dataList = dataList;
     }
-    
+
+    /**
+     * Add some test items from text file. For test only. File under "app/src/main/assets"
+     * @param count: number of items to add
+     */
+    public void addfromtext(int count) {
+        //add Item from text
+        BufferedReader reader;
+        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+        try {
+            reader = new BufferedReader(new InputStreamReader(getAssets().open("testItems.txt")));
+            String line = reader.readLine();
+
+            while (line != null && count > 0) {
+                String[] parts = line.split(", ");
+                Item item = new Item(formatter.parse(parts[0]), parts[1], parts[2], parts[3], Double.parseDouble(parts[4]), parts[5], parts[6]);
+                dataList.add(item);
+                line = reader.readLine();
+                count--;
+            }
+            reader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            adapter.update();
+        }
+    }
 
 }
