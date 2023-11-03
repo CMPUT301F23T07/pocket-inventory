@@ -65,7 +65,7 @@ public class HomePageActivity extends AppCompatActivity {
         dataList.add(item_1);
         adapter.update();
 
-        addfromtext(99999);//Add some test items
+        addfromtext(100);//Add some test items
 
         Button addItemButton = findViewById(R.id.add_item);
 
