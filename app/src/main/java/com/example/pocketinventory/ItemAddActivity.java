@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +27,8 @@ import java.util.Date;
  * This class is the activity that allows the user to add a new item to the inventory.
  */
 public class ItemAddActivity extends AppCompatActivity {
+
+    private boolean isEditing = false;
 
     /**
      * This method is called when the activity is created. It sets up the buttons and text fields
@@ -41,6 +45,12 @@ public class ItemAddActivity extends AppCompatActivity {
 
         Button cancelButton = findViewById(R.id.cancel_button);
         Button addButton = findViewById(R.id.add_button);
+        Button deleteButton = findViewById(R.id.delete_button);
+        View deleteButtonSpacer = findViewById(R.id.delete_button_spacer);
+        // Delete button is only visible if the user is editing an item
+        deleteButton.setVisibility(View.GONE);
+        deleteButtonSpacer.setVisibility(View.GONE);
+
 
         TextInputLayout makeInput = findViewById(R.id.make_text);
         TextInputLayout modelInput = findViewById(R.id.model_text);
@@ -49,6 +59,26 @@ public class ItemAddActivity extends AppCompatActivity {
         TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
         TextInputLayout descriptionInput = findViewById(R.id.description_text);
         TextInputLayout commentInput = findViewById(R.id.comment_text);
+
+        // Check if an item was passed in from the previous activity
+        Intent intent = getIntent();
+        Item item = intent.getParcelableExtra("item");
+        if (item != null) {
+            isEditing = true;
+            addButton.setText("Save");
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButtonSpacer.setVisibility(View.VISIBLE);
+
+            // If an item was passed in, set the text fields to the item's values
+            makeInput.getEditText().setText(item.getMake());
+            modelInput.getEditText().setText(item.getModel());
+            serialInput.getEditText().setText(item.getSerialNumber());
+            estimatedValueInput.getEditText().setText(String.valueOf(item.getValue()));
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            dateOfPurchaseInput.getEditText().setText(dateFormat.format(item.getDate()));
+            descriptionInput.getEditText().setText(item.getDescription());
+            commentInput.getEditText().setText(item.getComment());
+        }
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

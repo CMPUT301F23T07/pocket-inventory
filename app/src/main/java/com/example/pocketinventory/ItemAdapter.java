@@ -2,6 +2,7 @@ package com.example.pocketinventory;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -83,6 +84,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Item item = data.get(position);
         // Bind the data item to the ViewHolder, updating the view
         holder.bind(item);
+
         // Set up a long click listener to initiate ActionMode for item selection
         // Reference: https://youtu.be/Uld0N4ofgWQ?si=5ZYiswWMMzLF1FcL
         // Used the above resource's code structure to compelete the functionality below:
@@ -229,6 +231,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 if (isEnable){
                     // Handle item selection when ActionMode is enabled
                     ClickItem(holder);
+                } else {
+                    // Go to the item details page when ActionMode is not enabled
+                    Intent intent = new Intent(context, ItemAddActivity.class);
+                    intent.putExtra("item", item);
+                    context.startActivity(intent);
                 }
             }
         });
