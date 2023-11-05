@@ -11,6 +11,9 @@ import java.util.List;
  * This class manages the Firestore database for the items.
  * It manages all CRUD operations for the items.
  * It is a singleton class.
+ * Citations:
+ * https://firebase.google.com/docs/android/setup#java
+ * https://firebase.google.com/docs/firestore/quickstart#java_1
  */
 public class ItemDB {
     private static ItemDB instance; // Static instance of the class
