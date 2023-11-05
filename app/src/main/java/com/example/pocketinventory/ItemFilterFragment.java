@@ -30,7 +30,11 @@ public class ItemFilterFragment extends DialogFragment {
     private View view;
     private String current = "";
     RecyclerView recyclerView;
+    HomePageActivity homePageActivity;
 
+    public ItemFilterFragment(HomePageActivity homePageActivity) {
+        this.homePageActivity = homePageActivity;
+    }
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -102,6 +106,7 @@ public class ItemFilterFragment extends DialogFragment {
             itemAdapter = new ItemAdapter(getContext(), filteredList);
             recyclerView.setAdapter(itemAdapter);
             itemAdapter.update();
+            homePageActivity.onFiltered(itemAdapter, filteredList);
         }
     }
 
