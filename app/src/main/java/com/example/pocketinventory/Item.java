@@ -3,18 +3,20 @@ package com.example.pocketinventory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * This class represents an item in the inventory. It contains information about the item such as
  * the date it was purchased, the make and model, the estimated value, and a comment.
  * It also implements Parcelable so that it can be passed between activities.
  */
 public class Item implements Parcelable {
-    private String date;
     private String make;
     private String model;
     private String description;
     private String serialNumber;
-
+    private Date date;
     private double value;
     private String comment;
 
@@ -29,15 +31,15 @@ public class Item implements Parcelable {
      * @param comment
      * @param serialNumber
      */
-    public Item(String date, String make, String model, String description, double value, String comment, String serialNumber) {
+    public Item(Date date, String make, String model, String description, double value, String comment, String serialNumber) {
 
         this.make = make;
         this.model = model;
-        this.date = date;
         this.description = description;
         this.serialNumber = serialNumber;
         this.value = value;
         this.comment = comment;
+        this.date = date;
     }
 
     /**
@@ -48,7 +50,7 @@ public class Item implements Parcelable {
     protected Item(Parcel in) {
         make = in.readString();
         model = in.readString();
-        date = in.readString();
+        date = (Date) in.readValue(Date.class.getClassLoader());
         description = in.readString();
         serialNumber = in.readString();
         value = in.readDouble();
@@ -59,7 +61,7 @@ public class Item implements Parcelable {
      * Getter for the date
      * @return date
      */
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
@@ -67,7 +69,7 @@ public class Item implements Parcelable {
      * Setter for the date
      * @param date
      */
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
@@ -202,7 +204,7 @@ public class Item implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(make);
         dest.writeString(model);
-        dest.writeString(date);
+        dest.writeValue(date);
         dest.writeString(description);
         dest.writeString(serialNumber);
         dest.writeDouble(value);

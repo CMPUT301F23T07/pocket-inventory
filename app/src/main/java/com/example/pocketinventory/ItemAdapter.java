@@ -20,6 +20,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -248,6 +250,27 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     public int getItemCount() {
         return data.size();
     }
+    /**
+     * This method returns the list of items
+     * @return list of items
+     */
+    public List<Item> getList() {
+        return data;
+    }
+
+    /**
+     * This method updates the total value text view, and call notifyDataSetChanged()
+     * Call this instead of notifyDataSetChanged() :)
+     */
+    public void update(){
+        double total = 0;
+        for (Item item : data) {
+            total += item.getValue();
+        }
+        TextView totalValueText = ((HomePageActivity)context).findViewById(R.id.total_value_text);
+        totalValueText.setText(String.format("$ %.2f", total));
+        notifyDataSetChanged();
+    }
 
     /**
      * This method handles the click event for an item in the RecyclerView.
@@ -310,13 +333,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            dateTextView.setText("Date: " + item.getDate());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateTextView.setText("Date: " + dateFormat.format(item.getDate()));
             makeTextView.setText("Make: " + item.getMake());
             modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
             commentTextView.setText("Comment: " + item.getComment());
         }
+
+
     }
 }
 
