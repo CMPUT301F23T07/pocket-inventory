@@ -150,10 +150,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                                 // Iterate through the selectItems list (assuming it contains selected items)
                                 for (Item item1 : selectItems){
-                                    // Remove each selected item from the "data" collection of items
-                                    data.remove(item1);
+                                    // Remove each selected item from itemDB
+                                    ItemDB.getInstance().deleteItem(item1);
                                 }
-
+                                ((HomePageActivity)context).updateItemData();
                                 // Finish the Action Mode, exiting the contextual action bar
                                 mode.finish();
                             }
