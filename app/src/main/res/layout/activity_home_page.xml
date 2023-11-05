@@ -4,10 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_dark_background"
-    >
-
-
+    android:background="@color/md_theme_dark_background">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/log_list"
         android:layout_width="426dp"
@@ -19,12 +16,11 @@
         android:longClickable="true"
         android:scrollbars="vertical"
         android:textColor="@color/md_theme_dark_inverseSurface"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/add_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327" />
+        app:layout_constraintTop_toBottomOf="@+id/total_value_prompt" />
 
     <ImageButton
         android:id="@+id/sorterButton"
@@ -50,8 +46,8 @@
 
     <TextView
         android:id="@+id/total_value_prompt"
-        android:layout_width="158dp"
-        android:layout_height="59dp"
+        android:layout_width="154dp"
+        android:layout_height="50dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="Total Value:"

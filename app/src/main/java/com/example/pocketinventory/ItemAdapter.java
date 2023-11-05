@@ -2,10 +2,22 @@ package com.example.pocketinventory;
 
 
 import android.content.Context;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.DateFormat;
@@ -21,6 +33,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     private List<Item> data;
     private Context context;
+    private SelectionViewModel selectionViewModel;
+    private boolean isEnable = false;
+    private boolean isSelectAll = false;
+    private ArrayList<Item> selectItems = new ArrayList<>();
 
     /**
      * Constructor for the adapter
@@ -43,19 +59,187 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_list_fragment, parent, false);
+        ViewModelProvider viewModelProvider = new ViewModelProvider((FragmentActivity) context);
+        selectionViewModel = viewModelProvider.get(SelectionViewModel.class);
         return new ViewHolder(view);
     }
 
     /**
      * This method binds the data to the view holder
+     *
+     * This method is called by the RecyclerView to display data at the specified position.
+     * It binds the data item to the provided ViewHolder, sets up long click and click listeners,
+     * and manages the selection state for items when the user interacts with the view.
+     *
+     * Citation: https://youtu.be/Uld0N4ofgWQ?si=5ZYiswWMMzLF1FcL
+     *
      * @param holder The ViewHolder which should be updated to represent the contents of the
      *        item at the given position in the data set.
      * @param position The position of the item within the adapter's data set.
      */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        // Obtain the data item for the specified position
         Item item = data.get(position);
+        // Bind the data item to the ViewHolder, updating the view
         holder.bind(item);
+        // Set up a long click listener to initiate ActionMode for item selection
+        // Reference: https://youtu.be/Uld0N4ofgWQ?si=5ZYiswWMMzLF1FcL
+        // Used the above resource's code structure to compelete the functionality below:
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                // First instance after long press: ActionMode not enabled yet
+                // Allows to create ActionMode before using it
+                if (!isEnable){
+                    // Create ActionMode callback
+                    ActionMode.Callback callback = new ActionMode.Callback() {
+
+                        @Override // Override the method to create an Action Mode, which is a contextual action bar.
+                        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+                            // This method is called when the action mode is being created.
+
+                            // Inflate a menu layout
+                            MenuInflater menuInflater = mode.getMenuInflater();
+                            menuInflater.inflate(R.menu.menu, menu);
+                            // The code above inflates (loads) a menu layout resource named "menu" into the provided Menu object.
+
+                            return true;
+                            // Return true to indicate that the Action Mode has been created successfully.
+                        }
+
+                        @Override // Override the method to prepare the Action Mode for display.
+                        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+                            // This method is called before the Action Mode is displayed to the user.
+
+                            // Set the "isEnable" flag to true because Action Mode needs to be enabled for its contents to be displayed
+                            isEnable = true;
+
+                            // Call the ClickItem method on the holder object
+                            ClickItem(holder);
+
+                            // Observe changes in the text value from the selectionViewModel (tracks the changes in number of selected items)
+                            selectionViewModel.getText().observe((LifecycleOwner) context, new Observer<String>() {
+                                @Override
+                                public void onChanged(String s) {
+                                    // When the text value changes, update the Action Mode's title (i.e., number of selected items)
+                                    mode.setTitle(String.format("%s Selected", s));
+                                }
+                            });
+
+                            return true;
+                            // Return true to indicate that the Action Mode has been prepared successfully.
+                        }
+
+
+
+                        @Override // Override the method to handle user clicks on action items within the Action Mode.
+                        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+                            // This method is called when an action item is clicked.
+
+                            // Get the ID of the clicked menu item
+                            int menuItem = item.getItemId();
+
+                            // Check if the clicked item's ID matches the "delete_icon" defined in menu.xml (R.id.delete_icon)
+                            if (menuItem == R.id.delete_icon){
+
+                                // Iterate through the selectItems list (assuming it contains selected items)
+                                for (Item item1 : selectItems){
+                                    // Remove each selected item from the "data" collection of items
+                                    data.remove(item1);
+                                }
+
+                                // Finish the Action Mode, exiting the contextual action bar
+                                mode.finish();
+                            }
+                            // Need to implement the add_tag_icon in the future
+
+                            /*
+                            if (menuItem == R.id.add_tag_icon){
+
+                            }
+                            */
+
+                            if (menuItem == R.id.select_all_icon){
+                                // Check if the clicked item's ID matches the "select_all_icon" defined in menu.xml (R.id.select_all_icon)
+                                if (selectItems.size() == data.size()){
+                                    // If the number of selected items is equal to the total number of items in the data:
+
+                                    // No need for selectAll as all items manually are selected
+                                    isSelectAll = false;
+
+                                    // Clear the list of selected items ("selectItems")
+                                    selectItems.clear();
+                                }
+                                else{// If not all items are selected:
+
+                                    // There is need for selectAll functionality
+                                    isSelectAll = true;
+
+                                    // Add all the items from the data to selectItems without duplication
+                                    selectItems.clear();
+                                    selectItems.addAll(data);
+                                }
+
+                                // Update the text in the selectionViewModel to display the count of selected items
+                                selectionViewModel.setText(String.valueOf(selectItems.size()));
+
+                                // Notify the adapter to refresh the UI, reflecting the changes in selection
+                                notifyDataSetChanged();
+                            }
+
+                            return true; // Return true to indicate that the Action Mode has been prepared successfully.
+                        }
+
+                        @Override // Override the method to handle Finish Action Mode.
+                        public void onDestroyActionMode(ActionMode mode) {
+                            // This method is called when mode is set to finish ("mode.finish()")
+
+                            // Reset the Boolean flags
+                            isEnable = false;
+                            isSelectAll = false;
+
+                            // Reset the selected items list ("selectItems")
+                            selectItems.clear();
+
+                            // Notify the adapter to refresh the UI
+                            notifyDataSetChanged();
+
+                        }
+                    };
+
+                    // Call the ActionMode
+                    ((AppCompatActivity) v.getContext()).startActionMode(callback);
+
+                }
+                else { // If ActionMode already enabled
+
+                    // Handle click on Items through the ClickItem() function which shows the checkboxes
+                    ClickItem(holder);
+                }
+
+                return true; // Return true to indicate that the .setOnLongPress() has been prepared successfully
+            }
+        });
+
+        // Set up a click listener to toggle item selection when not in ActionMode
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isEnable){
+                    // Handle item selection when ActionMode is enabled
+                    ClickItem(holder);
+                }
+            }
+        });
+
+        // Update the checkmark icon visibility based on selection state: isSelectAll or Not isSelectAll
+        if (isSelectAll){
+            holder.checkedBoxImageView.setVisibility(View.VISIBLE);
+        }
+        else{
+            holder.checkedBoxImageView.setVisibility(View.GONE);
+        }
     }
 
     /**
@@ -89,6 +273,34 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     /**
+     * This method handles the click event for an item in the RecyclerView.
+     *
+     * This method toggles the selection state of the item represented by the given ViewHolder.
+     * When the item is selected, it displays a checkmark icon, and when deselected, it hides the icon.
+     * The method also updates a count of selected items and communicates the count to a ViewModel.
+     *
+     * Citation: https://youtu.be/Uld0N4ofgWQ?si=5ZYiswWMMzLF1FcL
+     *
+     * @param holder The ViewHolder associated with the clicked item.
+     */
+    private void ClickItem(ViewHolder holder) {
+        // Get the selected item from the data list based on the adapter position
+        Item itemSelected = data.get(holder.getAdapterPosition());
+
+        // Toggle the visibility of the checkmark icon based on the current state
+        if (holder.checkedBoxImageView.getVisibility() == View.GONE) {
+            holder.checkedBoxImageView.setVisibility(View.VISIBLE);
+            selectItems.add(itemSelected);
+        } else {
+            holder.checkedBoxImageView.setVisibility(View.GONE);
+            selectItems.remove(itemSelected);
+        }
+
+        // Update the count of selected items and communicate it to a ViewModel
+        selectionViewModel.setText(String.valueOf(selectItems.size()));
+    }
+
+    /**
      * This class is the view holder for the recycler view. It holds the views that will be
      * displayed in the recycler view.
      */
@@ -99,6 +311,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView descriptionTextView;
         private TextView valueTextView;
         private TextView commentTextView;
+        private ImageView checkedBoxImageView;
 
         /**
          * Constructor for the view holder
@@ -112,6 +325,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
             commentTextView = itemView.findViewById(R.id.commentTextView);
+            checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
         }
 
         /**
