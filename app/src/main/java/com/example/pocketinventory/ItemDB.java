@@ -10,19 +10,25 @@ import java.util.List;
 /**
  * This class manages the Firestore database for the items.
  * It manages all CRUD operations for the items.
+ * It is a singleton class.
  */
 public class ItemDB {
     private static ItemDB instance; // Static instance of the class
     private FirebaseFirestore db;
     private FirebaseAuth auth;
 
-    // Private constructor to prevent instantiation from other classes
+    /**
+     * This method is the constructor for the ItemDB class.
+     */
     private ItemDB() {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
     }
 
-    // Static method to access the singleton instance
+    /**
+     * This method gets the instance of the ItemDB class.
+     * @return The instance of the ItemDB class.
+     */
     public static ItemDB getInstance() {
         if (instance == null) {
             instance = new ItemDB();
@@ -45,14 +51,26 @@ public class ItemDB {
         });
     }
 
+    /**
+     * This method updates an item in the database.
+     * @param item The item to be updated in the database.
+     */
     public void updateItem(Item item) {
         db.collection("items").document(item.getId()).set(item);
     }
 
+    /**
+     * This method deletes an item from the database.
+     * @param item The item to be deleted from the database.
+     */
     public void deleteItem(Item item) {
         db.collection("items").document(item.getId()).delete();
     }
 
+    /**
+     * This method gets all items from the database.
+     * @param listener The listener to be called when the query is complete.
+     */
     public void getAllItems(OnCompleteListener<QuerySnapshot> listener) {
         db.collection("items").get().addOnCompleteListener(listener);
     }

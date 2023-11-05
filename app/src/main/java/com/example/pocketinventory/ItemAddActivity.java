@@ -102,6 +102,7 @@ public class ItemAddActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Read in all of the text fields
                 String make = makeInput.getEditText().getText().toString();
                 String model = modelInput.getEditText().getText().toString();
                 String serialNumber = serialInput.getEditText().getText().toString();
@@ -116,6 +117,7 @@ public class ItemAddActivity extends AppCompatActivity {
                     return;
                 }
 
+                // If the user is editing an item, update the item in the database
                 if (isEditing) {
                     item.setMake(make);
                     item.setModel(model);
@@ -127,7 +129,7 @@ public class ItemAddActivity extends AppCompatActivity {
                     // log the id
                     Log.d("ItemAddActivity", "onClick: " + item.getId());
                     itemDB.updateItem(item);
-                } else {
+                } else { // Otherwise, create a new item and add it to the database
                     Item item = new Item(parseDate(dateOfPurchase), make, model, serialNumber, Double.parseDouble(estimatedValue), description, comment);
                     itemDB.addItem(item);
                 }
