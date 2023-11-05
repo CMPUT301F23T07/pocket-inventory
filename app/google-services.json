@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "143137682656",
+    "project_id": "pocket-inventory-96e7e",
+    "storage_bucket": "pocket-inventory-96e7e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143137682656:android:1b24c816a9df464cbd8c85",
+        "android_client_info": {
+          "package_name": "com.example.pocketinventory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJOIyjhbaZHkvX7suvpa5h880OdLXqgPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
