@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/black"
@@ -54,5 +55,15 @@
         android:layout_below="@id/valueTextView"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/checkImageView"
+        android:layout_width="49dp"
+        android:layout_height="56dp"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/checked_box"
+        android:visibility="gone"/>
 
 </RelativeLayout>
