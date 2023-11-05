@@ -29,6 +29,7 @@ import java.util.Date;
 public class ItemAddActivity extends AppCompatActivity {
 
     private boolean isEditing = false;
+    private ItemDB itemDB = ItemDB.getInstance();
 
     /**
      * This method is called when the activity is created. It sets up the buttons and text fields
@@ -80,6 +81,15 @@ public class ItemAddActivity extends AppCompatActivity {
             commentInput.getEditText().setText(item.getComment());
         }
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemDB.deleteItem(item);
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,16 +110,27 @@ public class ItemAddActivity extends AppCompatActivity {
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
 
-                // if any field other than comment is empty, display a toast dialog and return
-                if (make.isEmpty() || model.isEmpty() || serialNumber.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
+                // if any field other than comment or serial number is empty, display a toast dialog and return
+                if (make.isEmpty() || model.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
-                Intent intent = new Intent();
-                intent.putExtra("item", item);
-                setResult(RESULT_OK, intent);
+                if (isEditing) {
+                    item.setMake(make);
+                    item.setModel(model);
+                    item.setSerialNumber(serialNumber);
+                    item.setValue(Double.parseDouble(estimatedValue));
+                    item.setDate(parseDate(dateOfPurchase));
+                    item.setDescription(description);
+                    item.setComment(comment);
+                    // log the id
+                    Log.d("ItemAddActivity", "onClick: " + item.getId());
+                    itemDB.updateItem(item);
+                } else {
+                    Item item = new Item(parseDate(dateOfPurchase), make, model, serialNumber, Double.parseDouble(estimatedValue), description, comment);
+                    itemDB.addItem(item);
+                }
                 finish();
             }
         });

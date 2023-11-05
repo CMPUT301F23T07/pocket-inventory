@@ -44,6 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
     private RecyclerView log_list;
     private ItemFilterFragment itemFilterFragment;
     private boolean filtered = false;
+    private ItemDB itemDB = ItemDB.getInstance();
 
     /**
      * This method is called when the activity is created. It sets up the recycler view and
@@ -57,39 +58,19 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
-        Item item_1 = new Item(new Date(),"apple","iphone","New 15 pro max", 1836,"Fav", "xxxxx");
         log_list = (RecyclerView) findViewById(R.id.log_list);
         dataList = new ArrayList<>();
         log_list.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ItemAdapter(this, dataList);
         log_list.setAdapter(adapter);
-        dataList.add(item_1);
         adapter.update();
-
-        addfromtext(100);//Add some test items
+        updateItemData();
 
         Button addItemButton = findViewById(R.id.add_item);
 
-        // TEMPORARY CODE: Replace once we have a database
-        // ActivityResultLauncher for the ItemAddActivity which returns an item object in the intent
-        ActivityResultLauncher<Intent> addItemLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result != null && result.getResultCode() == RESULT_OK) {
-                        Log.d("MainListActivity", "Received result from ItemAddActivity");
-                        Item item = result.getData().getParcelableExtra("item");
-                        dataList.add(item);
-                        adapter.update();
-                        adapter.notifyDataSetChanged();
-                        if (filtered) {
-                            dataListCopy.add(item);
-                        }
-                    }
-                }
-        );
         addItemButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
-            addItemLauncher.launch(intent);
+            startActivity(intent);
         });
 
         //Sort button
@@ -124,6 +105,12 @@ public class HomePageActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateItemData();
     }
 
     /**
@@ -200,6 +187,20 @@ public class HomePageActivity extends AppCompatActivity {
         } finally {
             adapter.update();
         }
+    }
+
+    public void updateItemData() {
+        itemDB.getAllItems(task -> {
+            if (task.isSuccessful()) {
+                List<Item> items = task.getResult().toObjects(Item.class);
+                dataList.clear();
+                dataList.addAll(items);
+                adapter.update();
+            } else {
+                Log.d("HomePageActivity", "Error getting documents: ", task.getException());
+            }
+        });
+
     }
 
 }
