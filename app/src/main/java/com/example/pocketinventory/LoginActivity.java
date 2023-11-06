@@ -16,7 +16,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-
+/**
+ * This class is the login activity of the app. It allows returning users to sign into their
+ * accounts.
+ * It also allows new users to go to the signup page and create an account.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private EditText loginEmail, loginPassword;
