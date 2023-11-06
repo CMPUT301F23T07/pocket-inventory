@@ -153,7 +153,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                     // Remove each selected item from itemDB
                                     ItemDB.getInstance().deleteItem(item1);
                                 }
+                                // Update Item Data in HomePageActivity as well
                                 ((HomePageActivity)context).updateItemData();
+
                                 // Finish the Action Mode, exiting the contextual action bar
                                 mode.finish();
                             }
