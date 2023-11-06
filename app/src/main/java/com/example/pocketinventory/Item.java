@@ -12,6 +12,8 @@ import java.util.Date;
  * It also implements Parcelable so that it can be passed between activities.
  */
 public class Item implements Parcelable {
+    private String userId;
+    private String id;
     private String make;
     private String model;
     private String description;
@@ -19,6 +21,10 @@ public class Item implements Parcelable {
     private Date date;
     private double value;
     private String comment;
+
+    // Firebase requires an empty constructor
+    public Item() {
+    }
 
 
     /**
@@ -48,6 +54,7 @@ public class Item implements Parcelable {
      * @param in
      */
     protected Item(Parcel in) {
+        id = in.readString();
         make = in.readString();
         model = in.readString();
         date = (Date) in.readValue(Date.class.getClassLoader());
@@ -55,6 +62,38 @@ public class Item implements Parcelable {
         serialNumber = in.readString();
         value = in.readDouble();
         comment = in.readString();
+    }
+
+    /**
+     * Getter for the user id
+     * @return userId
+     */
+    public String getUserId() {
+        return userId;
+    }
+
+    /**
+     * Setter for the user id
+     * @param userId
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * Getter for the id
+     * @return id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Setter for the id
+     * @param id
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 
     /**
@@ -102,7 +141,7 @@ public class Item implements Parcelable {
      * Setter for the value
      * @param value
      */
-    public void setValue(float value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -202,6 +241,7 @@ public class Item implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
         dest.writeString(make);
         dest.writeString(model);
         dest.writeValue(date);

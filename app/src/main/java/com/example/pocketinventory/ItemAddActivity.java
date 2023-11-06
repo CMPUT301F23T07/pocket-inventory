@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,6 +27,9 @@ import java.util.Date;
  * This class is the activity that allows the user to add a new item to the inventory.
  */
 public class ItemAddActivity extends AppCompatActivity {
+
+    private boolean isEditing = false;
+    private ItemDB itemDB = ItemDB.getInstance();
 
     /**
      * This method is called when the activity is created. It sets up the buttons and text fields
@@ -41,6 +46,12 @@ public class ItemAddActivity extends AppCompatActivity {
 
         Button cancelButton = findViewById(R.id.cancel_button);
         Button addButton = findViewById(R.id.add_button);
+        Button deleteButton = findViewById(R.id.delete_button);
+        View deleteButtonSpacer = findViewById(R.id.delete_button_spacer);
+        // Delete button is only visible if the user is editing an item
+        deleteButton.setVisibility(View.GONE);
+        deleteButtonSpacer.setVisibility(View.GONE);
+
 
         TextInputLayout makeInput = findViewById(R.id.make_text);
         TextInputLayout modelInput = findViewById(R.id.model_text);
@@ -49,6 +60,35 @@ public class ItemAddActivity extends AppCompatActivity {
         TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
         TextInputLayout descriptionInput = findViewById(R.id.description_text);
         TextInputLayout commentInput = findViewById(R.id.comment_text);
+
+        // Check if an item was passed in from the previous activity
+        Intent intent = getIntent();
+        Item item = intent.getParcelableExtra("item");
+        if (item != null) {
+            isEditing = true;
+            addButton.setText("Save");
+            deleteButton.setVisibility(View.VISIBLE);
+            deleteButtonSpacer.setVisibility(View.VISIBLE);
+
+            // If an item was passed in, set the text fields to the item's values
+            makeInput.getEditText().setText(item.getMake());
+            modelInput.getEditText().setText(item.getModel());
+            serialInput.getEditText().setText(item.getSerialNumber());
+            estimatedValueInput.getEditText().setText(String.valueOf(item.getValue()));
+            DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+            dateOfPurchaseInput.getEditText().setText(dateFormat.format(item.getDate()));
+            descriptionInput.getEditText().setText(item.getDescription());
+            commentInput.getEditText().setText(item.getComment());
+        }
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemDB.deleteItem(item);
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
 
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +102,7 @@ public class ItemAddActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Read in all of the text fields
                 String make = makeInput.getEditText().getText().toString();
                 String model = modelInput.getEditText().getText().toString();
                 String serialNumber = serialInput.getEditText().getText().toString();
@@ -70,16 +111,28 @@ public class ItemAddActivity extends AppCompatActivity {
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
 
-                // if any field other than comment is empty, display a toast dialog and return
-                if (make.isEmpty() || model.isEmpty() || serialNumber.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
+                // if any field other than comment or serial number is empty, display a toast dialog and return
+                if (make.isEmpty() || model.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
                     Toast.makeText(getApplicationContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber);
-                Intent intent = new Intent();
-                intent.putExtra("item", item);
-                setResult(RESULT_OK, intent);
+                // If the user is editing an item, update the item in the database
+                if (isEditing) {
+                    item.setMake(make);
+                    item.setModel(model);
+                    item.setSerialNumber(serialNumber);
+                    item.setValue(Double.parseDouble(estimatedValue));
+                    item.setDate(parseDate(dateOfPurchase));
+                    item.setDescription(description);
+                    item.setComment(comment);
+                    // log the id
+                    Log.d("ItemAddActivity", "onClick: " + item.getId());
+                    itemDB.updateItem(item);
+                } else { // Otherwise, create a new item and add it to the database
+                    Item item = new Item(parseDate(dateOfPurchase), make, model, serialNumber, Double.parseDouble(estimatedValue), description, comment);
+                    itemDB.addItem(item);
+                }
                 finish();
             }
         });

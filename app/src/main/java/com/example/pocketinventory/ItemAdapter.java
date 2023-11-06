@@ -2,6 +2,8 @@ package com.example.pocketinventory;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -12,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentActivity;
@@ -83,6 +87,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Item item = data.get(position);
         // Bind the data item to the ViewHolder, updating the view
         holder.bind(item);
+
         // Set up a long click listener to initiate ActionMode for item selection
         // Reference: https://youtu.be/Uld0N4ofgWQ?si=5ZYiswWMMzLF1FcL
         // Used the above resource's code structure to compelete the functionality below:
@@ -145,10 +150,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                                 // Iterate through the selectItems list (assuming it contains selected items)
                                 for (Item item1 : selectItems){
-                                    // Remove each selected item from the "data" collection of items
-                                    data.remove(item1);
+                                    // Remove each selected item from itemDB
+                                    ItemDB.getInstance().deleteItem(item1);
                                 }
-
+                                ((HomePageActivity)context).updateItemData();
                                 // Finish the Action Mode, exiting the contextual action bar
                                 mode.finish();
                             }
@@ -229,6 +234,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 if (isEnable){
                     // Handle item selection when ActionMode is enabled
                     ClickItem(holder);
+                } else {
+                    // Go to the item details page when ActionMode is not enabled
+                    Intent intent = new Intent(context, ItemAddActivity.class);
+                    intent.putExtra("item", item);
+                    context.startActivity(intent);
                 }
             }
         });

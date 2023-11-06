@@ -125,6 +125,11 @@ public class ItemFilterFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Set the date of the button
+     * @param calendar
+     * @param which
+     */
     public void setDate(Calendar calendar, String which) {
         String date = (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR);
         if (which == "after") {

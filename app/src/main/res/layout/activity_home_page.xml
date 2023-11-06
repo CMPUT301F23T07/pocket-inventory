@@ -31,7 +31,8 @@
         android:contentDescription="sort"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+        app:srcCompat="@drawable/sort"
+        android:paddingTop="5dp"/>
 
     <ImageButton
         android:layout_width="60dp"
@@ -42,7 +43,7 @@
         android:id = "@+id/filterButton"
         app:layout_constraintEnd_toStartOf="@+id/sorterButton"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_agenda" />
+        app:srcCompat="@drawable/tune" />
 
     <TextView
         android:id="@+id/total_value_prompt"
