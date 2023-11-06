@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">PocketInventory</string>
+    <string name="app_name">Pocket Inventory</string>
     <string name="subtotal" />
+    <string name="title_home">Home</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_profile">Profile</string>
 </resources>

@@ -18,6 +18,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
@@ -102,6 +103,24 @@ public class HomePageActivity extends AppCompatActivity {
                 filtered = false;
             }
 
+        });
+
+        // For the navigation panel
+        BottomNavigationView bottomNavigationView = findViewById(R.id.nav_view);
+        bottomNavigationView.setSelectedItemId(R.id.navigation_home);
+
+        // This controls the navigation between the different activities
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.navigation_home) {
+                return true;
+            } else if (item.getItemId() == R.id.navigation_camera) {
+                startActivity(new Intent(HomePageActivity.this, CameraActivity.class));
+                return true;
+            } else if (item.getItemId() == R.id.navigation_profile) {
+                startActivity(new Intent(HomePageActivity.this, UserProfileActivity.class));
+                return true;
+            }
+            return false;
         });
     }
 
@@ -203,7 +222,6 @@ public class HomePageActivity extends AppCompatActivity {
                 Log.d("HomePageActivity", "Error getting documents: ", task.getException());
             }
         });
-
     }
 
 }
