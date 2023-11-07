@@ -172,7 +172,13 @@ public class HomePageActivity extends AppCompatActivity {
                 List<Item> items = task.getResult().toObjects(Item.class);
                 dataList.clear();
                 dataList.addAll(items);
+                //Since the list is updated, the filter is no longer applied.
+                //So we need to create a new adapter, the old one is for filtered list.
+                adapter = new ItemAdapter(this, dataList);
+                log_list.setAdapter(adapter);
                 adapter.update();
+                filtered = false;
+                ((ImageButton)findViewById(R.id.filterButton)).setColorFilter(null);
             } else {
                 Log.d("HomePageActivity", "Error getting documents: ", task.getException());
             }
