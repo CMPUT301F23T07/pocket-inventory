@@ -20,7 +20,10 @@
         android:id="@+id/modelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/makeTextView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="171dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -28,7 +31,6 @@
         android:id="@+id/dateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/modelTextView"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -36,7 +38,10 @@
         android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dateTextView"
+        android:layout_below="@+id/modelTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="171dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -44,7 +49,10 @@
         android:id="@+id/valueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/descriptionTextView"
+        android:layout_below="@+id/descriptionTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="171dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -52,7 +60,6 @@
         android:id="@+id/commentTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/valueTextView"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -68,12 +75,12 @@
 
     <ImageView
         android:id="@+id/productImageView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="3dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="7dp"
         app:srcCompat="@drawable/product_image" />
 
 </RelativeLayout>
