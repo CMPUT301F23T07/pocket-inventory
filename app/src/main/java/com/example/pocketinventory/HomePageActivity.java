@@ -162,37 +162,6 @@ public class HomePageActivity extends AppCompatActivity {
         this.dataList = dataList;
     }
 
-    /**
-     * Add some test items from text file. For test only. File under "app/src/main/assets"
-     * @param count: number of items to add
-     */
-    public void addfromtext(int count) {
-        //add Item from text
-        BufferedReader reader;
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-
-        ArrayList<String> tagsTest = new ArrayList<>();
-        tagsTest.add("expensive");
-        tagsTest.add("phone");
-
-        try {
-            reader = new BufferedReader(new InputStreamReader(getAssets().open("testItems.txt")));
-            String line = reader.readLine();
-
-            while (line != null && count > 0) {
-                String[] parts = line.split(", ");
-                Item item = new Item(formatter.parse(parts[0]), parts[1], parts[2], parts[3], Double.parseDouble(parts[4]), parts[5], parts[6], tagsTest);
-                dataList.add(item);
-                line = reader.readLine();
-                count--;
-            }
-            reader.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            adapter.update();
-        }
-    }
 
     /**
      * Update the list of items from database

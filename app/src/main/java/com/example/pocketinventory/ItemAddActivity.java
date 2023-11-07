@@ -169,6 +169,7 @@ public class ItemAddActivity extends AppCompatActivity {
                     item.setDate(parseDate(dateOfPurchase));
                     item.setDescription(description);
                     item.setComment(comment);
+                    item.setTags(tags);
                     // log the id
                     Log.d("ItemAddActivity", "onClick: " + item.getId());
                     itemDB.updateItem(item);

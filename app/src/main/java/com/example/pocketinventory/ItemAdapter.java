@@ -26,6 +26,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
@@ -337,6 +338,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private Chip tag4Chip;
         private Chip tag5Chip;
         private ArrayList<String> tagsList;
+        private RecyclerView recyclerView;
 
 
         /**
@@ -358,7 +360,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tag3Chip = itemView.findViewById(R.id.tag3Chip);
             tag4Chip = itemView.findViewById(R.id.tag4Chip);
             tag5Chip = itemView.findViewById(R.id.tag5Chip);
-
+            recyclerView = itemView.findViewById(R.id.tagList);
         }
 
         /**
@@ -415,6 +417,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 }
             }
 
+            // Set up a child recyclerView to display the tags in a horizontal list.
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            tagAdapter adapter = new tagAdapter(context, tagsList);
+            recyclerView.setAdapter(adapter);
             /*
 
             Need to implement this eventually for the +More to work in the future

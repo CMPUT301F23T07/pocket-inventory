@@ -123,7 +123,22 @@
 
     </LinearLayout>
 
-    <ImageView
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tagsLinearLayout"
+        android:id="@+id/tagsLinearLayout2"
+        android:orientation="horizontal">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tagList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tagsLinearLayout"
+            android:scrollbars="horizontal" />
+    </LinearLayout>
+
+
+        <ImageView
         android:id="@+id/checkImageView"
         android:layout_width="49dp"
         android:layout_height="56dp"
