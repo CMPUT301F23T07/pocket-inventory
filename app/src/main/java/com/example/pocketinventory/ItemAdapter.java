@@ -354,12 +354,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             valueTextView = itemView.findViewById(R.id.valueTextView);
             commentTextView = itemView.findViewById(R.id.commentTextView);
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
-            tagsLinearLayout = itemView.findViewById(R.id.tagsLinearLayout);
-            tag1Chip = itemView.findViewById(R.id.tag1Chip);
-            tag2Chip = itemView.findViewById(R.id.tag2Chip);
-            tag3Chip = itemView.findViewById(R.id.tag3Chip);
-            tag4Chip = itemView.findViewById(R.id.tag4Chip);
-            tag5Chip = itemView.findViewById(R.id.tag5Chip);
             recyclerView = itemView.findViewById(R.id.tagList);
         }
 
@@ -382,92 +376,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                 tagsList.add(tag);
             }
 
-            // If there are tags in the 'tagsList' collection:
-            if (tagsList.size() > 0) {
-                // Make the 'tagsLinearLayout' visible.
-                tagsLinearLayout.setVisibility(View.VISIBLE);
-
-                // Loop through the tags in 'tagsList' and display them in corresponding Chip views.
-                for (int i = 0; i < tagsList.size(); i++) {
-                    if (i == 0) {
-                        // Display and set text for 'tag1Chip'.
-                        tag1Chip.setVisibility(View.VISIBLE);
-                        tag1Chip.setText(tagsList.get(i));
-                    }
-                    if (i == 1) {
-                        // Display and set text for 'tag2Chip'.
-                        tag2Chip.setVisibility(View.VISIBLE);
-                        tag2Chip.setText(tagsList.get(i));
-                    }
-                    if (i == 2) {
-                        // Display and set text for 'tag3Chip'.
-                        tag3Chip.setVisibility(View.VISIBLE);
-                        tag3Chip.setText(tagsList.get(i));
-                    }
-                    if (i == 3) {
-                        // Display and set text for 'tag4Chip'.
-                        tag4Chip.setVisibility(View.VISIBLE);
-                        tag4Chip.setText(tagsList.get(i));
-                    }
-                    if (i == 4) {
-                        // Display and set text for 'tag5Chip'.
-                        tag5Chip.setVisibility(View.VISIBLE);
-                        tag5Chip.setText(tagsList.get(i));
-                    }
-                }
-            }
 
             // Set up a child recyclerView to display the tags in a horizontal list.
             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             tagAdapter adapter = new tagAdapter(context, tagsList);
             recyclerView.setAdapter(adapter);
-            /*
-
-            Need to implement this eventually for the +More to work in the future
-
-            if (tagsList.size() > 0){
-                tagsLinearLayout.setVisibility(View.VISIBLE);
-                for (int i =0; i < tagsList.size(); i++){
-                    if (i == 0){
-                        tag1Chip.setVisibility(View.VISIBLE);
-                        tag1Chip.setText(tagsList.get(i));
-                    }
-                    if (i == 1){
-                        tag2Chip.setVisibility(View.VISIBLE);
-                        tag2Chip.setText(tagsList.get(i));
-                        if (checkOutOfWindow(tag2Chip)) {
-                            tag2Chip.setText("+" + String.valueOf(tagsList.size() - i));
-                            break;
-                        }
-
-                    }
-                    if (i == 2){
-                        tag3Chip.setVisibility(View.VISIBLE);
-                        tag3Chip.setText(tagsList.get(i));
-                        if (checkOutOfWindow(tag3Chip)) {
-                            tag3Chip.setText("+" + String.valueOf(tagsList.size() - i));
-                            break;
-                        }
-                    }
-                    if (i == 3){
-                        tag4Chip.setVisibility(View.VISIBLE);
-                        tag4Chip.setText(tagsList.get(i));
-                        if (checkOutOfWindow(tag4Chip)) {
-                            tag4Chip.setText("+" + String.valueOf(tagsList.size() - i));
-                            break;
-                        }
-                    }
-                    if (i == 4){
-                        tag5Chip.setVisibility(View.VISIBLE);
-                        tag5Chip.setText(tagsList.get(i));
-                        if (checkOutOfWindow(tag5Chip)) {
-                            tag5Chip.setText("+" + String.valueOf(tagsList.size() - i));
-                            break;
-                        }
-                    }
-                }
-
-            }*/
 
         }
 
