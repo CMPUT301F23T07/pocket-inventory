@@ -3,6 +3,8 @@ package com.example.pocketinventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -11,7 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,6 +27,8 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.chip.Chip;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -324,6 +330,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
+        private LinearLayout tagsLinearLayout;
+        private Chip tag1Chip;
+        private Chip tag2Chip;
+        private Chip tag3Chip;
+        private Chip tag4Chip;
+        private Chip tag5Chip;
+        private ArrayList<String> tagsList;
+
 
         /**
          * Constructor for the view holder
@@ -338,6 +352,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             valueTextView = itemView.findViewById(R.id.valueTextView);
             commentTextView = itemView.findViewById(R.id.commentTextView);
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
+            tagsLinearLayout = itemView.findViewById(R.id.tagsLinearLayout);
+            tag1Chip = itemView.findViewById(R.id.tag1Chip);
+            tag2Chip = itemView.findViewById(R.id.tag2Chip);
+            tag3Chip = itemView.findViewById(R.id.tag3Chip);
+            tag4Chip = itemView.findViewById(R.id.tag4Chip);
+            tag5Chip = itemView.findViewById(R.id.tag5Chip);
+
         }
 
         /**
@@ -352,6 +373,133 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
             commentTextView.setText("Comment: " + item.getComment());
+            tagsList = new ArrayList<>();
+
+            // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
+            for (String tag : item.getTags()) {
+                tagsList.add(tag);
+            }
+
+            // If there are tags in the 'tagsList' collection:
+            if (tagsList.size() > 0) {
+                // Make the 'tagsLinearLayout' visible.
+                tagsLinearLayout.setVisibility(View.VISIBLE);
+
+                // Loop through the tags in 'tagsList' and display them in corresponding Chip views.
+                for (int i = 0; i < tagsList.size(); i++) {
+                    if (i == 0) {
+                        // Display and set text for 'tag1Chip'.
+                        tag1Chip.setVisibility(View.VISIBLE);
+                        tag1Chip.setText(tagsList.get(i));
+                    }
+                    if (i == 1) {
+                        // Display and set text for 'tag2Chip'.
+                        tag2Chip.setVisibility(View.VISIBLE);
+                        tag2Chip.setText(tagsList.get(i));
+                    }
+                    if (i == 2) {
+                        // Display and set text for 'tag3Chip'.
+                        tag3Chip.setVisibility(View.VISIBLE);
+                        tag3Chip.setText(tagsList.get(i));
+                    }
+                    if (i == 3) {
+                        // Display and set text for 'tag4Chip'.
+                        tag4Chip.setVisibility(View.VISIBLE);
+                        tag4Chip.setText(tagsList.get(i));
+                    }
+                    if (i == 4) {
+                        // Display and set text for 'tag5Chip'.
+                        tag5Chip.setVisibility(View.VISIBLE);
+                        tag5Chip.setText(tagsList.get(i));
+                    }
+                }
+            }
+
+            /*
+
+            Need to implement this eventually for the +More to work in the future
+
+            if (tagsList.size() > 0){
+                tagsLinearLayout.setVisibility(View.VISIBLE);
+                for (int i =0; i < tagsList.size(); i++){
+                    if (i == 0){
+                        tag1Chip.setVisibility(View.VISIBLE);
+                        tag1Chip.setText(tagsList.get(i));
+                    }
+                    if (i == 1){
+                        tag2Chip.setVisibility(View.VISIBLE);
+                        tag2Chip.setText(tagsList.get(i));
+                        if (checkOutOfWindow(tag2Chip)) {
+                            tag2Chip.setText("+" + String.valueOf(tagsList.size() - i));
+                            break;
+                        }
+
+                    }
+                    if (i == 2){
+                        tag3Chip.setVisibility(View.VISIBLE);
+                        tag3Chip.setText(tagsList.get(i));
+                        if (checkOutOfWindow(tag3Chip)) {
+                            tag3Chip.setText("+" + String.valueOf(tagsList.size() - i));
+                            break;
+                        }
+                    }
+                    if (i == 3){
+                        tag4Chip.setVisibility(View.VISIBLE);
+                        tag4Chip.setText(tagsList.get(i));
+                        if (checkOutOfWindow(tag4Chip)) {
+                            tag4Chip.setText("+" + String.valueOf(tagsList.size() - i));
+                            break;
+                        }
+                    }
+                    if (i == 4){
+                        tag5Chip.setVisibility(View.VISIBLE);
+                        tag5Chip.setText(tagsList.get(i));
+                        if (checkOutOfWindow(tag5Chip)) {
+                            tag5Chip.setText("+" + String.valueOf(tagsList.size() - i));
+                            break;
+                        }
+                    }
+                }
+
+            }*/
+
+        }
+
+        /**
+         * Checks if a Chip is partially or fully out of the visible window within its parent view.
+         *
+         * @param tagChip The Chip to be checked for visibility within the window.
+         * @return {@code true} if the Chip is partially or fully out of the visible window, {@code false} otherwise.
+         */
+        private Boolean checkOutOfWindow(Chip tagChip) {
+            // Get the location of the Chip on the screen
+            int[] chipLocation = new int[2];
+            tagChip.getLocationOnScreen(chipLocation);
+            int tagX = chipLocation[0];
+
+            // Get the parent view where the Chip is placed (e.g., a LinearLayout)
+            View parentView = tagsLinearLayout;
+
+            // Get the width of the parent view, which represents the visible window
+            int windowWidth = parentView.getWidth();
+
+            // Get the text and paint information from the Chip
+            String tagText = tagChip.getText().toString();
+            Paint tagPaint = tagChip.getPaint();
+
+            // Calculate the width of the Chip's text and the width of the Chip itself
+            float textWidth = tagPaint.measureText(tagText);
+            float chipWidth = tagChip.getWidth();
+
+            // Check if the Chip's text extends beyond the right edge of the visible window
+            if (tagX + textWidth > windowWidth) {
+                // The text within the Chip is not fully visible within the window
+                // You can handle this condition here, e.g., by resizing the text, changing the Chip's size, or showing a message
+                return Boolean.TRUE;
+            } else {
+                // The Chip's text is fully visible within the window
+                return Boolean.FALSE;
+            }
         }
 
 

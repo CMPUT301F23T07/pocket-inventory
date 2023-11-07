@@ -170,13 +170,18 @@ public class HomePageActivity extends AppCompatActivity {
         //add Item from text
         BufferedReader reader;
         DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+
+        ArrayList<String> tagsTest = new ArrayList<>();
+        tagsTest.add("expensive");
+        tagsTest.add("phone");
+
         try {
             reader = new BufferedReader(new InputStreamReader(getAssets().open("testItems.txt")));
             String line = reader.readLine();
 
             while (line != null && count > 0) {
                 String[] parts = line.split(", ");
-                Item item = new Item(formatter.parse(parts[0]), parts[1], parts[2], parts[3], Double.parseDouble(parts[4]), parts[5], parts[6]);
+                Item item = new Item(formatter.parse(parts[0]), parts[1], parts[2], parts[3], Double.parseDouble(parts[4]), parts[5], parts[6], tagsTest);
                 dataList.add(item);
                 line = reader.readLine();
                 count--;
