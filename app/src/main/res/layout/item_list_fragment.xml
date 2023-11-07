@@ -62,6 +62,73 @@
         android:layout_height="wrap_content"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
+    <LinearLayout
+        android:id="@+id/tagsLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/commentTextView"
+        android:visibility="gone"
+        android:orientation="horizontal">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tag1Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:includeFontPadding="false"
+            android:visibility="gone"
+            android:text="Tag 1"
+            android:textColor="@color/md_theme_dark_inverseSurface"
+            app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+            app:chipStrokeWidth="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tag2Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:text="Tag 2"
+            android:textColor="@color/md_theme_dark_inverseSurface"
+            app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+            app:chipStrokeWidth="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tag3Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:text="Tag 3"
+            android:textColor="@color/md_theme_dark_inverseSurface"
+            app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+            app:chipStrokeWidth="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tag4Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:text="Tag 4"
+            android:textColor="@color/md_theme_dark_inverseSurface"
+            app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+            app:chipStrokeWidth="0dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/tag5Chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:visibility="gone"
+            android:text="Tag 5"
+            android:textColor="@color/md_theme_dark_inverseSurface"
+            app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+            app:chipStrokeWidth="0dp" />
+
+
+    </LinearLayout>
+
 
     <ImageView
         android:id="@+id/checkImageView"
