@@ -66,4 +66,14 @@
         app:srcCompat="@drawable/checked_box"
         android:visibility="gone"/>
 
+    <ImageView
+        android:id="@+id/productImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="3dp"
+        app:srcCompat="@drawable/product_image" />
+
 </RelativeLayout>

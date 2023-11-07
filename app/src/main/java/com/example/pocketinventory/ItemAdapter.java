@@ -322,6 +322,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
+        private ImageView pictureImageView;
 
         /**
          * Constructor for the view holder
@@ -329,12 +330,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          */
         public ViewHolder(View itemView) {
             super(itemView);
-            dateTextView = itemView.findViewById(R.id.dateTextView);
-            makeTextView = itemView.findViewById(R.id.makeTextView);
+
+
             modelTextView = itemView.findViewById(R.id.modelTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
-            commentTextView = itemView.findViewById(R.id.commentTextView);
+            pictureImageView = itemView.findViewById((R.id.productImageView));
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
         }
 
@@ -343,13 +344,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateTextView.setText("Date: " + dateFormat.format(item.getDate()));
-            makeTextView.setText("Make: " + item.getMake());
+
+
             modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
-            commentTextView.setText("Comment: " + item.getComment());
+            pictureImageView.setImageResource(R.drawable.product_image);
         }
 
 
