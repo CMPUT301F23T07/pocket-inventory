@@ -6,6 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/buttonAddTag"
+        android:layout_width="64dp"
+        android:layout_height="42dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="+"
+        app:backgroundTint="@color/md_theme_light_inversePrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView64" />
+
     <TextView
         android:id="@+id/textView67"
         android:layout_width="wrap_content"
@@ -111,26 +122,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myTextInputLayout4" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/myTextInputLayout5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView64">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tagInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Tag"
-            android:singleLine="true" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <Button
         android:id="@+id/buttonBefore"
         android:layout_width="121dp"
@@ -152,5 +143,43 @@
         android:text="(Optional)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView62" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/filterTagView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonAddTag" />
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/filterButtonToggleGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        app:checkedButton="@id/buttonAND"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/buttonAddTag"
+        app:layout_constraintTop_toBottomOf="@+id/textView64"
+        app:selectionRequired="true"
+        app:singleSelection="true">
+
+        <Button
+            android:id="@+id/buttonAND"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:text="Match All"/>
+
+        <Button
+            android:id="@+id/buttonOR"
+            style="?attr/materialButtonOutlinedStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="41dp"
+            android:text="Match One"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

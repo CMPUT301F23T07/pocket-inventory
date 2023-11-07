@@ -6,27 +6,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 
-public class tagAdapter extends RecyclerView.Adapter<tagAdapter.tagViewHolder> {
+public class TagAdapter extends RecyclerView.Adapter<TagAdapter.tagViewHolder> {
 
     private ArrayList<String> tags;
     private Context context;
+    private int mode;
 
     /*
      * Constructor for the tagAdapter class.
      * @param context The context of the tagAdapter.
      * @param tags The list of tags to be displayed.
+     * @param mode The mode of the tagAdapter. 0 when used in homepage, 1 in filter.
      */
-    public tagAdapter(Context context, ArrayList<String> tags) {
+    public TagAdapter(Context context, ArrayList<String> tags, int mode) {
         this.tags = tags;
         this.context = context;
+        this.mode = mode;
     }
 
     @NonNull
@@ -61,6 +63,13 @@ public class tagAdapter extends RecyclerView.Adapter<tagAdapter.tagViewHolder> {
         public tagViewHolder(View itemView) {
             super(itemView);
             chip = itemView.findViewById(R.id.tagChip);
+            // Set the onclick listener if used in filter.
+            if (mode == 1) {
+                chip.setOnClickListener(v -> {
+                    tags.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                });
+            }
         }
     }
 
