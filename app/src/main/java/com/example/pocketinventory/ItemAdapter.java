@@ -3,6 +3,8 @@ package com.example.pocketinventory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
@@ -11,7 +13,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -22,7 +26,10 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.chip.Chip;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -153,7 +160,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                     // Remove each selected item from itemDB
                                     ItemDB.getInstance().deleteItem(item1);
                                 }
+                                // Update Item Data in HomePageActivity as well
                                 ((HomePageActivity)context).updateItemData();
+
                                 // Finish the Action Mode, exiting the contextual action bar
                                 mode.finish();
                             }
@@ -322,7 +331,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
-        private ImageView pictureImageView;
+        private ImageView productImageView;
+        private ArrayList<String> tagsList;
+        private RecyclerView recyclerView;
+
 
         /**
          * Constructor for the view holder
@@ -330,13 +342,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          */
         public ViewHolder(View itemView) {
             super(itemView);
-
-
             modelTextView = itemView.findViewById(R.id.modelTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
-            pictureImageView = itemView.findViewById((R.id.productImageView));
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
+            productImageView = itemView.findViewById(R.id.productImageView);
+            recyclerView = itemView.findViewById(R.id.tagList);
         }
 
         /**
@@ -344,15 +355,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-
-
             modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
-            pictureImageView.setImageResource(R.drawable.product_image);
+            productImageView.setImageResource(R.drawable.product_image);
+
+            tagsList = new ArrayList<>();
+            // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
+            for (String tag : item.getTags()) {
+                tagsList.add(tag);
+            }
+
+
+            // Set up a child recyclerView to display the tags in a horizontal list.
+            recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            tagAdapter adapter = new tagAdapter(context, tagsList);
+            recyclerView.setAdapter(adapter);
+
         }
 
 
     }
 }
-

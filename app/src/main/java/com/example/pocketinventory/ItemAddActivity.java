@@ -20,6 +20,8 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -44,6 +46,8 @@ public class ItemAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_add);
 
+
+
         Button cancelButton = findViewById(R.id.cancel_button);
         Button addButton = findViewById(R.id.add_button);
         Button deleteButton = findViewById(R.id.delete_button);
@@ -60,7 +64,7 @@ public class ItemAddActivity extends AppCompatActivity {
         TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
         TextInputLayout descriptionInput = findViewById(R.id.description_text);
         TextInputLayout commentInput = findViewById(R.id.comment_text);
-
+        TextInputLayout tagsInput = findViewById(R.id.tag_input);
         // Check if an item was passed in from the previous activity
         Intent intent = getIntent();
         Item item = intent.getParcelableExtra("item");
@@ -79,6 +83,24 @@ public class ItemAddActivity extends AppCompatActivity {
             dateOfPurchaseInput.getEditText().setText(dateFormat.format(item.getDate()));
             descriptionInput.getEditText().setText(item.getDescription());
             commentInput.getEditText().setText(item.getComment());
+
+            // Retrieving the tags String from the item
+            ArrayList<String> tagsList = item.getTags();
+            StringBuilder tagsStringBuilder = new StringBuilder();
+
+            // Iterates through the list of tags and combines them into a String devided by comma (,)
+            for (int i = 0; i < tagsList.size(); i++){
+                tagsStringBuilder.append(tagsList.get(i));
+                if (i < tagsList.size() - 1){
+                    tagsStringBuilder.append(", ");
+                }
+            }
+
+            // Get the string from the StringBuilder
+            String tagsString = tagsStringBuilder.toString();
+            // Set the String of tags (comma seperating them) to the EditText associated with the tags
+            tagsInput.getEditText().setText(tagsString);
+
         }
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +124,7 @@ public class ItemAddActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ArrayList<String> tags;
                 // Read in all of the text fields
                 String make = makeInput.getEditText().getText().toString();
                 String model = modelInput.getEditText().getText().toString();
@@ -110,6 +133,26 @@ public class ItemAddActivity extends AppCompatActivity {
                 String dateOfPurchase = dateOfPurchaseInput.getEditText().getText().toString();
                 String description = descriptionInput.getEditText().getText().toString();
                 String comment = commentInput.getEditText().getText().toString();
+                String tagsString = tagsInput.getEditText().getText().toString().trim();
+                // Create a new ArrayList to store tags.
+                tags = new ArrayList<>();
+
+                // Check if the String derived from the EditText is not empty.
+                if (!tagsString.isEmpty()) {
+
+                    // Split the String derived from the EditText into an array using commas as separators.
+                    String[] tagArray = tagsString.split(",");
+
+                    // Iterate through the elements in the 'tagArray'.
+                    for (String tag : tagArray) {
+                        // Check if the tag is not empty
+                        if (!tag.isEmpty()) {
+                            // Add the non-empty tag to the 'tags' ArrayList
+                            tags.add(tag);
+                        }
+                    }
+                }
+
 
                 // if any field other than comment or serial number is empty, display a toast dialog and return
                 if (make.isEmpty() || model.isEmpty() || estimatedValue.isEmpty() || dateOfPurchase.isEmpty() || description.isEmpty()) {
@@ -126,11 +169,13 @@ public class ItemAddActivity extends AppCompatActivity {
                     item.setDate(parseDate(dateOfPurchase));
                     item.setDescription(description);
                     item.setComment(comment);
+                    item.setTags(tags);
                     // log the id
                     Log.d("ItemAddActivity", "onClick: " + item.getId());
                     itemDB.updateItem(item);
                 } else { // Otherwise, create a new item and add it to the database
-                    Item item = new Item(parseDate(dateOfPurchase), make, model, serialNumber, Double.parseDouble(estimatedValue), description, comment);
+
+                    Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber, tags);
                     itemDB.addItem(item);
                 }
                 finish();
