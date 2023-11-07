@@ -331,12 +331,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
-        private LinearLayout tagsLinearLayout;
-        private Chip tag1Chip;
-        private Chip tag2Chip;
-        private Chip tag3Chip;
-        private Chip tag4Chip;
-        private Chip tag5Chip;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 
@@ -369,8 +363,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
             commentTextView.setText("Comment: " + item.getComment());
-            tagsList = new ArrayList<>();
 
+            tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
             for (String tag : item.getTags()) {
                 tagsList.add(tag);
@@ -382,43 +376,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             tagAdapter adapter = new tagAdapter(context, tagsList);
             recyclerView.setAdapter(adapter);
 
-        }
-
-        /**
-         * Checks if a Chip is partially or fully out of the visible window within its parent view.
-         *
-         * @param tagChip The Chip to be checked for visibility within the window.
-         * @return {@code true} if the Chip is partially or fully out of the visible window, {@code false} otherwise.
-         */
-        private Boolean checkOutOfWindow(Chip tagChip) {
-            // Get the location of the Chip on the screen
-            int[] chipLocation = new int[2];
-            tagChip.getLocationOnScreen(chipLocation);
-            int tagX = chipLocation[0];
-
-            // Get the parent view where the Chip is placed (e.g., a LinearLayout)
-            View parentView = tagsLinearLayout;
-
-            // Get the width of the parent view, which represents the visible window
-            int windowWidth = parentView.getWidth();
-
-            // Get the text and paint information from the Chip
-            String tagText = tagChip.getText().toString();
-            Paint tagPaint = tagChip.getPaint();
-
-            // Calculate the width of the Chip's text and the width of the Chip itself
-            float textWidth = tagPaint.measureText(tagText);
-            float chipWidth = tagChip.getWidth();
-
-            // Check if the Chip's text extends beyond the right edge of the visible window
-            if (tagX + textWidth > windowWidth) {
-                // The text within the Chip is not fully visible within the window
-                // You can handle this condition here, e.g., by resizing the text, changing the Chip's size, or showing a message
-                return Boolean.TRUE;
-            } else {
-                // The Chip's text is fully visible within the window
-                return Boolean.FALSE;
-            }
         }
 
 
