@@ -48,10 +48,7 @@ public class ItemDB {
         //item.setUserId(userId);
 
         // add item and set id
-        db.collection("items").add(item).addOnSuccessListener(documentReference -> {
-            item.setId(documentReference.getId());
-            updateItem(item);
-        });
+        updateItem(item);
     }
 
     /**
@@ -59,7 +56,8 @@ public class ItemDB {
      * @param item The item to be updated in the database.
      */
     public void updateItem(Item item) {
-        db.collection("items").document(item.getId()).set(item);
+        String id = item.getId();
+        db.collection("items").document(id).set(item);
     }
 
     /**
