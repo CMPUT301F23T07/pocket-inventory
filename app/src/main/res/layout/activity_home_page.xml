@@ -22,35 +22,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/total_value_prompt" />
 
+    <LinearLayout
+        android:layout_width="421dp"
+        android:layout_height="70dp"
+        android:background="@color/md_theme_dark_inversePrimary"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+
     <ImageButton
         android:id="@+id/sorterButton"
         style="@android:style/Widget.Holo.Light.ImageButton"
         android:layout_width="50dp"
         android:layout_height="45dp"
-        android:background="@color/md_theme_dark_background"
+        android:background="@color/md_theme_dark_inversePrimary"
         android:contentDescription="sort"
+        android:paddingTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/sort"
-        android:paddingTop="5dp"/>
+        app:srcCompat="@drawable/sort" />
 
     <ImageButton
+        android:id="@+id/filterButton"
         android:layout_width="60dp"
         android:layout_height="54dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/md_theme_dark_background"
+        android:background="@color/md_theme_dark_inversePrimary"
         android:contentDescription="Filter"
-        android:id = "@+id/filterButton"
         app:layout_constraintEnd_toStartOf="@+id/sorterButton"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/tune" />
 
     <TextView
         android:id="@+id/total_value_prompt"
-        android:layout_width="154dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:background="@color/md_theme_dark_inversePrimary"
         android:text="Total Value:"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="24sp"
@@ -63,6 +73,7 @@
         android:layout_height="51dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
+        android:background="@color/md_theme_dark_inversePrimary"
         android:text="@string/subtotal"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="24sp"
