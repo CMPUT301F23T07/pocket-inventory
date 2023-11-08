@@ -20,9 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -38,9 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/modelTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -49,9 +45,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/descriptionTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="11dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/md_theme_dark_inverseSurface"
         android:textSize="16sp" />
 
@@ -84,12 +78,12 @@
 
     <ImageView
         android:id="@+id/productImageView"
-        android:layout_width="65dp"
-        android:layout_height="88dp"
-        android:layout_alignParentStart="true"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="7dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="20dp"
         app:srcCompat="@drawable/product_image" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -97,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/valueTextView"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="27dp"
         android:scrollbars="horizontal" />
 
 </RelativeLayout>
