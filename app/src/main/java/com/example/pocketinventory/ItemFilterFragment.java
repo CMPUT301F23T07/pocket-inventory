@@ -137,48 +137,14 @@ public class ItemFilterFragment extends DialogFragment {
         //Editable tag = ((TextInputEditText) view.findViewById(R.id.tagInput)).getText(); //WIP
         //make a copy of the list
         ArrayList<Item> filteredList = new ArrayList<Item>(list);
-
-        if (!after.isEmpty() && after.compareTo("(Optional)") != 0) {
-            Date afterDate = parseDate(after);
-            filteredList.removeIf(expense -> expense.getDate().compareTo(afterDate) < 0);
-            changed = true;
+        String logic;
+        if (((MaterialButtonToggleGroup)view.findViewById(R.id.filterButtonToggleGroup)).getCheckedButtonId() == R.id.buttonAND) {
+            logic = "and";
+        } else {
+            logic = "or";
         }
-        if (!before.isEmpty() && before.compareTo("(Optional)") != 0) {
-            Date beforeDate = parseDate(before);
-            filteredList.removeIf(expense -> expense.getDate().compareTo(beforeDate) > 0);
-            changed = true;
-        }
-        if (description != null && !description.toString().isEmpty()) {
-            filteredList.removeIf(expense -> !expense.getDescription().toLowerCase().contains(description.toString().toLowerCase()));
-            changed = true;
-        }
-        if (make != null && !make.toString().isEmpty()) {
-            filteredList.removeIf(expense -> expense.getMake().toLowerCase().compareTo(make.toString().toLowerCase()) != 0);
-            changed = true;
-        }
-        if (tags.size() > 0) {
-            List<String> tagsLower = tags.stream().map(String::toLowerCase).collect(Collectors.toList());
-            if (((MaterialButtonToggleGroup)view.findViewById(R.id.filterButtonToggleGroup)).getCheckedButtonId() == R.id.buttonAND) {
-                //Remove if item does not contain all tags
-                filteredList.removeIf(expense -> expense.getTags().size() == 0 ||
-                        !tagsLower.stream().allMatch(tag -> expense.getTags().stream()
-                                .map(String::toLowerCase).collect(Collectors.toList()).contains(tag)));
-            } else {
-                //Remove if item does not contain any of the tags
-                filteredList.removeIf(expense -> expense.getTags().size() == 0 ||
-                        !tagsLower.stream().anyMatch(tag -> expense.getTags().stream()
-                                .map(String::toLowerCase).collect(Collectors.toList()).contains(tag)));
-            }
-            changed = true;
-        }
-        if (changed) {
-            final ImageButton filterButton = getActivity().findViewById(R.id.filterButton);
-            filterButton.setColorFilter(R.color.md_theme_dark_onError);
-            itemAdapter = new ItemAdapter(getContext(), filteredList);
-            recyclerView.setAdapter(itemAdapter);
-            itemAdapter.update();
-            homePageActivity.onFiltered(itemAdapter, filteredList);
-        }
+        FilterContext fc = new FilterContext(after, before, description.toString(), make.toString(), tags, logic, homePageActivity);
+        filter(fc);
     }
 
     /**
@@ -217,6 +183,83 @@ public class ItemFilterFragment extends DialogFragment {
     public void addTag(String tag) {
         tags.add(tag.trim());
         tagAdapter.notifyDataSetChanged();
+    }
+
+    /*
+    *filter and update to homepage
+    * @param fc: contains all the filter information
+     */
+    public static boolean filter(FilterContext fc) {
+        boolean changed = false;
+        RecyclerView recyclerView1 = (RecyclerView) fc.homePageActivity.findViewById(R.id.log_list);
+        ItemAdapter itemAdapter1 = (ItemAdapter) recyclerView1.getAdapter();
+        ArrayList<Item> list1 = (ArrayList<Item>) itemAdapter1.getList();
+        ArrayList<Item> filteredList = new ArrayList<Item>(list1);
+
+        if (!fc.after.isEmpty() && fc.after.compareTo("(Optional)") != 0) {
+            Date afterDate = parseDate(fc.after);
+            filteredList.removeIf(expense -> expense.getDate().compareTo(afterDate) < 0);
+            changed = true;
+        }
+        if (!fc.before.isEmpty() && fc.before.compareTo("(Optional)") != 0) {
+            Date beforeDate = parseDate(fc.before);
+            filteredList.removeIf(expense -> expense.getDate().compareTo(beforeDate) > 0);
+            changed = true;
+        }
+        if (fc.description != null && !fc.description.isEmpty()) {
+            filteredList.removeIf(expense -> !expense.getDescription().toLowerCase().contains(fc.description.toLowerCase()));
+            changed = true;
+        }
+        if (fc.make != null && !fc.make.isEmpty()) {
+            filteredList.removeIf(expense -> expense.getMake().toLowerCase().compareTo(fc.make.toLowerCase()) != 0);
+            changed = true;
+        }
+        if (fc.tags.size() > 0) {
+            List<String> tagsLower = fc.tags.stream().map(String::toLowerCase).collect(Collectors.toList());
+            if (fc.logic.toLowerCase().compareTo("and") == 0) {
+                //Remove if item does not contain all tags
+                filteredList.removeIf(expense -> expense.getTags().size() == 0 ||
+                        !tagsLower.stream().allMatch(tag -> expense.getTags().stream()
+                                .map(String::toLowerCase).collect(Collectors.toList()).contains(tag)));
+            } else {
+                //Remove if item does not contain any of the tags
+                filteredList.removeIf(expense -> expense.getTags().size() == 0 ||
+                        !tagsLower.stream().anyMatch(tag -> expense.getTags().stream()
+                                .map(String::toLowerCase).collect(Collectors.toList()).contains(tag)));
+            }
+            changed = true;
+        }
+        if (changed) {
+            final ImageButton filterButton = fc.homePageActivity.findViewById(R.id.filterButton);
+            filterButton.setColorFilter(R.color.md_theme_dark_onError);
+            itemAdapter1 = new ItemAdapter(fc.homePageActivity, filteredList);
+            recyclerView1.setAdapter(itemAdapter1);
+            itemAdapter1.update();
+            fc.homePageActivity.onFiltered(itemAdapter1, filteredList, fc);
+        }
+        return changed;
+    }
+
+    /*
+    * A simple class to record filter settings
+     */
+    public class FilterContext {
+        private final String after;
+        private final String before;
+        private final String description;
+        private final String make;
+        private final ArrayList<String> tags;
+        private final String logic;
+        private final HomePageActivity homePageActivity;
+        public FilterContext(String after, String before, String description, String make,ArrayList<String> tags,String logic, HomePageActivity homePageActivity) {
+            this.after = after;
+            this.before = before;
+            this.description = description;
+            this.make = make;
+            this.tags = tags;
+            this.logic = logic;
+            this.homePageActivity = homePageActivity;
+        }
     }
 
 }

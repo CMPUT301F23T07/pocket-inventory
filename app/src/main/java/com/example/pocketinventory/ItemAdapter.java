@@ -193,6 +193,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                 selectionViewModel.setText(String.valueOf(selectItems.size()));
 
                                 // Notify the adapter to refresh the UI, reflecting the changes in selection
+
                                 notifyDataSetChanged();
                             }
 
@@ -212,6 +213,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
+
+                            //Take filter into account.If filtered, remain filtered
+                            ((HomePageActivity)context).reapplyFilter();
 
                         }
                     };
@@ -326,11 +330,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
         private LinearLayout tagsLinearLayout;
-        private Chip tag1Chip;
-        private Chip tag2Chip;
-        private Chip tag3Chip;
-        private Chip tag4Chip;
-        private Chip tag5Chip;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 

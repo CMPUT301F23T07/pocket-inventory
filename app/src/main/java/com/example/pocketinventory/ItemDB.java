@@ -56,8 +56,7 @@ public class ItemDB {
      * @param item The item to be updated in the database.
      */
     public void updateItem(Item item) {
-        String id = item.getId();
-        db.collection("items").document(id).set(item);
+        db.collection("items").document(item.getId()).set(item);
     }
 
     /**
