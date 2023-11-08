@@ -32,45 +32,26 @@
         android:textSize="15dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tag_selected_input"
+        android:id="@+id/tagSelectedInput"
         style="@style/TextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/addTagDescriptionTextView"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="0dp"
         android:layout_weight="1"
         android:hint="Tags"
+        app:placeholderText="Add multiple tags (comma-separated)"
         android:paddingStart="5dp"
         android:paddingTop="24dp"
         app:expandedHintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tag_selected_edit_text"
+            android:id="@+id/tagSelectedEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/cancel_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="10dp"
-        android:layout_toStartOf="@+id/confirm_button"
-        android:background="@android:color/transparent"
-        android:text="Cancel"
-        android:textColor="#D0BCFF" />
-
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:background="@android:color/transparent"
-        android:text="Confirm"
-        android:textColor="#D0BCFF" />
 
 
 </RelativeLayout>

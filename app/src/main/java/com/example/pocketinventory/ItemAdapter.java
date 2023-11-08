@@ -22,12 +22,12 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.chip.Chip;
 
@@ -48,6 +48,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private boolean isEnable = false;
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
+
+    private ItemAddTagsFragment itemAddTagsFragment;
 
     /**
      * Constructor for the adapter
@@ -107,7 +109,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
 
-                        @Override // Override the method to create an Action Mode, which is a contextual action bar.
+                        @Override // Override the method to create an Action Mode
                         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                             // This method is called when the action mode is being created.
 
@@ -163,16 +165,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                 // Update Item Data in HomePageActivity as well
                                 ((HomePageActivity)context).updateItemData();
 
-                                // Finish the Action Mode, exiting the contextual action bar
+                                // Finish the Action Mode, exiting the selection action bar
                                 mode.finish();
                             }
-                            // Need to implement the add_tag_icon in the future
-
-                            /*
-                            if (menuItem == R.id.add_tag_icon){
-
-                            }
-                            */
 
                             if (menuItem == R.id.select_all_icon){
                                 // Check if the clicked item's ID matches the "select_all_icon" defined in menu.xml (R.id.select_all_icon)
@@ -195,11 +190,20 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                     selectItems.addAll(data);
                                 }
 
+
+
                                 // Update the text in the selectionViewModel to display the count of selected items
                                 selectionViewModel.setText(String.valueOf(selectItems.size()));
 
                                 // Notify the adapter to refresh the UI, reflecting the changes in selection
                                 notifyDataSetChanged();
+                            }
+
+                            if (menuItem == R.id.add_tag_icon){
+                                // Check if the clicked item's ID matches the "add_tag_icon" defined in menu.xml (R.id.add_tag_icon)
+
+                                new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity)context).getSupportFragmentManager(),"ADD_TAGS");
+                                // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
                             }
 
                             return true; // Return true to indicate that the Action Mode has been prepared successfully.
@@ -218,6 +222,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
+
 
                         }
                     };

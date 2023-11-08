@@ -225,6 +225,13 @@ public class Item implements Parcelable {
      * @param tags
      */
     public void setTags(ArrayList<String> tags) {this.tags = tags;}
+    /**
+     * Setter for appending tag to an already existing tags array
+     * @param newTag A tag which needs to be appended to the tags array
+     */
+    public void addTags(String newTag) {
+        tags.add(newTag);
+    }
 
     /**
      * Creator for the parcelable
