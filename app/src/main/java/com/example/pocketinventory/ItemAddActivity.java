@@ -141,7 +141,7 @@ public class ItemAddActivity extends AppCompatActivity {
                 if (!tagsString.isEmpty()) {
 
                     // Split the String derived from the EditText into an array using commas as separators.
-                    String[] tagArray = tagsString.split(", ");
+                    String[] tagArray = tagsString.split(",");
 
                     // Iterate through the elements in the 'tagArray'.
                     for (String tag : tagArray) {
