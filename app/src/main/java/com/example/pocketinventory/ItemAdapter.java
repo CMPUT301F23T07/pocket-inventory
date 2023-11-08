@@ -373,7 +373,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             recyclerView.setAdapter(adapter);
 
         }
-
-
+        
     }
 }
