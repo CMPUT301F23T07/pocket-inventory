@@ -103,6 +103,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
+                ImageView productImageView = v.findViewById(R.id.productImageView);
+                //productImageView.setVisibility(View.GONE);
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -215,7 +217,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
-
+                            //productImageView.setVisibility(View.VISIBLE);
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
@@ -259,6 +261,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         else{
             holder.checkedBoxImageView.setVisibility(View.GONE);
         }
+
     }
 
     /**
