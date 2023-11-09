@@ -175,6 +175,8 @@ public class ItemAddActivity extends AppCompatActivity {
                     // log the id
                     Log.d("ItemAddActivity", "onClick: " + item.getId());
                     itemDB.updateItem(item);
+                    setResult(RESULT_OK);
+                    finish();
                 } else { // Otherwise, create a new item and add it to the database
 
                     Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber, tags);
@@ -254,7 +256,7 @@ public class ItemAddActivity extends AppCompatActivity {
                 dateOfPurchaseInput.getEditText().setText(selectedDate);
             }
         }, year, month, day);
-
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis()); // Prevents the user from selecting a future date
         datePickerDialog.show();
     }
 

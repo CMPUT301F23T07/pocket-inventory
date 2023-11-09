@@ -45,9 +45,6 @@ public class ItemDB {
      * @param item The item to be added to the database.
      */
     public void addItem(Item item, AddItemCallback callback) {
-        //String userId = auth.getCurrentUser().getUid();
-        //item.setUserId(userId);
-
         db.collection("items").add(item).addOnSuccessListener(documentReference -> {
             item.setId(documentReference.getId());
             updateItem(item);
@@ -74,11 +71,12 @@ public class ItemDB {
     }
 
     /**
-     * This method gets all items from the database.
+     * This method gets all items from the database that are owned by the current user.
      * @param listener The listener to be called when the query is complete.
      */
     public void getAllItems(OnCompleteListener<QuerySnapshot> listener) {
-        db.collection("items").get().addOnCompleteListener(listener);
+        String userId = auth.getCurrentUser().getUid();
+        db.collection("items").whereEqualTo("userId", userId).get().addOnCompleteListener(listener);
     }
 
 

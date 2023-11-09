@@ -3,6 +3,8 @@ package com.example.pocketinventory;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +16,7 @@ import java.util.UUID;
  * It also implements Parcelable so that it can be passed between activities.
  */
 public class Item implements Parcelable {
+    private String userId;
     private String id;
     private String make;
     private String model;
@@ -41,7 +44,7 @@ public class Item implements Parcelable {
      * @param tags
      */
     public Item(Date date, String make, String model, String description, double value, String comment, String serialNumber, ArrayList<String> tags) {
-
+        this.userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         this.make = make;
         this.model = model;
         this.description = description;
@@ -58,6 +61,7 @@ public class Item implements Parcelable {
      * @param in
      */
     protected Item(Parcel in) {
+        userId = in.readString();
         id = in.readString();
         make = in.readString();
         model = in.readString();
@@ -69,6 +73,13 @@ public class Item implements Parcelable {
         tags = in.createStringArrayList();
     }
 
+    /**
+     * Getter for the user id
+     * @return userId
+     */
+    public String getUserId() {
+        return userId;
+    }
 
     /**
      * Getter for the id
@@ -251,6 +262,7 @@ public class Item implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(userId);
         dest.writeString(id);
         dest.writeString(make);
         dest.writeString(model);
@@ -269,6 +281,7 @@ public class Item implements Parcelable {
     public String toString() {
         return "Item{" +
                 "id='" + id + '\'' +
+                ", userId='" + userId + '\'' +
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", date=" + date +
