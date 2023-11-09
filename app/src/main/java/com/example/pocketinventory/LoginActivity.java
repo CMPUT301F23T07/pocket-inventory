@@ -1,7 +1,6 @@
 package com.example.pocketinventory;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.KeyEvent;
@@ -35,15 +34,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Check if the user is already signed in
-        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        boolean isLoggedIn = preferences.getBoolean("loggedIn", false);
+        auth = FirebaseAuth.getInstance();
 
-        if (isLoggedIn) {
-            // User is already signed in, navigate to the main activity
-            startActivity(new Intent(LoginActivity.this, UserProfileActivity.class));
+        if (auth.getCurrentUser() != null) {
+            startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
             finish();
-            //return; // Exit the onCreate method to prevent showing the login screen
         }
 
         loginEmail = findViewById(R.id.login_email);
