@@ -106,6 +106,8 @@ public class ItemAddActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // debug print item
+                Log.d("ItemAddActivity", "onClick: " + item.toString());
                 itemDB.deleteItem(item);
                 setResult(RESULT_OK);
                 finish();
@@ -176,9 +178,20 @@ public class ItemAddActivity extends AppCompatActivity {
                 } else { // Otherwise, create a new item and add it to the database
 
                     Item item = new Item(parseDate(dateOfPurchase), make, model, description, Double.parseDouble(estimatedValue), comment, serialNumber, tags);
-                    itemDB.addItem(item);
+                    // wait for the item to be added to the database
+                    itemDB.addItem(item, new AddItemCallback() {
+                        @Override
+                        public void onItemAdded(Item item) {
+                            setResult(RESULT_OK);
+                            finish();
+                        }
+                        @Override
+                        public void onError(Exception e) {
+                            setResult(RESULT_CANCELED);
+                            Toast.makeText(getApplicationContext(), "Failed to add item", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
-                finish();
             }
         });
 

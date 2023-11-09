@@ -72,8 +72,4 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.tagViewHolder> {
             }
         }
     }
-
-
-
-
 }

@@ -17,11 +17,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.FragmentActivity;
+
+import com.google.android.material.chip.Chip;
 
 import com.google.android.material.chip.Chip;
 
@@ -42,6 +46,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private boolean isEnable = false;
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
+
+    private ItemAddTagsFragment itemAddTagsFragment;
 
     /**
      * Constructor for the adapter
@@ -97,11 +103,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
+                ImageView productImageView = v.findViewById(R.id.productImageView);
+                //productImageView.setVisibility(View.GONE);
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
 
-                        @Override // Override the method to create an Action Mode, which is a contextual action bar.
+                        @Override // Override the method to create an Action Mode
                         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
                             // This method is called when the action mode is being created.
 
@@ -157,16 +165,9 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                 // Update Item Data in HomePageActivity as well
                                 ((HomePageActivity)context).updateItemData();
 
-                                // Finish the Action Mode, exiting the contextual action bar
+                                // Finish the Action Mode, exiting the selection action bar
                                 mode.finish();
                             }
-                            // Need to implement the add_tag_icon in the future
-
-                            /*
-                            if (menuItem == R.id.add_tag_icon){
-
-                            }
-                            */
 
                             if (menuItem == R.id.select_all_icon){
                                 // Check if the clicked item's ID matches the "select_all_icon" defined in menu.xml (R.id.select_all_icon)
@@ -189,12 +190,21 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                     selectItems.addAll(data);
                                 }
 
+
+
                                 // Update the text in the selectionViewModel to display the count of selected items
                                 selectionViewModel.setText(String.valueOf(selectItems.size()));
 
                                 // Notify the adapter to refresh the UI, reflecting the changes in selection
 
                                 notifyDataSetChanged();
+                            }
+
+                            if (menuItem == R.id.add_tag_icon){
+                                // Check if the clicked item's ID matches the "add_tag_icon" defined in menu.xml (R.id.add_tag_icon)
+
+                                new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity)context).getSupportFragmentManager(),"ADD_TAGS");
+                                // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
                             }
 
                             return true; // Return true to indicate that the Action Mode has been prepared successfully.
@@ -210,7 +220,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
-
+                            //productImageView.setVisibility(View.VISIBLE);
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
@@ -257,6 +267,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         else{
             holder.checkedBoxImageView.setVisibility(View.GONE);
         }
+
     }
 
     /**
@@ -330,6 +341,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
         private LinearLayout tagsLinearLayout;
+        private ImageView productImageView;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 
@@ -340,14 +352,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          */
         public ViewHolder(View itemView) {
             super(itemView);
-            dateTextView = itemView.findViewById(R.id.dateTextView);
-            makeTextView = itemView.findViewById(R.id.makeTextView);
             modelTextView = itemView.findViewById(R.id.modelTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
-            commentTextView = itemView.findViewById(R.id.commentTextView);
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
+            productImageView = itemView.findViewById(R.id.productImageView);
             recyclerView = itemView.findViewById(R.id.tagList);
+            commentTextView = itemView.findViewById(R.id.commentTextView);
         }
 
         /**
@@ -355,15 +366,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateTextView.setText("Date: " + dateFormat.format(item.getDate()));
-            makeTextView.setText("Make: " + item.getMake());
-            modelTextView.setText("Model: " + item.getModel());
+            modelTextView.setText("model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
-            commentTextView.setText("Comment: " + item.getComment());
-            tagsList = new ArrayList<>();
+            productImageView.setImageResource(R.drawable.product_image);
+            //commentTextView.setText("Comment: " + item.getComment());
 
+            tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
             for (String tag : item.getTags()) {
                 tagsList.add(tag);
@@ -376,45 +385,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             recyclerView.setAdapter(adapter);
 
         }
-
-        /**
-         * Checks if a Chip is partially or fully out of the visible window within its parent view.
-         *
-         * @param tagChip The Chip to be checked for visibility within the window.
-         * @return {@code true} if the Chip is partially or fully out of the visible window, {@code false} otherwise.
-         */
-        private Boolean checkOutOfWindow(Chip tagChip) {
-            // Get the location of the Chip on the screen
-            int[] chipLocation = new int[2];
-            tagChip.getLocationOnScreen(chipLocation);
-            int tagX = chipLocation[0];
-
-            // Get the parent view where the Chip is placed (e.g., a LinearLayout)
-            View parentView = tagsLinearLayout;
-
-            // Get the width of the parent view, which represents the visible window
-            int windowWidth = parentView.getWidth();
-
-            // Get the text and paint information from the Chip
-            String tagText = tagChip.getText().toString();
-            Paint tagPaint = tagChip.getPaint();
-
-            // Calculate the width of the Chip's text and the width of the Chip itself
-            float textWidth = tagPaint.measureText(tagText);
-            float chipWidth = tagChip.getWidth();
-
-            // Check if the Chip's text extends beyond the right edge of the visible window
-            if (tagX + textWidth > windowWidth) {
-                // The text within the Chip is not fully visible within the window
-                // You can handle this condition here, e.g., by resizing the text, changing the Chip's size, or showing a message
-                return Boolean.TRUE;
-            } else {
-                // The Chip's text is fully visible within the window
-                return Boolean.FALSE;
-            }
-        }
-
-
+        
     }
 }
-
