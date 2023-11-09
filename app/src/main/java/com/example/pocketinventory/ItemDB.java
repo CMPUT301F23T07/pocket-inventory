@@ -67,7 +67,29 @@ public class ItemDB {
      * @param item The item to be deleted from the database.
      */
     public void deleteItem(Item item) {
-        db.collection("items").document(item.getId()).delete();
+        try {
+            db.collection("items").document(item.getId()).delete();
+        } catch (Exception e) {
+            System.out.println("Error deleting item");
+        }
+    }
+
+    /**
+     @@ -79,6 +83,16 @@ public void getAllItems(OnCompleteListener<QuerySnapshot> listener) {
+     db.collection("items").whereEqualTo("userId", userId).get().addOnCompleteListener(listener);
+     }
+
+
+     /**
+      * Remove all items for the current user from the database.
+     */
+    public void deleteAllItems() {
+        getAllItems(task -> {
+            List<Item> items = task.getResult().toObjects(Item.class);
+            for (Item item : items) {
+                deleteItem(item);
+            }
+        });
     }
 
     /**
