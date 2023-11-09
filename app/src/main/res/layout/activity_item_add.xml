@@ -201,6 +201,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
+            app:placeholderText="Add multiple tags (comma-separated)"
             android:layout_weight="1"
             android:hint="Tags"
             app:expandedHintEnabled="false">

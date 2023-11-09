@@ -60,6 +60,9 @@ public class HomePageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
 
+        // Update the list of items
+        updateItemData();
+
         // Initialize the recycler view
         log_list = (RecyclerView) findViewById(R.id.log_list);
         dataList = new ArrayList<>();
@@ -67,7 +70,6 @@ public class HomePageActivity extends AppCompatActivity {
         adapter = new ItemAdapter(this, dataList);
         log_list.setAdapter(adapter);
         adapter.update();
-        updateItemData();
 
         Button addItemButton = findViewById(R.id.add_item);
         addItemButton.setOnClickListener(v -> {
