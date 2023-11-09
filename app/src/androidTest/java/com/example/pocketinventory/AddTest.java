@@ -51,7 +51,7 @@ import org.junit.runner.RunWith;
             Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
 
             // Check if the model matches "iPhone"
-            onView(withText("iPhone")).perform(ViewActions.scrollTo()).check(matches(       isDisplayed()));
+            onView(withText("iPhone")).perform(ViewActions.scrollTo()).check(matches(isDisplayed()));
         }
     }
 
