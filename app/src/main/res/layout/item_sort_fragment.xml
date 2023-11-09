@@ -2,7 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="350dp"
-    android:layout_height="350dp"
+    android:layout_height="400dp"
     android:orientation="vertical"
     android:layout_centerInParent="true"
     >
@@ -144,6 +144,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/Make_btn_des"
+        android:layout_alignEnd="@id/Sortby"
+        android:layout_marginRight="10dp"
+        android:text="↓"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/Tag"
+        android:text="   Tag"
+        android:textSize="30dp"
+        android:padding="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/Value"/>
+
+    <Button
+        android:id="@+id/Tag_btn_asc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Value_btn_asc"
+        android:layout_toLeftOf="@id/Tag_btn_des"
+        android:text="↑"
+        android:textSize="30dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rectangle_button"/>
+
+
+    <Button
+        android:id="@+id/Tag_btn_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Value_btn_des"
         android:layout_alignEnd="@id/Sortby"
         android:layout_marginRight="10dp"
         android:text="↓"
