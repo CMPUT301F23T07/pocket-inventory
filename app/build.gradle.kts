@@ -36,9 +36,7 @@ android {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.10.0")
-    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
-        exclude(module = "protobuf-lite")
-    }
+    
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment:2.7.5")
     implementation("androidx.navigation:navigation-ui:2.7.5")

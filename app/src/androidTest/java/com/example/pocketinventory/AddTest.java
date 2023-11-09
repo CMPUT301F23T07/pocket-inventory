@@ -67,7 +67,7 @@ import java.util.Calendar;
             Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, durable"));
 
             Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-            
+
         }
     }
 
