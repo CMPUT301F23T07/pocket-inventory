@@ -6,3 +6,4 @@
         <item name="android:textColorHint">@color/text_input_box_stroke</item>
     </style>
 </resources>
+

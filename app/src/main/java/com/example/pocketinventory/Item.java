@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * This class represents an item in the inventory. It contains information about the item such as
@@ -13,7 +14,6 @@ import java.util.Date;
  * It also implements Parcelable so that it can be passed between activities.
  */
 public class Item implements Parcelable {
-    private String userId;
     private String id;
     private String make;
     private String model;
@@ -69,21 +69,6 @@ public class Item implements Parcelable {
         tags = in.createStringArrayList();
     }
 
-    /**
-     * Getter for the user id
-     * @return userId
-     */
-    public String getUserId() {
-        return userId;
-    }
-
-    /**
-     * Setter for the user id
-     * @param userId
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     /**
      * Getter for the id
@@ -293,5 +278,20 @@ public class Item implements Parcelable {
                 ", comment='" + comment + '\'' +
                 ", tags=" + tags +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof Item)) {
+            return false;
+        }
+        Item item = (Item) o;
+        return item.getId().equals(this.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
     }
 }

@@ -150,7 +150,7 @@ public class ItemAddActivity extends AppCompatActivity {
                         // Check if the tag is not empty
                         if (!tag.isEmpty()) {
                             // Add the non-empty tag to the 'tags' ArrayList
-                            tags.add(tag);
+                            tags.add(tag.trim());
                         }
                     }
                 }

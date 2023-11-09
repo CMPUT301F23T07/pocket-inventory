@@ -4,8 +4,6 @@ package com.example.pocketinventory;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,14 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
@@ -200,6 +196,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                                 selectionViewModel.setText(String.valueOf(selectItems.size()));
 
                                 // Notify the adapter to refresh the UI, reflecting the changes in selection
+
                                 notifyDataSetChanged();
                             }
 
@@ -227,6 +224,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
+                            //Take filter into account.If filtered, remain filtered
+                            ((HomePageActivity)context).reapplyFilter();
 
                         }
                     };
@@ -341,6 +340,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
+        private LinearLayout tagsLinearLayout;
         private ImageView productImageView;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
@@ -366,7 +366,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            modelTextView.setText("ID: " + item.getId());
+            modelTextView.setText("model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
             productImageView.setImageResource(R.drawable.product_image);
@@ -381,7 +381,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
             // Set up a child recyclerView to display the tags in a horizontal list.
             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            tagAdapter adapter = new tagAdapter(context, tagsList);
+            TagAdapter adapter = new TagAdapter(context, tagsList, 0);
             recyclerView.setAdapter(adapter);
 
         }

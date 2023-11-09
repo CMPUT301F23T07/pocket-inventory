@@ -45,6 +45,7 @@ public class HomePageActivity extends AppCompatActivity {
     private RecyclerView log_list;
     private ItemFilterFragment itemFilterFragment;
     private boolean filtered = false;
+    private ItemFilterFragment.FilterContext fc;
     private ItemDB itemDB = ItemDB.getInstance();
 
     /**
@@ -177,12 +178,22 @@ public class HomePageActivity extends AppCompatActivity {
      * @param adapter: the new adapter after filtered
      * @param dataList: the new list after filtered
      */
-    public void onFiltered(ItemAdapter adapter, ArrayList<Item> dataList) {
+    public void onFiltered(ItemAdapter adapter, ArrayList<Item> dataList, ItemFilterFragment.FilterContext fc) {
         this.filtered = true;
         this.adapter = adapter;
         this.dataList = dataList;
+        this.fc = fc;
     }
-
+    /**
+     * Reapply filter based on previous filter settings. Normally, filter setting is deleted. So,
+     * this method is used to reapply filter after filter is lost after sync data with database
+     */
+    public void reapplyFilter() {
+        if (filtered) {
+            dataListCopy = new ArrayList<Item>(dataList);
+            ItemFilterFragment.filter(fc);
+        }
+    }
 
     /**
      * Update the list of items from database
@@ -191,9 +202,20 @@ public class HomePageActivity extends AppCompatActivity {
         itemDB.getAllItems(task -> {
             if (task.isSuccessful()) {
                 List<Item> items = task.getResult().toObjects(Item.class);
+                //:( so sad almost every feature needs to take filter into account
+                //Because filtered view used a seperate list and adapter.
+
                 dataList.clear();
                 dataList.addAll(items);
-                adapter.update();
+                if (filtered) {
+                    //filter again after update, based on previous filter settings
+                    dataListCopy = new ArrayList<Item>(dataList);
+                    ItemFilterFragment.filter(fc);
+                } else {
+                    adapter.update();
+                }
+
+
             } else {
                 Log.d("HomePageActivity", "Error getting documents: ", task.getException());
             }
