@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -21,6 +22,7 @@ public class Item implements Parcelable {
     private Date date;
     private double value;
     private String comment;
+    private ArrayList<String> tags;
 
     // Firebase requires an empty constructor
     public Item() {
@@ -36,8 +38,9 @@ public class Item implements Parcelable {
      * @param value
      * @param comment
      * @param serialNumber
+     * @param tags
      */
-    public Item(Date date, String make, String model, String description, double value, String comment, String serialNumber) {
+    public Item(Date date, String make, String model, String description, double value, String comment, String serialNumber, ArrayList<String> tags) {
 
         this.make = make;
         this.model = model;
@@ -46,6 +49,7 @@ public class Item implements Parcelable {
         this.value = value;
         this.comment = comment;
         this.date = date;
+        this.tags = tags;
     }
 
     /**
@@ -62,6 +66,7 @@ public class Item implements Parcelable {
         serialNumber = in.readString();
         value = in.readDouble();
         comment = in.readString();
+        tags = in.createStringArrayList();
     }
 
     /**
@@ -210,6 +215,25 @@ public class Item implements Parcelable {
     }
 
     /**
+     * Getter for the tags
+     * @return tags
+     */
+    public ArrayList<String> getTags() { return tags;}
+
+    /**
+     * Setter for the tags
+     * @param tags
+     */
+    public void setTags(ArrayList<String> tags) {this.tags = tags;}
+    /**
+     * Setter for appending tag to an already existing tags array
+     * @param newTag A tag which needs to be appended to the tags array
+     */
+    public void addTags(String newTag) {
+        tags.add(newTag);
+    }
+
+    /**
      * Creator for the parcelable
      */
     public static final Creator<Item> CREATOR = new Creator<Item>() {
@@ -249,6 +273,7 @@ public class Item implements Parcelable {
         dest.writeString(serialNumber);
         dest.writeDouble(value);
         dest.writeString(comment);
+        dest.writeStringList(tags);
     }
 
     /**
@@ -257,6 +282,6 @@ public class Item implements Parcelable {
      */
     public String toString() {
         return "Make: " + make + ", Model: "+model+", value: $" + value + ", Date Purchased: "+date +
-                ", Description: "+description+", Comment: "+comment;
+                ", Description: "+description+", Comment: "+comment + ", Tags: "+ tags;
     }
 }
