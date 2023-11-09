@@ -63,8 +63,4 @@ public class tagAdapter extends RecyclerView.Adapter<tagAdapter.tagViewHolder> {
             chip = itemView.findViewById(R.id.tagChip);
         }
     }
-
-
-
-
 }

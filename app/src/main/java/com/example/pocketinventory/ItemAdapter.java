@@ -31,6 +31,8 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.material.chip.Chip;
 
+import com.google.android.material.chip.Chip;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -105,6 +107,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
+                ImageView productImageView = v.findViewById(R.id.productImageView);
+                //productImageView.setVisibility(View.GONE);
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -219,7 +223,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
-
+                            //productImageView.setVisibility(View.VISIBLE);
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
@@ -264,6 +268,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         else{
             holder.checkedBoxImageView.setVisibility(View.GONE);
         }
+
     }
 
     /**
@@ -336,6 +341,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
+        private ImageView productImageView;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 
@@ -346,14 +352,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          */
         public ViewHolder(View itemView) {
             super(itemView);
-            dateTextView = itemView.findViewById(R.id.dateTextView);
-            makeTextView = itemView.findViewById(R.id.makeTextView);
             modelTextView = itemView.findViewById(R.id.modelTextView);
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
-            commentTextView = itemView.findViewById(R.id.commentTextView);
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
+            productImageView = itemView.findViewById(R.id.productImageView);
             recyclerView = itemView.findViewById(R.id.tagList);
+            commentTextView = itemView.findViewById(R.id.commentTextView);
         }
 
         /**
@@ -361,13 +366,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            dateTextView.setText("Date: " + dateFormat.format(item.getDate()));
-            makeTextView.setText("Make: " + item.getMake());
-            modelTextView.setText("Model: " + item.getModel());
+            modelTextView.setText("ID: " + item.getId());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText("Value: $" + item.getValue());
-            commentTextView.setText("Comment: " + item.getComment());
+            productImageView.setImageResource(R.drawable.product_image);
+            //commentTextView.setText("Comment: " + item.getComment());
 
             tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
@@ -382,8 +385,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             recyclerView.setAdapter(adapter);
 
         }
-
-
+        
     }
 }
-

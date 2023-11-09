@@ -225,6 +225,7 @@ public class Item implements Parcelable {
      * @param tags
      */
     public void setTags(ArrayList<String> tags) {this.tags = tags;}
+
     /**
      * Setter for appending tag to an already existing tags array
      * @param newTag A tag which needs to be appended to the tags array
@@ -281,7 +282,16 @@ public class Item implements Parcelable {
      * @return string representation of the item
      */
     public String toString() {
-        return "Make: " + make + ", Model: "+model+", value: $" + value + ", Date Purchased: "+date +
-                ", Description: "+description+", Comment: "+comment + ", Tags: "+ tags;
+        return "Item{" +
+                "id='" + id + '\'' +
+                ", make='" + make + '\'' +
+                ", model='" + model + '\'' +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", value=" + value +
+                ", comment='" + comment + '\'' +
+                ", tags=" + tags +
+                '}';
     }
 }

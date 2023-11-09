@@ -7,6 +7,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 
+
 /**
  * This class manages the Firestore database for the items.
  * It manages all CRUD operations for the items.
@@ -43,14 +44,16 @@ public class ItemDB {
      * This method adds an item to the database.
      * @param item The item to be added to the database.
      */
-    public void addItem(Item item) {
+    public void addItem(Item item, AddItemCallback callback) {
         //String userId = auth.getCurrentUser().getUid();
         //item.setUserId(userId);
 
-        // add item and set id
         db.collection("items").add(item).addOnSuccessListener(documentReference -> {
             item.setId(documentReference.getId());
             updateItem(item);
+            callback.onItemAdded(item);
+        }).addOnFailureListener(e -> {
+            callback.onError(e);
         });
     }
 
