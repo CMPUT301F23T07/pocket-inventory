@@ -295,8 +295,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         for (Item item : data) {
             total += item.getValue();
         }
-        TextView totalValueText = ((HomePageActivity)context).findViewById(R.id.total_value_text);
-        totalValueText.setText(String.format("$ %.2f", total));
+        TextView totalValueText = ((HomePageActivity)context).findViewById(R.id.total_value_prompt);
+        totalValueText.setText(String.format("Total Value: $%.2f", total));
         notifyDataSetChanged();
     }
 
@@ -366,12 +366,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
          * @param item
          */
         public void bind(Item item) {
-            modelTextView.setText("model: " + item.getModel());
+            modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
-            valueTextView.setText("Value: $" + item.getValue());
+            valueTextView.setText(String.format("Value: $%.2f", item.getValue()));
             productImageView.setImageResource(R.drawable.product_image);
-            //commentTextView.setText("Comment: " + item.getComment());
-
             tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
             for (String tag : item.getTags()) {

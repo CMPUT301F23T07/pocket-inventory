@@ -4,41 +4,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/md_theme_dark_background">
+    android:background="@color/tertiary_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/primary_bronze"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/log_list"
-        android:layout_width="426dp"
-        android:layout_height="480dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
+        android:paddingTop="10dp"
         android:layout_row="1"
         android:layout_column="0"
         android:cacheColorHint="@color/md_theme_dark_inverseSurface"
-        android:foregroundTint="@color/backdrop"
+        android:foregroundTint="@color/tertiary_background"
         android:longClickable="true"
         android:scrollbars="vertical"
-        android:textColor="@color/md_theme_dark_inverseSurface"
-        app:layout_constraintBottom_toTopOf="@+id/add_item"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/total_value_prompt" />
-
-    <LinearLayout
-        android:layout_width="421dp"
-        android:layout_height="70dp"
-        android:background="@color/md_theme_dark_inversePrimary"
-        android:orientation="horizontal"
-        android:paddingBottom="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintTop_toBottomOf="@+id/total_value_prompt"
+        tools:layout_editor_absoluteX="0dp" />
 
     <ImageButton
         android:id="@+id/sorterButton"
         style="@android:style/Widget.Holo.Light.ImageButton"
         android:layout_width="50dp"
         android:layout_height="45dp"
-        android:background="@color/md_theme_dark_inversePrimary"
+        android:layout_marginTop="12dp"
+        android:background="@color/primary_bronze"
         android:contentDescription="sort"
         android:paddingTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,9 +48,10 @@
     <ImageButton
         android:id="@+id/filterButton"
         android:layout_width="60dp"
+        android:layout_marginTop="12dp"
         android:layout_height="54dp"
         android:layout_marginEnd="8dp"
-        android:background="@color/md_theme_dark_inversePrimary"
+        android:background="@color/primary_bronze"
         android:contentDescription="Filter"
         app:layout_constraintEnd_toStartOf="@+id/sorterButton"
         app:layout_constraintTop_toTopOf="parent"
@@ -59,46 +60,40 @@
     <TextView
         android:id="@+id/total_value_prompt"
         android:layout_width="wrap_content"
+        android:padding="5dp"
         android:layout_height="54dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/md_theme_dark_inversePrimary"
-        android:text="Total Value:"
-        android:textColor="@color/md_theme_dark_inverseSurface"
+        android:layout_marginTop="15dp"
+        android:background="@color/primary_bronze"
+        android:text="@string/subtotal"
+        android:textStyle="bold"
+        android:textColor="@color/white"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/total_value_text"
-        android:layout_width="148dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/md_theme_dark_inversePrimary"
-        android:text="@string/subtotal"
-        android:textColor="@color/md_theme_dark_inverseSurface"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/total_value_prompt"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="+ Add Item"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/log_list"
+        android:layout_marginBottom="12dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/primary_bronze"
+        app:tint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintVertical_bias="0.32" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/backdrop"
+        android:background="@color/secondary_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"

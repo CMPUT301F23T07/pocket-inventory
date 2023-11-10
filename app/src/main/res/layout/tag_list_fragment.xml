@@ -12,8 +12,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/md_theme_dark_inverseSurface"
-        app:chipBackgroundColor="@color/md_theme_dark_secondaryContainer"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/tag_background"
         app:chipStrokeWidth="0dp"></com.google.android.material.chip.Chip>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

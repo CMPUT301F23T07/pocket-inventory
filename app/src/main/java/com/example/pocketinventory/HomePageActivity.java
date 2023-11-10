@@ -72,7 +72,7 @@ public class HomePageActivity extends AppCompatActivity {
         log_list.setAdapter(adapter);
         adapter.update();
 
-        Button addItemButton = findViewById(R.id.add_item);
+        FloatingActionButton addItemButton = findViewById(R.id.add_item);
         addItemButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             startActivity(intent);
@@ -151,10 +151,12 @@ public class HomePageActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 itemFilterFragment.setDate(myCalendar, "after");
             };
-            new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            datePickerDialog.show();
         }
-
     }
+
     /**
      * Filter after pressing OK. It's called by the Before Datebutton's onClickListener
      */
@@ -170,7 +172,9 @@ public class HomePageActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 itemFilterFragment.setDate(myCalendar, "before");
             };
-            new DatePickerDialog(HomePageActivity.this, date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH));
+            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            datePickerDialog.show();
         }
     }
     /**
