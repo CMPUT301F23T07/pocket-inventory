@@ -103,8 +103,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
-                ImageView productImageView = v.findViewById(R.id.productImageView);
-                //productImageView.setVisibility(View.GONE);
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -220,7 +218,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
-                            //productImageView.setVisibility(View.VISIBLE);
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
@@ -341,7 +338,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
         private LinearLayout tagsLinearLayout;
-        private ImageView productImageView;
+
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 
@@ -356,7 +353,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
             checkedBoxImageView = itemView.findViewById(R.id.checkImageView);
-            productImageView = itemView.findViewById(R.id.productImageView);
             recyclerView = itemView.findViewById(R.id.tagList);
             commentTextView = itemView.findViewById(R.id.commentTextView);
         }
@@ -369,7 +365,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
             valueTextView.setText(String.format("Value: $%.2f", item.getValue()));
-            productImageView.setImageResource(R.drawable.product_image);
             tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
             for (String tag : item.getTags()) {
