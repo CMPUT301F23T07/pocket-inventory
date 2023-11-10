@@ -368,10 +368,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         public void bind(Item item) {
             modelTextView.setText("Model: " + item.getModel());
             descriptionTextView.setText("Description: " + item.getDescription());
-            valueTextView.setText("Value: $" + item.getValue());
+            valueTextView.setText(String.format("Value: $%.2f", item.getValue()));
             productImageView.setImageResource(R.drawable.product_image);
-            //commentTextView.setText("Comment: " + item.getComment());
-
             tagsList = new ArrayList<>();
             // Iterate through the list of tags in the 'item' object and add them to the 'tagsList' collection.
             for (String tag : item.getTags()) {

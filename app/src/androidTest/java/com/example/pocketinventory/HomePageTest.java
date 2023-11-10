@@ -232,7 +232,7 @@ public class HomePageTest {
         onView(withId(R.id.navigation_home)).perform(click());
         onView(withId(R.id.log_list)).check(matches(isDisplayed()));
     }
-    
+
     // US 02.03.01
     // As an owner, I want to select items from the list of items and delete the selected items
     @Test
