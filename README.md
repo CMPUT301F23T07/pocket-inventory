@@ -5,6 +5,7 @@ inventory for various purposes, including insurance documentation. It offers a s
 and user-friendly interface while maintaining flexibility for future developers to extend its functionalities.
 
 **Problem Statement**
+
 The goal is to develop an app that enables users to efficiently 
 record, manage, and store information about the items they own. 
 The application must cater to the following user needs expressed in partial user stories:
