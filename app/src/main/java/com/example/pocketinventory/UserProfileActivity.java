@@ -18,7 +18,11 @@ public class UserProfileActivity extends AppCompatActivity {
     Button logout;
     private FirebaseAuth auth;
     private static final String PREFS_NAME = "MyPrefs";
-
+    /**
+     * Called when the User profile activity is starting or being reinitialized
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
