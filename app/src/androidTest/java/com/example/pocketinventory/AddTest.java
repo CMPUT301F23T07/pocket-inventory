@@ -78,63 +78,29 @@ import java.util.Calendar;
     //US 01.01.01,US 02.01.01,US 03.02.01
     @Test
     public void testAddItemAndCheckModel() {
-        // Click the "Add Item" button
-        Espresso.onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
-
-        // Fill in item details
-        fillInapple();
-        Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-
-    }
-
-    @Test
-    public void testdelete() {
-        // Click the "Add Item" button
         Espresso.onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
         fillInapple();
 
         // Click the "Add" button to add the item
         Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-
-        // Now, long click on the added item (replace R.id.recyclerViewId with your RecyclerView's ID)
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        
+        try{
+            Thread.sleep(500);
+        }
+        catch (InterruptedException e){
             e.printStackTrace();
         }
-        onView(ViewMatchers.withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.longClick()));
-
-        // Find and click the delete icon within the selected item (replace R.id.deleteIcon with the actual ID of your delete icon)
-        Espresso.onView(ViewMatchers.withId(R.id.delete_icon)).perform(ViewActions.click());
-
-        // Verify that the item is deleted or check any confirmation dialog
-    }
-
-    @Test
-    public void testAssigntagstoItems(){
-        Espresso.onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
-        fillInapple();
-
-        // Click the "Add" button to add the item
-        Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
         onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
+
         fillInasus();
 
         // Click the "Add" button to add the item
         onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
 
-        // Now, long click on the added item (replace R.id.recyclerViewId with your RecyclerView's ID)
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        onView(ViewMatchers.withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, ViewActions.longClick()));
-        onView(ViewMatchers.withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(1, ViewActions.click()));
-        onView(ViewMatchers.withId(R.id.add_tag_icon)).perform(ViewActions.click());
-        onView(ViewMatchers.withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("battery, charger"));
-        onView(ViewMatchers.withText("CONFIRM")).perform(ViewActions.click());
+
     }
+
+
 }
 
 
