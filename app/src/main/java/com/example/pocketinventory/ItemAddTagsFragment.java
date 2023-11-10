@@ -31,6 +31,8 @@ public class ItemAddTagsFragment extends DialogFragment {
     private ArrayList<Item> selectItems;
     private ActionMode mode;
     private Context context;
+    private TextView addTagDescriptionTextView;
+    private TextInputLayout tagSelectedInput;
 
     /**
      * Constructor for the Add Tags dialog fragment
@@ -45,8 +47,7 @@ public class ItemAddTagsFragment extends DialogFragment {
     }
 
 
-    TextView addTagDescriptionTextView;
-    TextInputLayout tagSelectedInput;
+
 
     /**
      * This method is called to create the dialog fragment, and returns the dialog after adding tags to selected items
