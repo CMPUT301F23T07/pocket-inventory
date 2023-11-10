@@ -81,6 +81,16 @@ public class ItemDB {
         db.collection("items").get().addOnCompleteListener(listener);
     }
 
-
+    /**
+     * Remove all items for the current user from the database.
+     */
+    public void deleteAllItems() {
+        getAllItems(task -> {
+            List<Item> items = task.getResult().toObjects(Item.class);
+            for (Item item : items) {
+                deleteItem(item);
+            }
+        });
+    }
 
 }
