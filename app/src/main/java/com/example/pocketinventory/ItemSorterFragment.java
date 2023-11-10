@@ -28,7 +28,6 @@ public class ItemSorterFragment extends DialogFragment {
 
     private ItemAdapter adapter;
 
-    private  TagAdapter tagAdapter;
 
     /**
      * Constructor for the dialog fragment
@@ -301,7 +300,6 @@ public class ItemSorterFragment extends DialogFragment {
 
         return builder
                 .setView(view)
-                .setTitle("Sort Item")
                 .setNegativeButton("Cancel", null)
                 .create();
     }

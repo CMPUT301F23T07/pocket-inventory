@@ -33,6 +33,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A fragment for filtering items within the context of the HomePageActivity.
+ */
 public class ItemFilterFragment extends DialogFragment {
     private ItemAdapter itemAdapter;
     private ArrayList<Item> list;
@@ -43,14 +46,29 @@ public class ItemFilterFragment extends DialogFragment {
     private ArrayList<String> tags = new ArrayList<String>();
     private TagAdapter tagAdapter;
 
+    /**
+     * Constructs an ItemFilterFragment with a reference to the HomePageActivity.
+     *
+     * @param homePageActivity
+     */
     public ItemFilterFragment(HomePageActivity homePageActivity) {
         this.homePageActivity = homePageActivity;
     }
+    /**
+     * Called when the fragment is attached to its context.
+     *
+     * @param context The context to which the fragment is attached.
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
+    /**
+     * Create a new Dialog instance to be displayed by the fragment.
+     *
+     * @param savedInstanceState The last saved state of the fragment, or null if there is no saved state.
+     * @return The Dialog to be displayed.
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         view = LayoutInflater.from(getActivity()).inflate(R.layout.filter_layout, null);
@@ -189,7 +207,7 @@ public class ItemFilterFragment extends DialogFragment {
         tagAdapter.notifyDataSetChanged();
     }
 
-    /*
+    /**
     *filter and update to homepage
     * @param fc: contains all the filter information
      */
@@ -254,7 +272,7 @@ public class ItemFilterFragment extends DialogFragment {
         return changed;
     }
 
-    /*
+    /**
     * A simple class to record filter settings
      */
     public class FilterContext {

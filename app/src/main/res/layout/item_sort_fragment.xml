@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/Sortby"
         android:textSize="25dp"
+        android:layout_marginTop="10dp"
         android:text="    Sort by\n    __________________________" />
 
     <TextView
