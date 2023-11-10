@@ -338,7 +338,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
         private LinearLayout tagsLinearLayout;
-
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 

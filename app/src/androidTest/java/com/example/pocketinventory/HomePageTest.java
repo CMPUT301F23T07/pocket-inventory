@@ -441,22 +441,14 @@ public class HomePageTest {
         // Click add tags icon to the selected items
         onView(withId(R.id.add_tag_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
 
         // Add tags wanted to the tags EditText
         onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Good, Cleaned"));
         onView(withText("Confirm")).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if the tags are added to the first item
 
@@ -464,11 +456,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Good"))));
@@ -485,11 +473,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
@@ -499,31 +483,19 @@ public class HomePageTest {
         // Click on select all button
         onView(withId(R.id.select_all_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Click add tags icon to the selected items
         onView(withId(R.id.add_tag_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
 
         // Add tags wanted to the tags EditText
         onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Durable, No Warranty"));
         onView(withText("Confirm")).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if the tags are added to all the items
 
@@ -531,11 +503,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
@@ -548,11 +516,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
