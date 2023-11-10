@@ -234,7 +234,7 @@ public class HomePageTest {
             e.printStackTrace();
         }
 
-
+        // Perform long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
@@ -250,7 +250,7 @@ public class HomePageTest {
         onView(withId(R.id.select_all_icon)).check(matches(isDisplayed()));
 
 
-        // Delete the sPhone item
+        // Delete the first (only) item
         onView(withId(R.id.delete_icon)).perform(click());
 
         // The item with model "sPhone" should not exist on the screen
@@ -278,6 +278,7 @@ public class HomePageTest {
             e.printStackTrace();
         }
 
+        // Long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
@@ -321,6 +322,8 @@ public class HomePageTest {
     @Test
     public void testSelectToAddTags(){
 
+        // Adding tags to one item:
+
         // Add an item
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
@@ -342,8 +345,6 @@ public class HomePageTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
 
         // Perform a long press on the first item in the list
         onView(withId(R.id.log_list))
@@ -380,7 +381,7 @@ public class HomePageTest {
             e.printStackTrace();
         }
 
-        // Check if the tags are added to the item with Model "Air Jordon"
+        // Check if the tags are added to the first item
 
         // Open the details of the first item (the item we just added tags to)
         onView(withId(R.id.log_list))
@@ -395,6 +396,92 @@ public class HomePageTest {
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Good"))));
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Cleaned"))));
+
+        // Go back to home screen
+
+        onView(withId(R.id.cancel_button)).perform(click());
+        //________________________________________________________________________________________________________________
+
+        // Adding tags to more than 1 one item, in this case all items:
+
+        // Perform a long press on the first item in the list
+        onView(withId(R.id.log_list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Check if necessary selection icons appear
+        onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
+        onView(withId(R.id.add_tag_icon)).check(matches(isDisplayed()));
+        onView(withId(R.id.select_all_icon)).check(matches(isDisplayed()));
+
+        // Click on select all button
+        onView(withId(R.id.select_all_icon)).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Click add tags icon to the selected items
+        onView(withId(R.id.add_tag_icon)).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+        // Add tags wanted to the tags EditText
+        onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Durable, No Warranty"));
+        onView(withText("Confirm")).perform(click());
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Check if the tags are added to all the items
+
+        // Open the details of the first item
+        onView(withId(R.id.log_list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // The view should have the added tags
+        onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
+        onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("No Warranty"))));
+
+        // Go back to home screen
+        onView(withId(R.id.cancel_button)).perform(click());
+
+        // Open the details of the second (last) item
+        onView(withId(R.id.log_list))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // The view should have the added tags
+        onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
+        onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("No Warranty"))));
+
+
 
     }
 
