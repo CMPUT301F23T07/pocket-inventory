@@ -251,7 +251,7 @@ public class SortTest {
         fillInForms();
         onView(withId(R.id.sorterButton)).perform(click());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -269,7 +269,7 @@ public class SortTest {
 
         onView(withId(R.id.sorterButton)).perform(click());
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
