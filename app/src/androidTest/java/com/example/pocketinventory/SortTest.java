@@ -125,6 +125,11 @@ public class SortTest {
     @Test
     public void SortTestDate(){
         fillInForms();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.sorterButton)).perform(click());
         try {
             Thread.sleep(1000);
@@ -257,14 +262,26 @@ public class SortTest {
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tag_edit_text)).check(matches(withText("BBB, CCC")));
         onView(withId(R.id.cancel_button)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         onView(withId(R.id.tag_edit_text)).check(matches(withText("")));
         onView(withId(R.id.cancel_button)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
         onView(withId(R.id.sorterButton)).perform(click());
         try {
-            Thread.sleep(1500);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -272,6 +289,11 @@ public class SortTest {
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tag_edit_text)).check(matches(withText("AAA, BBB")));
         onView(withId(R.id.cancel_button)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(2, click()));
         onView(withId(R.id.tag_edit_text)).check(matches(withText("")));
