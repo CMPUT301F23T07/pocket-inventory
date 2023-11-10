@@ -89,15 +89,7 @@ public class ItemDB {
      /**
       * Remove all items for the current user from the database.
      */
-    public void deleteAllItems() {
-        getAllItems(task -> {
-            List<Item> items = task.getResult().toObjects(Item.class);
-            for (Item item : items) {
-                deleteItem(item);
-            }
-        });
 
-    }
 
     /**
      * This method gets all items from the database that are owned by the current user.
