@@ -4,7 +4,7 @@ This Android application is created to address the need for a simple, attractive
 
 ## Project Overview
 
-The goal is to develop an app that enables users to efficiently record, manage, and store information about the items they own. The application must meet the following user needs expressed in partial user stories:
+The goal is to develop an app that enables users to efficiently record, manage, and store information about the items they own. The application meets the following user needs (when fully developed) expressed in partial user stories:
 
 ## User Stories
 
