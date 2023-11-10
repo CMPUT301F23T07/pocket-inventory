@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -152,7 +153,10 @@ public class ItemFilterFragment extends DialogFragment {
      * @param date
      * @return Date Object
      */
-    public static Date parseDate(String date) {
+    public static Date parseDate(@Nullable String date) {
+        if (date == null || date.isEmpty() || date.compareTo("(Optional)") == 0) {
+            return null;
+        }
         DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         try {
             return formatter.parse(date);
@@ -196,14 +200,24 @@ public class ItemFilterFragment extends DialogFragment {
         ArrayList<Item> list1 = (ArrayList<Item>) itemAdapter1.getList();
         ArrayList<Item> filteredList = new ArrayList<Item>(list1);
 
+        //Switch date range if inversed
+        Date afterDate = parseDate(fc.after);
+        Date beforeDate = parseDate(fc.before);
+        if ( afterDate != null && beforeDate != null && fc.after.compareTo(fc.before) > 0) {
+            //Swtich
+            Date temp = afterDate;
+            afterDate = beforeDate;
+            beforeDate = temp;
+        }
+
         if (!fc.after.isEmpty() && fc.after.compareTo("(Optional)") != 0) {
-            Date afterDate = parseDate(fc.after);
-            filteredList.removeIf(expense -> expense.getDate().compareTo(afterDate) < 0);
+            final Date finalAfterDate = afterDate;
+            filteredList.removeIf(expense -> expense.getDate().compareTo(finalAfterDate) < 0);
             changed = true;
         }
         if (!fc.before.isEmpty() && fc.before.compareTo("(Optional)") != 0) {
-            Date beforeDate = parseDate(fc.before);
-            filteredList.removeIf(expense -> expense.getDate().compareTo(beforeDate) > 0);
+            final Date finalBeforeDate = beforeDate;
+            filteredList.removeIf(expense -> expense.getDate().compareTo(finalBeforeDate) > 0);
             changed = true;
         }
         if (fc.description != null && !fc.description.isEmpty()) {
