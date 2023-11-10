@@ -28,7 +28,11 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
 
-
+    /**
+     * Called when the Login activity is starting or being reinitialized
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

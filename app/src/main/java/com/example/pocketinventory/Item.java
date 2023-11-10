@@ -292,7 +292,13 @@ public class Item implements Parcelable {
                 ", tags=" + tags +
                 '}';
     }
-
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * This method tests for object equality by comparing the IDs of the items.
+     *
+     * @param o The reference object with which to compare.
+     * @return {@code true} if this object is the same as the o argument; {@code false} otherwise.
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;
@@ -302,7 +308,12 @@ public class Item implements Parcelable {
         Item item = (Item) o;
         return item.getId().equals(this.getId());
     }
-
+    /**
+     * Returns a hash code value for the object.
+     * This method is supported for the benefit of hashing-based collections such as HashMap, HashTable, etc.
+     *
+     * @return A hash code value for this object.
+     */
     @Override
     public int hashCode() {
         return this.getId().hashCode();
