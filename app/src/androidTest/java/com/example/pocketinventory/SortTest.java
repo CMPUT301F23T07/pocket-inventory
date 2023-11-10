@@ -132,8 +132,7 @@ public class SortTest {
             e.printStackTrace();
         }
 
-        // US 02.04.01
-        // Testing for Sort By date
+
         onView(withId(R.id.Date_btn_des)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.model_edit_text)).check(matches(withText("CCC")));
@@ -163,8 +162,7 @@ public class SortTest {
             e.printStackTrace();
         }
 
-        // US 02.04.01
-        // Testing for Sort By date
+
         onView(withId(R.id.Description_btn_des)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.description_edit_text)).check(matches(withText("CCC")));
@@ -194,8 +192,7 @@ public class SortTest {
             e.printStackTrace();
         }
 
-        // US 02.04.01
-        // Testing for Sort By date
+
         onView(withId(R.id.Make_btn_des)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.make_edit_text)).check(matches(withText("CCC")));
@@ -225,11 +222,10 @@ public class SortTest {
             e.printStackTrace();
         }
 
-        // US 02.04.01
-        // Testing for Sort By date
+
         onView(withId(R.id.Value_btn_des)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.estimated_value_edit_text)).check(matches(withText("CCC")));
+        onView(withId(R.id.estimated_value_edit_text)).check(matches(withText("333.0")));
         onView(withId(R.id.cancel_button)).perform(click());
 
         onView(withId(R.id.sorterButton)).perform(click());
@@ -240,7 +236,7 @@ public class SortTest {
         }
         onView(withId(R.id.Value_btn_asc)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-        onView(withId(R.id.estimated_value_edit_text)).check(matches(withText("AAA")));
+        onView(withId(R.id.estimated_value_edit_text)).check(matches(withText("111.0")));
         onView(withId(R.id.cancel_button)).perform(click());
 
     }
@@ -256,8 +252,7 @@ public class SortTest {
             e.printStackTrace();
         }
 
-        // US 02.05.01
-        // Testing for Sort By Tag
+
         onView(withId(R.id.Tag_btn_des)).perform(click());
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.tag_edit_text)).check(matches(withText("BBB, CCC")));
