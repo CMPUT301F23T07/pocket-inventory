@@ -364,21 +364,13 @@ public class HomePageTest {
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Perform long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
@@ -398,31 +390,19 @@ public class HomePageTest {
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
@@ -432,20 +412,12 @@ public class HomePageTest {
         // Select all items
         onView(withId(R.id.select_all_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Delete the selected items
         onView(withId(R.id.delete_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if the item list is empty
         onView(ViewMatchers.withId(R.id.log_list))
@@ -465,32 +437,20 @@ public class HomePageTest {
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Add a second item
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Perform a long press on the first item in the list
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
@@ -500,22 +460,14 @@ public class HomePageTest {
         // Click add tags icon to the selected items
         onView(withId(R.id.add_tag_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
 
         // Add tags wanted to the tags EditText
         onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Good, Cleaned"));
         onView(withText("Confirm")).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if the tags are added to the first item
 
@@ -523,11 +475,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Good"))));
@@ -544,11 +492,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
@@ -558,31 +502,19 @@ public class HomePageTest {
         // Click on select all button
         onView(withId(R.id.select_all_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Click add tags icon to the selected items
         onView(withId(R.id.add_tag_icon)).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
 
         // Add tags wanted to the tags EditText
         onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Durable, No Warranty"));
         onView(withText("Confirm")).perform(click());
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // Check if the tags are added to all the items
 
@@ -590,11 +522,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
@@ -607,11 +535,7 @@ public class HomePageTest {
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
 
         // The view should have the added tags
         onView(withId(R.id.tag_edit_text)).check(ViewAssertions.matches(withText(containsString("Durable"))));
