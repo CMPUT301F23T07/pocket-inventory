@@ -31,6 +31,11 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signupButton;
     private TextView loginRedirectText;
 
+    /**
+     * Called when the Sign up activity is starting or being reinitialized
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

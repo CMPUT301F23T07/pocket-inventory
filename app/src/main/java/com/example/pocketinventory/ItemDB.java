@@ -66,6 +66,12 @@ public class ItemDB {
      * This method deletes an item from the database.
      * @param item The item to be deleted from the database.
      */
+
+
+
+
+
+
     public void deleteItem(Item item) {
         try {
             db.collection("items").document(item.getId()).delete();
@@ -73,6 +79,17 @@ public class ItemDB {
             System.out.println("Error deleting item");
         }
     }
+
+    /**
+     @@ -79,6 +83,16 @@ public void getAllItems(OnCompleteListener<QuerySnapshot> listener) {
+     db.collection("items").whereEqualTo("userId", userId).get().addOnCompleteListener(listener);
+     }
+
+
+     /**
+      * Remove all items for the current user from the database.
+     */
+
 
     /**
      * This method gets all items from the database that are owned by the current user.
