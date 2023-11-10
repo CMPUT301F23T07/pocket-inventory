@@ -3,6 +3,8 @@ package com.example.pocketinventory;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.assertion.ViewAssertions;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
@@ -14,6 +16,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -59,7 +62,7 @@ import org.junit.runners.model.Statement;
 public class HomePageTest {
 
 
-    private AutoSignInRule autoSignInRule = new AutoSignInRule();
+    private TestRule autoSignInRule = (TestRule) new AutoSignInRule();
 
     private ActivityScenarioRule<HomePageActivity> activityRule =
             new ActivityScenarioRule<>(HomePageActivity.class);
@@ -73,35 +76,50 @@ public class HomePageTest {
         ItemDB.getInstance().deleteAllItems();
     }
 
+    //use onView(isRoot()).perform(waitFor(5000)) to wait for 5 seconds
+    public static ViewAction waitFor(long delay) {
+        return new ViewAction() {
+            @Override public Matcher<View> getConstraints() {
+                return isRoot();
+            }
 
+            @Override public String getDescription() {
+                return "wait for " + delay + "milliseconds";
+            }
+
+            @Override public void perform(UiController uiController, View view) {
+                uiController.loopMainThreadForAtLeast(delay);
+            }
+        };
+    }
 
     private void fillInFormSamsung() {
         onView(withId(R.id.make_edit_text)).perform(ViewActions.typeText("Samsung"));
         onView(withId(R.id.model_edit_text)).perform(ViewActions.typeText("sPhone"));
-        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("some description here"));
+        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("non-iphone description"));
         onView(withId(R.id.estimated_value_edit_text)).perform(ViewActions.typeText("1234"));
         onView(withId(R.id.date_of_purchase_edit_text)).perform(click());
         // Set the date on the DatePicker widget
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(2020, 10, 10));
-        onView(withText("OK")).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.comment_edit_text)).perform(ViewActions.typeText("my comment wbwbwbwbwbwb!!!"));
-        onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag"));
+        onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag1"));
         onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
     }
 
     private void fillInFormApple() {
         onView(withId(R.id.make_edit_text)).perform(ViewActions.typeText("Apple"));
         onView(withId(R.id.model_edit_text)).perform(ViewActions.typeText("iPhone"));
-        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("some description here"));
+        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("iphone description"));
         onView(withId(R.id.estimated_value_edit_text)).perform(ViewActions.typeText("1234"));
         onView(withId(R.id.date_of_purchase_edit_text)).perform(click());
         // Set the date on the DatePicker widget
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
-                .perform(PickerActions.setDate(2020, 10, 10));
-        onView(withText("OK")).perform(click());
+                .perform(PickerActions.setDate(2023, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
         onView(withId(R.id.comment_edit_text)).perform(ViewActions.typeText("my comment wbwbwbwbwbwb!!!"));
-        onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag"));
+        onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag2"));
         onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
     }
 
@@ -113,7 +131,8 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(withText("sPhone")).check(matches(isDisplayed()));
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
     }
 
     // US 01.02.01
@@ -122,19 +141,15 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.make_edit_text)).check(matches(withText("Samsung")));
         onView(withId(R.id.model_edit_text)).check(matches(withText("sPhone")));
-        onView(withId(R.id.description_edit_text)).check(matches(withText("some description here")));
+        onView(withId(R.id.description_edit_text)).check(matches(withText("non-iphone description")));
         onView(withId(R.id.estimated_value_edit_text)).check(matches(withText("1234.0")));
         onView(withId(R.id.comment_edit_text)).check(matches(withText("my comment wbwbwbwbwbwb!!!")));
-        onView(withId(R.id.tag_edit_text)).check(matches(withText("mytag")));
+        onView(withId(R.id.tag_edit_text)).check(matches(withText("mytag1")));
         onView(withId(R.id.serial_number_edit_text)).check(matches(withText("1234567890")));
     }
 
@@ -145,11 +160,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // The fields are pre-filled with the original values. Change them.
@@ -174,11 +185,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.delete_button)).perform(click());
@@ -186,36 +193,150 @@ public class HomePageTest {
     }
 
 
-    // US 02.07.01
+    // US 02.06.01 and US 02.07.01
     @Test
     public void testFilter() {
+        //Create two items
+        //Combine all filter test here to save time
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
+        //filter by make
         onView(withId(R.id.filterButton)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        onView(isRoot()).perform(waitFor(500));
         onView(withId(R.id.makeInput)).perform(ViewActions.typeText("Apple"));
-        onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard());
-        onView(withText("OK")).perform(click());
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
         onView(withText(containsString("iPhone"))).check(matches(isDisplayed()));
         onView(withText(containsString("sPhone"))).check(doesNotExist());
+        //filter by description
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.descriptionInput)).perform(ViewActions.typeText("non"));
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
+    }
+
+    // US 02.05.01
+    @Test
+    public void testFilterDate() {
+        onView(withId(R.id.add_item)).perform(click());
+        fillInFormSamsung();
+        onView(withId(R.id.add_button)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.add_item)).perform(click());
+        fillInFormApple();
+        onView(withId(R.id.add_button)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        //filter by date, bounded blow
+        onView(withId(R.id.filterButton)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonAfter)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 10));
+        onView(isRoot()).perform(waitFor(50));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("sPhone"))).check(doesNotExist());
+        onView(withText(containsString("iPhone"))).check(matches(isDisplayed()));
+        //bounded above
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonBefore)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
+        //bounded both, but include nothing
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonBefore)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2021, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.buttonAfter)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(doesNotExist());
+        //bounded both, include one
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonAfter)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2000, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.buttonBefore)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
+        //inversely bounded
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonAfter)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2022, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.buttonBefore)).perform(click());
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2000, 10, 10));
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
+    }
+
+    //US 03.05.01
+    @Test
+    public void testFilterTag() {
+        onView(withId(R.id.add_item)).perform(click());
+        fillInFormSamsung();
+        onView(withId(R.id.add_button)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.add_item)).perform(click());
+        fillInFormApple();
+        onView(withId(R.id.add_button)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        //filter by tag, match All
+        onView(withId(R.id.filterButton)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonAddTag)).perform(click());
+        onView(withId(R.id.filterTagAutoComplete)).perform(ViewActions.typeText("mytag1"));
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(doesNotExist());
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
+        //match one
+        onView(withId(R.id.filterButton)).perform(click()).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withId(R.id.buttonAddTag)).perform(click());
+        onView(withId(R.id.filterTagAutoComplete)).perform(ViewActions.typeText("mytag1"));
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.buttonAddTag)).perform(click());
+        onView(withId(R.id.filterTagAutoComplete)).perform(ViewActions.typeText("mytag2"));
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(withId(R.id.buttonOR)).perform(click());
+        onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(500));
+        onView(withText(containsString("iPhone"))).check(matches(isDisplayed()));
+        onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
     }
 
 
