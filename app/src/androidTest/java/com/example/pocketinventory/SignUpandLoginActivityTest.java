@@ -14,13 +14,20 @@ import androidx.test.filters.LargeTest;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class SignUpandLoginActivityTest {
+
+    private TestRule autoSignOutRule = new AutoSignOutRule();
+
+    private ActivityScenarioRule<LoginActivity> activityRule =
+            new ActivityScenarioRule<>(LoginActivity.class);
     @Rule
-    public ActivityScenarioRule<LoginActivity> scenario = new ActivityScenarioRule<>(LoginActivity.class);
+    public TestRule chain = RuleChain.outerRule(autoSignOutRule).around(activityRule);
 
     // US 06.01.01
     // As a user, I want a profile with a unique username.
@@ -51,11 +58,25 @@ public class SignUpandLoginActivityTest {
 
     @Test
     public void testLogout() {
+        // sign in
+        onView(withId(R.id.login_email)).perform(typeText("testuser@example.com"));
+        onView(withId(R.id.login_password)).perform(typeText("password"));
+        onView(withId(R.id.login_button)).perform(click());
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //Switch to the user profile page
         // Take the user to the profile page
         onView(withId(R.id.navigation_profile)).perform(click());
         // Log out from the app
         onView(withId(R.id.logout)).perform(click());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(withId(R.id.login_button)).check(matches(isDisplayed()));
     }
 }

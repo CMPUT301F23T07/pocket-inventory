@@ -131,7 +131,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
     }
 
@@ -141,7 +141,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.make_edit_text)).check(matches(withText("Samsung")));
@@ -160,7 +160,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // The fields are pre-filled with the original values. Change them.
@@ -169,6 +169,7 @@ public class HomePageTest {
         onView(withId(R.id.description_edit_text)).perform(replaceText("some description here2"));
         // save the changes
         onView(withId(R.id.add_button)).perform(click());
+        onView(isRoot()).perform(waitFor(1500));
         // reopen the item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
@@ -185,7 +186,7 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.delete_button)).perform(click());
@@ -201,11 +202,11 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         //filter by make
         onView(withId(R.id.filterButton)).perform(click());
         onView(isRoot()).perform(waitFor(500));
@@ -232,11 +233,11 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         //filter by date, bounded blow
         onView(withId(R.id.filterButton)).perform(click());
         onView(isRoot()).perform(waitFor(500));
@@ -305,11 +306,11 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         //filter by tag, match All
         onView(withId(R.id.filterButton)).perform(click());
         onView(isRoot()).perform(waitFor(500));
@@ -318,12 +319,12 @@ public class HomePageTest {
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
         onView(withId(android.R.id.button1)).perform(click());
         onView(withId(android.R.id.button1)).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1500));
         onView(withText(containsString("iPhone"))).check(doesNotExist());
         onView(withText(containsString("sPhone"))).check(matches(isDisplayed()));
         //match one
         onView(withId(R.id.filterButton)).perform(click()).perform(click());
-        onView(isRoot()).perform(waitFor(500));
+        onView(isRoot()).perform(waitFor(1000));
         onView(withId(R.id.buttonAddTag)).perform(click());
         onView(withId(R.id.filterTagAutoComplete)).perform(ViewActions.typeText("mytag1"));
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
@@ -363,15 +364,11 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
+        onView(isRoot()).perform(waitFor(1500));
         // Perform long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
-
         onView(isRoot()).perform(waitFor(500));
-
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
         onView(withId(R.id.add_tag_icon)).check(matches(isDisplayed()));
@@ -389,21 +386,15 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
+        onView(isRoot()).perform(waitFor(1500));
         // Long press on the first item
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
-
         onView(isRoot()).perform(waitFor(500));
-
         // Check if necessary selection icons appear
         onView(withId(R.id.delete_icon)).check(matches(isDisplayed()));
         onView(withId(R.id.add_tag_icon)).check(matches(isDisplayed()));
@@ -411,14 +402,9 @@ public class HomePageTest {
 
         // Select all items
         onView(withId(R.id.select_all_icon)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
         // Delete the selected items
         onView(withId(R.id.delete_icon)).perform(click());
-
         onView(isRoot()).perform(waitFor(500));
-
         // Check if the item list is empty
         onView(ViewMatchers.withId(R.id.log_list))
                 .check(ViewAssertions.matches(hasChildCount(0)));
@@ -436,20 +422,15 @@ public class HomePageTest {
         onView(withId(R.id.add_item)).perform(click());
         fillInFormApple();
         onView(withId(R.id.add_button)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
+        onView(isRoot()).perform(waitFor(1500));
         // Add a second item
         onView(withId(R.id.add_item)).perform(click());
         fillInFormSamsung();
         onView(withId(R.id.add_button)).perform(click());
-
-        onView(isRoot()).perform(waitFor(500));
-
+        onView(isRoot()).perform(waitFor(1500));
         // Perform a long press on the first item in the list
         onView(withId(R.id.log_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, longClick()));
-
         onView(isRoot()).perform(waitFor(500));
 
         // Check if necessary selection icons appear

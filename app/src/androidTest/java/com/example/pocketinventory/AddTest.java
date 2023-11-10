@@ -80,24 +80,18 @@ import java.util.Calendar;
     public void testAddItemAndCheckModel() {
         Espresso.onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
         fillInapple();
-
         // Click the "Add" button to add the item
         Espresso.onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-        
         try{
-            Thread.sleep(500);
+            Thread.sleep(1500);
         }
         catch (InterruptedException e){
             e.printStackTrace();
         }
         onView(ViewMatchers.withId(R.id.add_item)).perform(ViewActions.click());
-
         fillInasus();
-
         // Click the "Add" button to add the item
         onView(ViewMatchers.withId(R.id.add_button)).perform(ViewActions.click());
-
-
     }
 
 
