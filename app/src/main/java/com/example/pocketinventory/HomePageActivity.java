@@ -72,7 +72,7 @@ public class HomePageActivity extends AppCompatActivity {
         log_list.setAdapter(adapter);
         adapter.update();
 
-        Button addItemButton = findViewById(R.id.add_item);
+        FloatingActionButton addItemButton = findViewById(R.id.add_item);
         addItemButton.setOnClickListener(v -> {
             Intent intent = new Intent(HomePageActivity.this, ItemAddActivity.class);
             startActivity(intent);

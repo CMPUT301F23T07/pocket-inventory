@@ -39,7 +39,7 @@
     <color name="md_theme_dark_onPrimaryContainer">#EADDFF</color>
     <color name="md_theme_dark_secondary">#CCC2DC</color>
     <color name="md_theme_dark_onSecondary">#332D41</color>
-    <color name="md_theme_dark_secondaryContainer">#4A4458</color>
+    <color name="tag_background">#876E47</color>
     <color name="md_theme_dark_onSecondaryContainer">#E8DEF8</color>
     <color name="md_theme_dark_tertiary">#EFB8C8</color>
     <color name="md_theme_dark_onTertiary">#492532</color>
@@ -47,7 +47,7 @@
     <color name="md_theme_dark_onTertiaryContainer">#FFD8E4</color>
     <color name="md_theme_dark_error">#F2B8B5</color>
     <color name="md_theme_dark_onError">#601410</color>
-    <color name="md_theme_dark_errorContainer">#8C1D18</color>
+    <color name="delete_color">#8C1D18</color>
     <color name="md_theme_dark_onErrorContainer">#F9DEDC</color>
     <color name="md_theme_dark_outline">#938F99</color>
     <color name="md_theme_dark_background">#141218</color>
@@ -63,12 +63,15 @@
     <color name="md_theme_dark_surfaceTint">#D0BCFF</color>
     <color name="md_theme_dark_outlineVariant">#49454F</color>
     <color name="md_theme_dark_scrim">#000000</color>
-    <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#101010</color>
-    <color name="backdrop">#5C5C5C</color>
-    <color name="lavender">#8692f7</color>
+    <color name="primary_background">#444</color>
+    <color name="secondary_background">#555</color>
+    <color name="tertiary_background">#333</color>
+    <color name="primary_bronze">#dbb270</color>
+    <color name="secondary_bronze">#FFB931</color>
+    <color name="check">#459F49</color>
 </resources>

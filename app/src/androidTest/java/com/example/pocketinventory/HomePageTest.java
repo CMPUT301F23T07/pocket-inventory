@@ -213,4 +213,20 @@ public class HomePageTest {
         onView(withText(containsString("sPhone"))).check(doesNotExist());
     }
 
+
+    // Tests the Navigation to to other pages
+    @Test
+    public void testNavigation() {
+        // Take the user to the camera page
+        onView(withId(R.id.navigation_camera)).perform(click());
+        onView(withId(R.id.text_dashboard)).check(matches(isDisplayed()));
+        // Take the user to the profile page
+        onView(withId(R.id.navigation_profile)).perform(click());
+        onView(withId(R.id.logout)).check(matches(isDisplayed()));
+        // Take the user back to the home page
+        onView(withId(R.id.navigation_home)).perform(click());
+        onView(withId(R.id.log_list)).check(matches(isDisplayed()));
+
+    }
+
 }

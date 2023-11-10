@@ -13,7 +13,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="+"
-        app:backgroundTint="@color/md_theme_light_inversePrimary"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/primary_bronze"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView64" />
 
@@ -127,6 +128,8 @@
         android:layout_width="121dp"
         android:layout_height="41dp"
         android:layout_marginEnd="24dp"
+        android:backgroundTint="@color/primary_bronze"
+        android:textColor="@color/black"
         android:onClick="onClick2"
         android:text="(Optional)"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
@@ -139,6 +142,8 @@
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="8dp"
+        android:backgroundTint="@color/primary_bronze"
+        android:textColor="@color/black"
         android:onClick="onClick1"
         android:text="(Optional)"
         app:layout_constraintStart_toStartOf="parent"
