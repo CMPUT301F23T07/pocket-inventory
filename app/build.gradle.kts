@@ -32,6 +32,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_1_8
     }
 
+    // disable animations for faster tests
+    testOptions {
+        animationsDisabled = true
+    }
+
 }
 
 dependencies {
