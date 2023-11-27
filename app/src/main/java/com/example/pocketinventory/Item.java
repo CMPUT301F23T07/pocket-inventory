@@ -220,14 +220,40 @@ public class Item implements Parcelable {
      * Setter for the tags
      * @param tags
      */
-    public void setTags(ArrayList<String> tags) {this.tags = tags;}
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
 
     /**
      * Setter for appending tag to an already existing tags array
+     * Accounts for duplicate, empty or empty space tags
+     * 
      * @param newTag A tag which needs to be appended to the tags array
      */
     public void addTags(String newTag) {
-        tags.add(newTag);
+        if (!checkDuplicateTag(newTag)){
+            if (!newTag.trim().isEmpty()) {
+                // Add the non-empty tag to the tags list
+                tags.add(newTag.trim());
+            }
+        }
+    }
+    /**
+     * Checks whether a specified tag already exists within the tags of an item.
+     *
+     * @param tag The tag to be checked for duplication within the item's tags.
+     * @return {@code true} if the specified tag already exists (case-insensitive comparison),
+     *         {@code false} otherwise.
+     */
+    public Boolean checkDuplicateTag(String tag){
+        // Check if the tag already exists within the tags of the item
+        for (String t : this.getTags()){
+            // If the tag parameter (tag needed to be added) equals, case-insensitive comparison, some existing tag of the item
+            if (tag.equalsIgnoreCase(t)){
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
     }
 
     /**

@@ -148,7 +148,7 @@ public class ItemAddActivity extends AppCompatActivity {
                     // Iterate through the elements in the 'tagArray'.
                     for (String tag : tagArray) {
                         // Check if the tag is not empty
-                        if (!tag.isEmpty()) {
+                        if (!tag.trim().isEmpty()) {
                             // Add the non-empty tag to the 'tags' ArrayList
                             tags.add(tag.trim());
                         }
@@ -171,7 +171,9 @@ public class ItemAddActivity extends AppCompatActivity {
                     item.setDate(parseDate(dateOfPurchase));
                     item.setDescription(description);
                     item.setComment(comment);
-                    item.setTags(tags);
+                    for (String tag:tags){
+                        item.addTags(tag);
+                    }
                     // log the id
                     Log.d("ItemAddActivity", "onClick: " + item.getId());
                     itemDB.updateItem(item);
