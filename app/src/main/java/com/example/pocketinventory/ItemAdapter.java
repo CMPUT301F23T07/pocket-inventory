@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.chip.Chip;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,6 +49,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private ArrayList<Item> selectItems = new ArrayList<>();
 
     private ItemAddTagsFragment itemAddTagsFragment;
+    private FloatingActionButton addItemIcon;
 
     /**
      * Constructor for the adapter
@@ -115,6 +117,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             MenuInflater menuInflater = mode.getMenuInflater();
                             menuInflater.inflate(R.menu.menu, menu);
                             // The code above inflates (loads) a menu layout resource named "menu" into the provided Menu object.
+
+                            // Set the visibility of the add item floating button to gone
+                            addItemIcon = v.findViewById(R.id.add_item);
+                            addItemIcon.setVisibility(View.GONE);
 
                             return true;
                             // Return true to indicate that the Action Mode has been created successfully.
@@ -218,6 +224,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
+
+                            // Set the visibility of the add item floating button back to visible
+                            addItemIcon.setVisibility(View.VISIBLE);
+
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 

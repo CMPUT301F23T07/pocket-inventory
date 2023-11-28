@@ -227,7 +227,7 @@ public class Item implements Parcelable {
     /**
      * Setter for appending tag to an already existing tags array
      * Accounts for duplicate, empty or empty space tags
-     * 
+     *
      * @param newTag A tag which needs to be appended to the tags array
      */
     public void addTags(String newTag) {
