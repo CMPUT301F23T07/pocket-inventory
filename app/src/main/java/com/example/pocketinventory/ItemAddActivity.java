@@ -2,11 +2,14 @@ package com.example.pocketinventory;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
@@ -41,12 +44,13 @@ public class ItemAddActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_add);
 
-
+        Context itemAddActivityContext = getApplicationContext();
 
         Button cancelButton = findViewById(R.id.cancel_button);
         Button addButton = findViewById(R.id.add_button);
@@ -100,6 +104,32 @@ public class ItemAddActivity extends AppCompatActivity {
             String tagsString = tagsStringBuilder.toString();
             // Set the String of tags (comma seperating them) to the EditText associated with the tags
             tagsInput.getEditText().setText(tagsString);
+
+            TextInputEditText serialNumberEditText = findViewById(R.id.serial_number_edit_text);
+
+
+            // Used the source ChatGPT 3.5 with prompt "How to access the image from edit text and make it a button clickable" on Nov 28, 2023 for the next 5 lines of code
+            serialNumberEditText.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Check if the event is within the bounds of the drawable
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (event.getRawX() >= (serialNumberEditText.getRight() - serialNumberEditText.getCompoundDrawables()[2].getBounds().width())) {
+                            // Handle the click on the camera image
+                            Toast.makeText(itemAddActivityContext, "Scanning Activated", Toast.LENGTH_SHORT).show();
+
+                            // Start the scanning serial number activity
+                            Intent intent1 = new Intent(itemAddActivityContext, ScanSerialNumberActivity.class);
+                            intent1.putExtra("item", item);
+                            startActivity(intent1);
+
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
+
 
         }
 
