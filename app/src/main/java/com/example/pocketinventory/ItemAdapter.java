@@ -47,9 +47,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private boolean isEnable = false;
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
-
-    private ItemAddTagsFragment itemAddTagsFragment;
-    private FloatingActionButton addItemIcon;
+    private FloatingActionButton addItemButton;
 
     /**
      * Constructor for the adapter
@@ -105,6 +103,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
+
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -118,9 +117,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             menuInflater.inflate(R.menu.menu, menu);
                             // The code above inflates (loads) a menu layout resource named "menu" into the provided Menu object.
 
+
                             // Set the visibility of the add item floating button to gone
-                            addItemIcon = v.findViewById(R.id.add_item);
-                            addItemIcon.setVisibility(View.GONE);
+                            addItemButton = ((HomePageActivity)context).findViewById(R.id.add_item);
+                            addItemButton.setVisibility(View.GONE);
 
                             return true;
                             // Return true to indicate that the Action Mode has been created successfully.
@@ -226,7 +226,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             selectItems.clear();
 
                             // Set the visibility of the add item floating button back to visible
-                            addItemIcon.setVisibility(View.VISIBLE);
+                            addItemButton.setVisibility(View.VISIBLE);
 
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
@@ -347,7 +347,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
-        private LinearLayout tagsLinearLayout;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 

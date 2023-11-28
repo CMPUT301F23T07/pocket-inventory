@@ -64,6 +64,8 @@ public class HomePageActivity extends AppCompatActivity {
         // Update the list of items
         updateItemData();
 
+
+
         // Initialize the recycler view
         log_list = (RecyclerView) findViewById(R.id.log_list);
         dataList = new ArrayList<>();
