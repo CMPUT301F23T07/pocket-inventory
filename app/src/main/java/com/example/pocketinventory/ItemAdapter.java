@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -161,16 +162,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             // Check if the clicked item's ID matches the "delete_icon" defined in menu.xml (R.id.delete_icon)
                             if (menuItem == R.id.delete_icon){
 
-                                // Iterate through the selectItems list (assuming it contains selected items)
-                                for (Item item1 : selectItems){
-                                    // Remove each selected item from itemDB
-                                    ItemDB.getInstance().deleteItem(item1);
+                                if (selectItems.size() == 0){
+                                    Toast.makeText(context, "No Items Selected", Toast.LENGTH_SHORT).show();
                                 }
-                                // Update Item Data in HomePageActivity as well
-                                ((HomePageActivity)context).updateItemData();
 
-                                // Finish the Action Mode, exiting the selection action bar
-                                mode.finish();
+                                else {
+                                    // Iterate through the selectItems list (assuming it contains selected items)
+                                    for (Item item1 : selectItems){
+                                        // Remove each selected item from itemDB
+                                        ItemDB.getInstance().deleteItem(item1);
+                                    }
+                                    // Update Item Data in HomePageActivity as well
+                                    ((HomePageActivity)context).updateItemData();
+
+                                    // Finish the Action Mode, exiting the selection action bar
+                                    mode.finish();
+                                }
                             }
 
                             if (menuItem == R.id.select_all_icon){
@@ -207,8 +214,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             if (menuItem == R.id.add_tag_icon){
                                 // Check if the clicked item's ID matches the "add_tag_icon" defined in menu.xml (R.id.add_tag_icon)
 
-                                new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity)context).getSupportFragmentManager(),"ADD_TAGS");
-                                // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
+                                if (selectItems.size() == 0){
+                                    Toast.makeText(context, "No Items Selected", Toast.LENGTH_SHORT).show();
+                                }
+
+                                else {
+                                    new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity) context).getSupportFragmentManager(), "ADD_TAGS");
+                                    // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
+                                }
                             }
 
                             return true; // Return true to indicate that the Action Mode has been prepared successfully.
