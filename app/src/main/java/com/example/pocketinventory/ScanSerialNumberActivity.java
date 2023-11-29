@@ -6,7 +6,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
@@ -26,6 +25,7 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
         setContentView(R.layout.activity_scan_serial_number);
 
         Intent intent = getIntent();
+
         Item item = intent.getParcelableExtra("item");
 
         Button scanSerialNumberButton = findViewById(R.id.scan_serial_number_button);
@@ -40,11 +40,13 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
 
             @Override
             public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-                return false;
+                mode.setTitle("Scan Serial Number");
+                return true;
             }
 
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
                 return false;
             }
 
@@ -55,6 +57,7 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
         };
 
         // Call the ActionMode
-        ((AppCompatActivity) this).startActionMode(callback);
+        (this).startActionMode(callback);
+
     }
 }

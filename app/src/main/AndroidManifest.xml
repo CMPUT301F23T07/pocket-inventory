@@ -50,6 +50,12 @@
             android:exported="false">
 
         </activity>
+
+        <activity
+            android:name=".ScanSerialNumberActivity"
+            android:exported="false">
+
+        </activity>
     </application>
 
 </manifest>
