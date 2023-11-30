@@ -141,10 +141,23 @@ public class ItemAddActivity extends AppCompatActivity {
             tagsInput.getEditText().setText(tagsString);
 
             imageUrls = item.getImageUrls();
+
+            // log the urls
+            Log.d("ItemAddActivity", "onCreate: " + Arrays.toString(imageUrls.toArray()));
+
         }
 
         // set the images
-        CarouselAdapter adapter = new CarouselAdapter(imageUrls);
+        CarouselAdapter adapter = new CarouselAdapter(imageUrls, new CarouselAdapter.OnItemDeleteListener() {
+            @Override
+            public void onDelete(int position) {
+                // Handle the deletion here
+                imageUrls.remove(position);
+                if (recyclerView.getAdapter() != null) {
+                    recyclerView.getAdapter().notifyDataSetChanged();
+                }
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -321,6 +334,10 @@ public class ItemAddActivity extends AppCompatActivity {
         return calendar.getTime();
     }
 
+    /**
+     * This method gets the URI of the image taken by the camera
+     * @return Uri
+     */
     private Uri getOutputMediaFileUri() {
         // if build version is greater than or equal to 24, use file provider
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
@@ -330,6 +347,10 @@ public class ItemAddActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method creates a file to store the image taken by the camera
+     * @return File
+     */
     private File getOutputMediaFile() {
         File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "PocketInventory");
 
@@ -344,6 +365,13 @@ public class ItemAddActivity extends AppCompatActivity {
         return new File(mediaStorageDir.getPath() + File.separator + "IMG_" + timeStamp + ".jpg");
     }
 
+    /**
+     * This method is called when the camera activity returns a result. It uploads the image to
+     * Firestore and adds the image URL to the item.
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -353,6 +381,10 @@ public class ItemAddActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method uploads an image to Firestore and adds the image URL to the item
+     * @param fileUri
+     */
     private void uploadImageToFirestore(Uri fileUri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
@@ -371,7 +403,17 @@ public class ItemAddActivity extends AppCompatActivity {
                                 imageUrls.add(uri.toString());
                                 Log.d("Upload", "Image URL retrieved successfully");
                                 RecyclerView recyclerView = findViewById(R.id.carousel_recycler_view);
-                                CarouselAdapter adapter = new CarouselAdapter(imageUrls);
+                                CarouselAdapter adapter = new CarouselAdapter(imageUrls, new CarouselAdapter.OnItemDeleteListener() {
+                                    @Override
+                                    public void onDelete(int position) {
+                                        // Handle the deletion here
+                                        imageUrls.remove(position);
+                                        if (recyclerView.getAdapter() != null) {
+                                            recyclerView.getAdapter().notifyDataSetChanged();
+                                        }
+
+                                    }
+                                });
                                 recyclerView.setAdapter(adapter);
                             }
                         });
