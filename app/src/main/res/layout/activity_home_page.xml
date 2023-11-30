@@ -73,8 +73,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_item"
         android:layout_width="wrap_content"
@@ -82,12 +80,13 @@
         android:layout_marginBottom="12dp"
         android:clickable="true"
         android:src="@android:drawable/ic_input_add"
+        android:visibility="visible"
         app:backgroundTint="@color/primary_bronze"
-        app:tint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.954"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/white" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

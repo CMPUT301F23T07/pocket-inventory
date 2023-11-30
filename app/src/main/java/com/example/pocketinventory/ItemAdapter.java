@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
@@ -28,6 +29,7 @@ import androidx.fragment.app.FragmentActivity;
 import com.google.android.material.chip.Chip;
 
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -46,8 +48,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private boolean isEnable = false;
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
-
-    private ItemAddTagsFragment itemAddTagsFragment;
+    private FloatingActionButton addItemButton;
 
     /**
      * Constructor for the adapter
@@ -103,6 +104,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
             public boolean onLongClick(View v) {
                 // First instance after long press: ActionMode not enabled yet
                 // Allows to create ActionMode before using it
+
                 if (!isEnable){
                     // Create ActionMode callback
                     ActionMode.Callback callback = new ActionMode.Callback() {
@@ -115,6 +117,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             MenuInflater menuInflater = mode.getMenuInflater();
                             menuInflater.inflate(R.menu.menu, menu);
                             // The code above inflates (loads) a menu layout resource named "menu" into the provided Menu object.
+
+
+                            // Set the visibility of the add item floating button to gone
+                            addItemButton = ((HomePageActivity)context).findViewById(R.id.add_item);
+                            addItemButton.setVisibility(View.GONE);
 
                             return true;
                             // Return true to indicate that the Action Mode has been created successfully.
@@ -155,16 +162,22 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             // Check if the clicked item's ID matches the "delete_icon" defined in menu.xml (R.id.delete_icon)
                             if (menuItem == R.id.delete_icon){
 
-                                // Iterate through the selectItems list (assuming it contains selected items)
-                                for (Item item1 : selectItems){
-                                    // Remove each selected item from itemDB
-                                    ItemDB.getInstance().deleteItem(item1);
+                                if (selectItems.size() == 0){
+                                    Toast.makeText(context, "No Items Selected", Toast.LENGTH_SHORT).show();
                                 }
-                                // Update Item Data in HomePageActivity as well
-                                ((HomePageActivity)context).updateItemData();
 
-                                // Finish the Action Mode, exiting the selection action bar
-                                mode.finish();
+                                else {
+                                    // Iterate through the selectItems list (assuming it contains selected items)
+                                    for (Item item1 : selectItems){
+                                        // Remove each selected item from itemDB
+                                        ItemDB.getInstance().deleteItem(item1);
+                                    }
+                                    // Update Item Data in HomePageActivity as well
+                                    ((HomePageActivity)context).updateItemData();
+
+                                    // Finish the Action Mode, exiting the selection action bar
+                                    mode.finish();
+                                }
                             }
 
                             if (menuItem == R.id.select_all_icon){
@@ -201,8 +214,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             if (menuItem == R.id.add_tag_icon){
                                 // Check if the clicked item's ID matches the "add_tag_icon" defined in menu.xml (R.id.add_tag_icon)
 
-                                new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity)context).getSupportFragmentManager(),"ADD_TAGS");
-                                // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
+                                if (selectItems.size() == 0){
+                                    Toast.makeText(context, "No Items Selected", Toast.LENGTH_SHORT).show();
+                                }
+
+                                else {
+                                    new ItemAddTagsFragment(selectItems, mode, context).show(((HomePageActivity) context).getSupportFragmentManager(), "ADD_TAGS");
+                                    // Call the ItemAddTagsFragment which is going to take care of the "Add tags to selected items" functionality
+                                }
                             }
 
                             return true; // Return true to indicate that the Action Mode has been prepared successfully.
@@ -218,6 +237,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Reset the selected items list ("selectItems")
                             selectItems.clear();
+
+                            // Set the visibility of the add item floating button back to visible
+                            addItemButton.setVisibility(View.VISIBLE);
+
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();
 
@@ -337,7 +360,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         private TextView valueTextView;
         private TextView commentTextView;
         private ImageView checkedBoxImageView;
-        private LinearLayout tagsLinearLayout;
         private ArrayList<String> tagsList;
         private RecyclerView recyclerView;
 
