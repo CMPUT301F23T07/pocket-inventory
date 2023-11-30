@@ -46,13 +46,12 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
 
             @Override
             public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-
                 return false;
             }
 
             @Override
             public void onDestroyActionMode(ActionMode mode) {
-
+                finish();
             }
         };
 

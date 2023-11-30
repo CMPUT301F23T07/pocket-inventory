@@ -1,5 +1,7 @@
 package com.example.pocketinventory;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -35,6 +37,7 @@ public class ItemAddActivity extends AppCompatActivity {
 
     private boolean isEditing = false;
     private ItemDB itemDB = ItemDB.getInstance();
+    private ActivityResultLauncher<Intent> scanSerialNumberResultLauncher;
 
     /**
      * This method is called when the activity is created. It sets up the buttons and text fields
@@ -109,20 +112,20 @@ public class ItemAddActivity extends AppCompatActivity {
 
 
             // Used the source ChatGPT 3.5 with prompt "How to access the image from edit text and make it a button clickable" on Nov 28, 2023 for the next 5 lines of code
+
+            // When scan button is clicked within the serial number edit text
+
             serialNumberEditText.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    // Check if the event is within the bounds of the drawable
+                    // Check if the event is within the bounds of the scan icon
                     if (event.getAction() == MotionEvent.ACTION_UP) {
                         if (event.getRawX() >= (serialNumberEditText.getRight() - serialNumberEditText.getCompoundDrawables()[2].getBounds().width())) {
-                            // Handle the click on the camera image
-                            Toast.makeText(itemAddActivityContext, "Scanning Activated", Toast.LENGTH_SHORT).show();
-
+                            // Handle the click on the scan icon
                             // Start the scanning serial number activity
                             Intent intent1 = new Intent(itemAddActivityContext, ScanSerialNumberActivity.class);
                             intent1.putExtra("item", item);
                             startActivity(intent1);
-
                             return true;
                         }
                     }
