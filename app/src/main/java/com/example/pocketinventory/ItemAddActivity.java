@@ -1,5 +1,7 @@
 package com.example.pocketinventory;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -9,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -53,6 +56,7 @@ public class ItemAddActivity extends AppCompatActivity {
     private ItemDB itemDB = ItemDB.getInstance();
     private ActivityResultLauncher<Intent> scanSerialNumberResultLauncher;
     private Uri fileUri;
+    private TextInputEditText serialNumberEditText;
     private ArrayList<String> imageUrls = new ArrayList<>();
 
 
@@ -84,6 +88,7 @@ public class ItemAddActivity extends AppCompatActivity {
         TextInputLayout makeInput = findViewById(R.id.make_text);
         TextInputLayout modelInput = findViewById(R.id.model_text);
         TextInputLayout serialInput = findViewById(R.id.serial_number_text);
+        serialNumberEditText = findViewById(R.id.serial_number_edit_text);
         TextInputLayout estimatedValueInput = findViewById(R.id.estimated_value_text);
         TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
         TextInputLayout descriptionInput = findViewById(R.id.description_text);
@@ -148,14 +153,13 @@ public class ItemAddActivity extends AppCompatActivity {
             // Set the String of tags (comma seperating them) to the EditText associated with the tags
             tagsInput.getEditText().setText(tagsString);
 
-            TextInputEditText serialNumberEditText = findViewById(R.id.serial_number_edit_text);
+
 
 
             // Used the source ChatGPT 3.5 with prompt "How to access the image from edit text and make it a button clickable" on Nov 28, 2023 for the next 5 lines of code
 
             // When scan button is clicked within the serial number edit text
-
-            serialNumberEditText.setOnTouchListener(new View.OnTouchListener() {
+            serialInput.getEditText().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     // Check if the event is within the bounds of the scan icon
@@ -165,11 +169,10 @@ public class ItemAddActivity extends AppCompatActivity {
                             // Start the scanning serial number activity
                             Intent intent1 = new Intent(itemAddActivityContext, ScanSerialNumberActivity.class);
                             intent1.putExtra("item", item);
-                            startActivity(intent1);
-                            return true;
+                            scanSerialNumberLauncher.launch(intent1);
                         }
                     }
-                    return false;
+                    return true;
                 }
             });
 
@@ -412,6 +415,11 @@ public class ItemAddActivity extends AppCompatActivity {
         if (requestCode == 100 && resultCode == RESULT_OK) {
             uploadImageToFirestore(fileUri);
         }
+
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            String serialNumber = data.getStringExtra("result");
+            serialNumberEditText.setText(serialNumber);
+        }
     }
 
     /**
@@ -460,4 +468,18 @@ public class ItemAddActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private ActivityResultLauncher<Intent> scanSerialNumberLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    // If taken by the camera, get the image
+                    if (result.getResultCode() == Activity.RESULT_OK){
+                        serialNumberEditText.setText(result.getData().getStringExtra("serialNumber"));
+                        Toast.makeText(ItemAddActivity.this, serialNumberEditText.getText(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+    );
 }
