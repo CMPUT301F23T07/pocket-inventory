@@ -50,7 +50,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
 
 
-
+    // Add Text Recognition Google ML library
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition:19.0.0")
 
 
 

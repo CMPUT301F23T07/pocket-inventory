@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
  * This class is the scan serial number activity of the app. It gives the user access to the camera to take
  * photos of serial number and save the serial number in the item details
  */
+
 public class ScanSerialNumberActivity extends AppCompatActivity {
     /**
      * Called when the activity is starting
