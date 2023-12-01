@@ -23,6 +23,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * This class represents a dialog fragment for adding tags to items in the inventory
@@ -47,7 +48,6 @@ public class ItemAddTagsFragment extends DialogFragment {
 
     TextView addTagDescriptionTextView;
     TextInputLayout tagSelectedInput;
-
     /**
      * This method is called to create the dialog fragment, and returns the dialog after adding tags to selected items
      * @param   savedInstanceState  Saved instance state
@@ -115,7 +115,6 @@ public class ItemAddTagsFragment extends DialogFragment {
 
                             // For each tag in the Array of tags
                             for (String t : tags){
-
                                 // Add each tag to the item's tags (ArrayList<String>)
                                 item.addTags(t);
                             }
@@ -136,4 +135,6 @@ public class ItemAddTagsFragment extends DialogFragment {
                 .create();
 
     }
+
+
 }
