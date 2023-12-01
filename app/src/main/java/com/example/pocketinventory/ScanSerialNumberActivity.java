@@ -57,6 +57,8 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
     /**
      * Called when the activity is starting
      *
+     * Citation: Used the resource: https://www.youtube.com/watch?v=1wewsm0Av98 to code many parts of this class
+     *
      * @param savedInstanceState If the activity is being re-initialized after previously being shut down,
      *                           this Bundle contains the data it most recently supplied in onSaveInstanceState.
      */
