@@ -26,6 +26,8 @@ public class Item implements Parcelable {
     private double value;
     private String comment;
     private ArrayList<String> tags;
+    private ArrayList<String> imageUrls; // List to hold image URLs or paths
+
 
     // Firebase requires an empty constructor
     public Item() {
@@ -53,6 +55,7 @@ public class Item implements Parcelable {
         this.comment = comment;
         this.date = date;
         this.tags = tags;
+        this.imageUrls = new ArrayList<>();
     }
 
     /**
@@ -71,6 +74,34 @@ public class Item implements Parcelable {
         value = in.readDouble();
         comment = in.readString();
         tags = in.createStringArrayList();
+        imageUrls = in.createStringArrayList();
+    }
+
+    /**
+     * Getter for the imageUrls
+     * @return imageUrls
+     */
+    public ArrayList<String> getImageUrls() {
+        if (imageUrls == null) {
+            imageUrls = new ArrayList<>();
+        }
+        return imageUrls;
+    }
+
+    /**
+     * Setter for the imageUrls
+     * @param imageUrls
+     */
+    public void setImageUrls(ArrayList<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    /**
+     * Adds an image URL to the imageUrls array
+     * @param imageUrl
+     */
+    public void addImageUrl(String imageUrl) {
+        this.imageUrls.add(imageUrl);
     }
 
     /**
@@ -298,6 +329,7 @@ public class Item implements Parcelable {
         dest.writeDouble(value);
         dest.writeString(comment);
         dest.writeStringList(tags);
+        dest.writeStringList(imageUrls);
     }
 
     /**
