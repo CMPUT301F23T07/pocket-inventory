@@ -48,7 +48,7 @@ public class ScanSerialNumberActivity extends AppCompatActivity {
     private Button confirmButton;
     private Button retakeButton;
     private ShapeableImageView serialNumberImage;
-    private String recognizedText;
+    private String recognizedText = "";
 
     // URI for the captured serial number image
     private Uri serialNumberUri = null;
