@@ -23,6 +23,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.DatePicker;
@@ -170,6 +171,14 @@ public class ItemAddActivity extends AppCompatActivity {
                             Intent intent1 = new Intent(itemAddActivityContext, ScanSerialNumberActivity.class);
                             intent1.putExtra("item", item);
                             scanSerialNumberLauncher.launch(intent1);
+                        }
+                        else
+                        {
+                            // Handle the click on the edit text
+                            serialNumberEditText.requestFocus();
+                            serialNumberEditText.setSelection(serialNumberEditText.getText().length());
+                            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            manager.showSoftInput(serialNumberEditText, InputMethodManager.SHOW_IMPLICIT);
                         }
                     }
                     return true;
