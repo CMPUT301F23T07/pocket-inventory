@@ -392,7 +392,7 @@ public class ItemAddActivity extends AppCompatActivity {
         }
     });
 
-     * This method gets the URI of the image taken by the camera
+     /* This method gets the URI of the image taken by the camera
      * @return Uri
      */
     private Uri getOutputMediaFileUri() {
