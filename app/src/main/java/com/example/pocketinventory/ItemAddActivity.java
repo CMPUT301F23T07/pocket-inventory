@@ -1,12 +1,15 @@
 package com.example.pocketinventory;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
@@ -17,6 +20,8 @@ import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,6 +37,7 @@ public class ItemAddActivity extends AppCompatActivity {
 
     private boolean isEditing = false;
     private ItemDB itemDB = ItemDB.getInstance();
+    private Button btn_scan;
 
     /**
      * This method is called when the activity is created. It sets up the buttons and text fields
@@ -41,6 +47,7 @@ public class ItemAddActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,6 +241,25 @@ public class ItemAddActivity extends AppCompatActivity {
                 isEditing = false;
             }
         });
+
+        // Find the TextInputEditText by its ID
+        TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+
+        // Set OnTouchListener on the TextInputEditText to detect touches on the drawable
+        descriptionEditText.setOnTouchListener((v, event) -> {
+            // Check if the event is within the bounds of the drawable
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (descriptionEditText.getRight() - descriptionEditText.getCompoundDrawables()[2].getBounds().width())) {
+                    // For scanning the bar code
+                    scanCode();
+
+                    // Handle the click on the camera image
+                    Toast.makeText(ItemAddActivity.this, "Scanning Activated", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /**
@@ -274,4 +300,34 @@ public class ItemAddActivity extends AppCompatActivity {
         calendar.set(year, month - 1, day);
         return calendar.getTime();
     }
+
+    /**
+     * This method enables the user to scan a bar code and get the item description
+     */
+    private void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
+
+            // Set the scanned text into the description_text TextInputEditText
+            TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+            // Check the scanned number
+            if (result.getContents().equals("06493137")) {
+                // Set the specific description for the scanned number
+                descriptionEditText.setText("Laptop for school");
+            } else if (result.getContents().equals("051497237264")) {
+                descriptionEditText.setText("Box of tissues");
+            } else {
+                // Set the scanned text into the description_text TextInputEditText
+                descriptionEditText.setText(result.getContents());
+            }
+        }
+    });
 }
