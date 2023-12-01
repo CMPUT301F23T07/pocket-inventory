@@ -10,21 +10,24 @@
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/serial_number_image"
-        android:layout_width="0dp"
-        android:layout_height="148dp"
+        android:layout_width="408dp"
+        android:layout_height="367dp"
         android:adjustViewBounds="true"
-        app:layout_constraintBottom_toTopOf="@+id/recognize_text_button"
+        app:layout_constraintBottom_toTopOf="@+id/recognize_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"/>
 
-    <Button
-        android:id="@+id/recognize_text_button"
+    <TextView
+        android:id="@+id/recognize_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Recognize Text"
-        android:textColor="@color/black"
-        android:textSize="14sp"
+        android:text="Recognized Text:"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/serial_number_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,19 +37,23 @@
 
     <EditText
         android:id="@+id/serial_number_edit_text"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:inputType="text"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recognize_text_button" />
+        app:layout_constraintTop_toBottomOf="@+id/recognize_text_view" />
 
     <Button
         android:id="@+id/scan_serial_number_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
+        android:visibility="visible"
         android:backgroundTint="@color/primary_bronze"
         android:text="Scan Serial No."
         android:textColor="@color/black"
@@ -59,11 +66,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="70dp"
+        android:textColor="@color/black"
         android:visibility="gone"
         android:text="Confirm"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/retake_serial_number_button"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/retake_serial_number_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="70dp"
+        android:text="Retake"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/confirm_serial_number_button" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

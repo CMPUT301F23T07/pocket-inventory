@@ -159,7 +159,7 @@ public class ItemAddActivity extends AppCompatActivity {
 
             // Used the source ChatGPT 3.5 with prompt "How to access the image from edit text and make it a button clickable" on Nov 28, 2023 for the next 5 lines of code
 
-            // When scan button is clicked within the serial number edit text
+            // When scan icon is clicked within the serial number edit text
             serialInput.getEditText().setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
@@ -175,6 +175,7 @@ public class ItemAddActivity extends AppCompatActivity {
                         else
                         {
                             // Handle the click on the edit text
+                            // Allow for editing the edit text when clicked anywhere within the edit text excluding the scan icon
                             serialNumberEditText.requestFocus();
                             serialNumberEditText.setSelection(serialNumberEditText.getText().length());
                             InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -478,15 +479,22 @@ public class ItemAddActivity extends AppCompatActivity {
                 });
     }
 
+    /**
+     * ActivityResultLauncher to handle the result of starting the scanSerialNumberActivity.
+     * This launcher captures the result of the scanSerialNumberActivity, which is initiated
+     * to capture an image of the serial number using the device's camera.
+     */
     private ActivityResultLauncher<Intent> scanSerialNumberLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
+
+                // Callback method invoked when the result of the scanSerialNumberActivity is received.
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    // If taken by the camera, get the image
-                    if (result.getResultCode() == Activity.RESULT_OK){
+                    // If the image is successfully captured by the camera
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Set the captured serial number text to the EditText
                         serialNumberEditText.setText(result.getData().getStringExtra("serialNumber"));
-                        Toast.makeText(ItemAddActivity.this, serialNumberEditText.getText(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
