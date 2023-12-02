@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
     @Rule
     public IntentsTestRule<ItemAddActivity> intentsRule = new IntentsTestRule<>(ItemAddActivity.class);
 
-    
+
 
     @Test
     public void testCameraIntent() {

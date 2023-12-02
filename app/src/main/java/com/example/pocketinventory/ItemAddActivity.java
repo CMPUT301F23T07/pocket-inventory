@@ -99,6 +99,9 @@ public class ItemAddActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // check camera permissions
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 100);
+                }
 
                     // start camera activity and grab the image taken
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
