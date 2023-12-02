@@ -457,6 +457,9 @@ public class ItemAddActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
             uploadImageToFirestore(selectedImage);
         }
+        else {
+            Log.d("Upload", "Failed to upload image to Firestore");
+        }
     }
 
     /**
