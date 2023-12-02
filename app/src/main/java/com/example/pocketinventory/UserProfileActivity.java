@@ -58,9 +58,6 @@ public class UserProfileActivity extends AppCompatActivity {
             if (item.getItemId() == R.id.navigation_home) {
                 startActivity(new Intent(UserProfileActivity.this, HomePageActivity.class));
                 return true;
-            } else if (item.getItemId() == R.id.navigation_camera) {
-                startActivity(new Intent(UserProfileActivity.this, CameraActivity.class));
-                return true;
             } else if (item.getItemId() == R.id.navigation_profile) {
                 return true;
             }

@@ -33,7 +33,9 @@
         </provider>
         <activity
             android:name=".ItemAddActivity"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".HomePageActivity"
             android:exported="false">
@@ -69,6 +71,12 @@
             android:exported="false">
 
         </activity>
+        <activity
+            android:name=".CaptureAct"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"/>
+
     </application>
 
 </manifest>

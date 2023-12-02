@@ -12,12 +12,6 @@
         tools:layout="@layout/activity_home_page" />
 
     <fragment
-        android:id="@+id/navigation_camera"
-        android:name="com.example.pocketinventory.CameraActivity"
-        android:label="@string/title_camera"
-        tools:layout="@layout/activity_camera" />
-
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.example.pocketinventory.UserProfileActivity"
         android:label="@string/title_profile"
