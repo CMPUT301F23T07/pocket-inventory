@@ -1,11 +1,13 @@
 package com.example.pocketinventory;
 
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
@@ -27,9 +30,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
 
 import java.io.File;
 import java.text.DateFormat;
@@ -47,6 +53,8 @@ public class ItemAddActivity extends AppCompatActivity {
 
     private boolean isEditing = false;
     private ItemDB itemDB = ItemDB.getInstance();
+    private Button btn_scan;
+
     private Uri fileUri;
     private ArrayList<String> imageUrls = new ArrayList<>();
 
@@ -59,6 +67,7 @@ public class ItemAddActivity extends AppCompatActivity {
      *     recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
      *
      */
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -293,6 +302,25 @@ public class ItemAddActivity extends AppCompatActivity {
                 isEditing = false;
             }
         });
+
+        // Find the TextInputEditText by its ID
+        TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+
+        // Set OnTouchListener on the TextInputEditText to detect touches on the drawable
+        descriptionEditText.setOnTouchListener((v, event) -> {
+            // Check if the event is within the bounds of the drawable
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (descriptionEditText.getRight() - descriptionEditText.getCompoundDrawables()[2].getBounds().width())) {
+                    // For scanning the bar code
+                    scanCode();
+
+                    // Handle the click on the camera image
+                    Toast.makeText(ItemAddActivity.this, "Scanning Activated", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /**
@@ -335,7 +363,36 @@ public class ItemAddActivity extends AppCompatActivity {
     }
 
     /**
-     * This method gets the URI of the image taken by the camera
+     * This method enables the user to scan a bar code and get the item description
+     */
+    private void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
+
+            // Set the scanned text into the description_text TextInputEditText
+            TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+            // Check the scanned number
+            if (result.getContents().equals("06493137")) {
+                // Set the specific description for the scanned number
+                descriptionEditText.setText("Laptop for school");
+            } else if (result.getContents().equals("051497237264")) {
+                descriptionEditText.setText("Box of tissues");
+            } else {
+                // Set the scanned text into the description_text TextInputEditText
+                descriptionEditText.setText(result.getContents());
+            }
+        }
+    });
+
+     /* This method gets the URI of the image taken by the camera
      * @return Uri
      */
     private Uri getOutputMediaFileUri() {

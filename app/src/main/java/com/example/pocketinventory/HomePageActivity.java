@@ -118,9 +118,6 @@ public class HomePageActivity extends AppCompatActivity {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_home) {
                 return true;
-            } else if (item.getItemId() == R.id.navigation_camera) {
-                startActivity(new Intent(HomePageActivity.this, CameraActivity.class));
-                return true;
             } else if (item.getItemId() == R.id.navigation_profile) {
                 startActivity(new Intent(HomePageActivity.this, UserProfileActivity.class));
                 return true;
