@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -95,22 +96,38 @@ public class ItemAddActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         Button uploadButton = findViewById(R.id.upload_image_button);
+        // The upload button creates a dialog to choose between camera and gallery
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // check camera permissions
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-                    requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 0);
-                } else {
-                    // start camera activity and grab the image taken
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    fileUri = getOutputMediaFileUri();
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                    startActivityForResult(intent, 100);
-                }
+                CharSequence[] items = {"Camera", "Gallery"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(ItemAddActivity.this);
+                builder.setTitle("Choose Image Source");
+                builder.setItems(items, (dialog, which) -> {
+                    if (which == 0) {
+                        // check camera permissions
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                            requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 0);
+                        } else {
+                            // start camera activity and grab the image taken
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            fileUri = getOutputMediaFileUri();
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                            startActivityForResult(intent, 100);
+                        }
+                    } else {
+                        // check gallery permissions
+                        if (ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
+                            requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 0);
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 101);
+                        }
+                    }
+                });
+                builder.show();
             }
         });
-
 
 
         // Check if an item was passed in from the previous activity
@@ -435,6 +452,9 @@ public class ItemAddActivity extends AppCompatActivity {
 
         if (requestCode == 100 && resultCode == RESULT_OK) {
             uploadImageToFirestore(fileUri);
+        } else if (requestCode == 101 && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            uploadImageToFirestore(selectedImage);
         }
     }
 
