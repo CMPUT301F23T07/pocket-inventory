@@ -18,6 +18,10 @@ import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.intent.Intents.init;
+import static androidx.test.espresso.intent.Intents.intended;
+import static androidx.test.espresso.intent.Intents.intending;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
@@ -25,14 +29,19 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsString;
 
 import android.Manifest;
+import android.app.Activity;
+import android.app.Instrumentation;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
@@ -42,11 +51,14 @@ import android.widget.Toast;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.action.ViewActions;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.internal.platform.content.PermissionGranter;
+import androidx.test.platform.app.InstrumentationRegistry;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.permission.PermissionRequester;
 
 import com.google.android.gms.auth.api.phone.SmsCodeAutofillClient;
@@ -76,12 +88,24 @@ public class ScanTest {
 
     @Rule
     public TestRule chain = RuleChain.outerRule(autoSignInRule).around(activityRule);
+    @Rule
+    public GrantPermissionRule permissionCamera = GrantPermissionRule.grant(android.Manifest.permission.CAMERA);
 
 
     @After
     @Before
     public void deleteItems() {
         ItemDB.getInstance().deleteAllItems();
+    }
+
+    @Before
+    public void setUp() {
+        Intents.init();
+    }
+
+    @After
+    public void tearDown() {
+        Intents.release();
     }
 
 
@@ -122,6 +146,7 @@ public class ScanTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName())))
                 .perform(PickerActions.setDate(2020, 10, 10));
         onView(withText("OK")).perform(click());
+        onView(ViewMatchers.withId(R.id.serial_number_edit_text)).perform(ViewActions.replaceText("ABCD"));
         onView(withId(R.id.add_button)).perform(click());
 
     }
@@ -139,7 +164,9 @@ public class ScanTest {
             e.printStackTrace();
         }
 
+        // Click on the first item in the list
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        // Click on the scan item drawble
         onView(isRoot()).perform(clickXY(1000, 400));
 
         try {
@@ -148,10 +175,10 @@ public class ScanTest {
             e.printStackTrace();
         }
 
+        // Check if the scan activity is displayed
         onView(withId(R.id.scan_serial_number_button)).check(matches(isDisplayed()));
 
     }
-
 
 
     // US 05.01.01 (Test whether the Scan Activity working as expected)
@@ -166,6 +193,7 @@ public class ScanTest {
             e.printStackTrace();
         }
 
+        // Click on the first item in the list, then click on the scan item drawable
         onView(withId(R.id.log_list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(isRoot()).perform(clickXY(1000, 400));
 
@@ -174,12 +202,23 @@ public class ScanTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Mock the capture action to return a result to the Scan Activity
+        Intent resultData = new Intent();
+        resultData.putExtra(MediaStore.EXTRA_OUTPUT, "test");
+        Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
+        intending(hasAction(MediaStore.ACTION_IMAGE_CAPTURE)).respondWith(result);
         onView(withId(R.id.scan_serial_number_button)).perform(click());
+
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        // Check whether the serial number is successfully scanned and changed accordingly(ABCD -> "" ).
+        onView(withId(R.id.confirm_serial_number_button)).perform(click());
+        onView(withId(R.id.serial_number_edit_text)).check(matches(withText("")));
     }
 }
 
