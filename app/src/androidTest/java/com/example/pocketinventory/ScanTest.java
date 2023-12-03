@@ -204,6 +204,8 @@ public class ScanTest {
         }
 
         // Mock the capture action to return a result to the Scan Activity
+        // Ignore the warning message, as this is expected outcome for using Mock capture.
+        // We only need to check whether we can proceed to the next step with the UI
         Intent resultData = new Intent();
         resultData.putExtra(MediaStore.EXTRA_OUTPUT, "test");
         Instrumentation.ActivityResult result = new Instrumentation.ActivityResult(Activity.RESULT_OK, resultData);
@@ -216,7 +218,7 @@ public class ScanTest {
             e.printStackTrace();
         }
 
-        // Check whether the serial number is successfully scanned and changed accordingly(ABCD -> "" ).
+        // Check whether the serial number is successfully scanned and changed accordingly(It changes from "ABCD" to "" ).
         onView(withId(R.id.confirm_serial_number_button)).perform(click());
         onView(withId(R.id.serial_number_edit_text)).check(matches(withText("")));
     }
