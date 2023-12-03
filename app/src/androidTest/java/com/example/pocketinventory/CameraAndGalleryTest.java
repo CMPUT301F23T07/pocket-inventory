@@ -25,23 +25,48 @@ import android.widget.DatePicker;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
+import androidx.test.espresso.intent.Intents;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.GrantPermissionRule;
 
 import org.hamcrest.Matchers;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
     @LargeTest
     public class CameraAndGalleryTest {
+    private AutoSignInRule autoSignInRule = new AutoSignInRule();
+
+    private ActivityScenarioRule<HomePageActivity> activityRule =
+            new ActivityScenarioRule<>(HomePageActivity.class);
 
     @Rule
-    public IntentsTestRule<ItemAddActivity> intentsRule = new IntentsTestRule<>(ItemAddActivity.class);
+    public TestRule chain = RuleChain.outerRule(autoSignInRule).around(activityRule);
 
+    @After
+    @Before
+    public void deleteItems() {
+        ItemDB.getInstance().deleteAllItems();
+    }
+
+    @Before
+    public void setUp() {
+        Intents.init();
+    }
+
+    @After
+    public void tearDown() {
+        Intents.release();
+    }
     @Rule
     public GrantPermissionRule permissionRule = GrantPermissionRule.grant(android.Manifest.permission.CAMERA);
 
@@ -56,6 +81,8 @@ import org.junit.runner.RunWith;
 
     @Test
     public void testCameraIntent() {
+        onView(withId(R.id.add_item)).perform(click());
+
         onView(withId(R.id.make_edit_text)).perform(ViewActions.typeText("Apple"));
         onView(withId(R.id.model_edit_text)).perform(ViewActions.typeText("iPhone 12"));
         onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
@@ -82,18 +109,22 @@ import org.junit.runner.RunWith;
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
 
+        onView(withId(R.id.add_button)).perform(click());
+
 
     }
 
+
     @Test
     public void testGalleryIntent() {
-        onView(withId(R.id.make_edit_text)).perform(ViewActions.typeText("Apple"));
-        onView(withId(R.id.model_edit_text)).perform(ViewActions.typeText("iPhone 12"));
-        onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
-        onView(withId(R.id.estimated_value_edit_text)).perform(ViewActions.typeText("1000"));
-        CameraAndGalleryTest.setDate(R.id.date_of_purchase_edit_text, 2023, 9, 15);
-        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("Blue"));
-        Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, durable"));
+        onView(withId(R.id.add_item)).perform(click());
+        Espresso.onView(withId(R.id.make_edit_text)).perform(ViewActions.typeText("Redbull"));
+        Espresso.onView(withId(R.id.model_edit_text)).perform(ViewActions.typeText("F1"));
+        onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("33412"));
+        onView(withId(R.id.estimated_value_edit_text)).perform(ViewActions.typeText("200000"));
+        CameraAndGalleryTest.setDate(R.id.date_of_purchase_edit_text, 2020, 1, 22);
+        onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("Red"));
+        Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, Agile"));
 
         onView(withId(R.id.upload_image_button)).perform(click());
         // Build an ActivityResult that will return from the camera app and set your extras (if any).
@@ -111,6 +142,7 @@ import org.junit.runner.RunWith;
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
 
+        onView(withId(R.id.add_button)).perform(click());
 
     }
 }
