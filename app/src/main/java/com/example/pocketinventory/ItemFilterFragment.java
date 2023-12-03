@@ -100,7 +100,7 @@ public class ItemFilterFragment extends DialogFragment {
 
         //Set up multiselect button
         MaterialButtonToggleGroup toggleGroup = (MaterialButtonToggleGroup) view.findViewById(R.id.filterButtonToggleGroup);
-        view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
+        view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.primary_bronze));
         ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.black));
         view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
         ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.white));
@@ -108,12 +108,12 @@ public class ItemFilterFragment extends DialogFragment {
             if (isChecked) {
                 //Change color
                 if (checkedId == R.id.buttonAND) {
-                    view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
+                    view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.primary_bronze));
                     ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.black));
                     view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
                     ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.white));
                 } else {
-                    view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
+                    view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.primary_bronze));
                     ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.black));
                     view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
                     ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.white));
