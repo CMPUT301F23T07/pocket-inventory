@@ -32,16 +32,16 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity
-            android:name=".ItemAddActivity"
+            android:name=".Activities.ItemAddActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".HomePageActivity"
+            android:name=".Activities.HomePageActivity"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".SignUpActivity"
+            android:name=".Activities.SignUpActivity"
             android:exported="false">
 
             <meta-data
@@ -49,7 +49,7 @@
                 android:value=""/>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +61,7 @@
                 android:value=""/>
         </activity>
         <activity
-            android:name=".UserProfileActivity"
+            android:name=".Activities.UserProfileActivity"
             android:exported="false">
 
         </activity>
@@ -72,7 +72,7 @@
         </activity>
 
         <activity
-            android:name=".ScanSerialNumberActivity"
+            android:name=".Activities.ScanSerialNumberActivity"
             android:exported="false">
 
         </activity>

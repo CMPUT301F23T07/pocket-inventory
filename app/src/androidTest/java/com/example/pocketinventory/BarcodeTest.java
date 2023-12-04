@@ -39,6 +39,7 @@ import androidx.test.filters.LargeTest;
 
 import android.graphics.Point;
 
+import com.example.pocketinventory.Activities.HomePageActivity;
 import com.google.zxing.client.android.Intents;
 
 import org.hamcrest.Matcher;

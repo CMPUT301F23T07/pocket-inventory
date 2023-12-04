@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="@color/tertiary_background"
-    tools:context=".SignUpActivity">
+    tools:context=".Activities.SignUpActivity">
 
     <ScrollView
         android:layout_width="match_parent"

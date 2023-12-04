@@ -3,6 +3,8 @@ package com.example.pocketinventory;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
+import com.example.pocketinventory.Fragments.ItemFilterFragment;
+
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;

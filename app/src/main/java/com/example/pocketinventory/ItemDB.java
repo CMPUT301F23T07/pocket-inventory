@@ -1,5 +1,6 @@
 package com.example.pocketinventory;
 
+import com.example.pocketinventory.Interfaces.AddItemCallback;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;

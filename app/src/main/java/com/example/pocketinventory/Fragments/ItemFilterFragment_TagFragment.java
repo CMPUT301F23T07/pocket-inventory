@@ -1,9 +1,8 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,7 @@ import android.widget.AutoCompleteTextView;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.pocketinventory.R;
 
 import java.util.ArrayList;
 /**

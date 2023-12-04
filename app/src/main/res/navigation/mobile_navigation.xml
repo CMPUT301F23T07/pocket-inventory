@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.pocketinventory.HomePageActivity"
+        android:name="com.example.pocketinventory.Activities.HomePageActivity"
         android:label="@string/title_home"
         tools:layout="@layout/activity_home_page" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.pocketinventory.UserProfileActivity"
+        android:name="com.example.pocketinventory.Activities.UserProfileActivity"
         android:label="@string/title_profile"
         tools:layout="@layout/activity_userprofile" />
 </navigation>
