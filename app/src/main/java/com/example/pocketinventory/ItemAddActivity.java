@@ -502,9 +502,10 @@ public class ItemAddActivity extends AppCompatActivity {
             uploadImageToFirestore(selectedImage);
         }
 
-        if (requestCode == 1 && resultCode == RESULT_OK){
+        if (requestCode == 1 && resultCode == RESULT_OK) {
             String serialNumber = data.getStringExtra("result");
-            serialNumberEditText.setText(serialNumber);}
+            serialNumberEditText.setText(serialNumber);
+        }
         else {
             Log.d("Upload", "Failed to upload image to Firestore");
         }
