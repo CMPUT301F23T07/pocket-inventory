@@ -59,7 +59,7 @@ import org.junit.runner.RunWith;
         Espresso.onView(ViewMatchers.withId(R.id.description_edit_text)).perform(ViewActions.typeText("xxxy"));
         AddTest.setDate(R.id.date_of_purchase_edit_text, 2023, 9, 15);
         Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, durable"));
-
+        Espresso.closeSoftKeyboard();
     }
     private void fillInasus(){
         // Fill in item details
@@ -70,7 +70,7 @@ import org.junit.runner.RunWith;
         Espresso.onView(ViewMatchers.withId(R.id.description_edit_text)).perform(ViewActions.typeText("asdad"));
         AddTest.setDate(R.id.date_of_purchase_edit_text, 2020, 9, 15);
         Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, durable"));
-
+        Espresso.closeSoftKeyboard();
     }
     //US 01.01.01,US 02.01.01,US 03.02.01
     @Test

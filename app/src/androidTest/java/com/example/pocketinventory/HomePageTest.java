@@ -2,6 +2,7 @@ package com.example.pocketinventory;
 
 import static androidx.test.espresso.Espresso.onView;
 
+import androidx.test.espresso.Espresso;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.assertion.ViewAssertions;
@@ -100,6 +101,7 @@ public class HomePageTest {
         onView(withId(R.id.comment_edit_text)).perform(ViewActions.typeText("my comment wbwbwbwbwbwb!!!"));
         onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag1"));
         onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
+        Espresso.closeSoftKeyboard();
     }
 
     private void fillInFormApple() {
@@ -115,6 +117,7 @@ public class HomePageTest {
         onView(withId(R.id.comment_edit_text)).perform(ViewActions.typeText("my comment wbwbwbwbwbwb!!!"));
         onView(withId(R.id.tag_edit_text)).perform(ViewActions.typeText("mytag2"));
         onView(withId(R.id.serial_number_edit_text)).perform(ViewActions.typeText("1234567890"));
+        Espresso.closeSoftKeyboard();
     }
 
     // US 01.01.01
