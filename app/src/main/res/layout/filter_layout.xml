@@ -1,198 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/textView65"
-        android:layout_width="138dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="24dp"
-        android:text="Tags Match:"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/filterButtonToggleGroup"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/filterButtonToggleGroup" />
-
-    <Button
-        android:id="@+id/buttonAddTag"
-        android:layout_width="64dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="+"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/primary_bronze"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView64" />
-
-    <TextView
-        android:id="@+id/textView62"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Date Range"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView61"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Description Keyword"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAfter" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/myTextInputLayout3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView61">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/descriptionInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description"
-            android:singleLine="true" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView63"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Make"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTextInputLayout3" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/myTextInputLayout4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView63">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/makeInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Make"
-            android:singleLine="true" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <TextView
-        android:id="@+id/textView64"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Tag"
-        android:textColor="@color/white"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myTextInputLayout4" />
-
-    <Button
-        android:id="@+id/buttonBefore"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginEnd="24dp"
-        android:backgroundTint="@color/primary_bronze"
-        android:onClick="onClick2"
-        android:text="(To)"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/buttonAfter" />
-
-    <Button
-        android:id="@+id/buttonAfter"
-        android:layout_width="wrap_content"
-        android:layout_height="41dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/primary_bronze"
-        android:onClick="onClick1"
-        android:text="(From)"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView62" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/filterTagView"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddTag" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/filterButtonToggleGroup"
-        android:layout_width="184dp"
-        android:layout_height="43dp"
-        android:layout_marginEnd="24dp"
-        app:checkedButton="@id/buttonAND"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filterTagView"
-        app:selectionRequired="true"
-        app:singleSelection="true">
+        <TextView
+            android:id="@+id/textView65"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:text="Tags Match:"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/filterTagView" />
 
         <Button
-            android:id="@+id/buttonAND"
-            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/buttonAddTag"
+            android:layout_width="64dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="+"
+            android:textColor="@color/black"
+            app:backgroundTint="@color/primary_bronze"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView64" />
+
+        <TextView
+            android:id="@+id/textView62"
             android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:text="All" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Date Range"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView61"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Description Keyword"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAfter" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/myTextInputLayout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView61">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/descriptionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView63"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Make"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myTextInputLayout3" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/myTextInputLayout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView63">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/makeInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Make"
+                android:singleLine="true" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView64"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="Tag"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/myTextInputLayout4" />
 
         <Button
-            android:id="@+id/buttonOR"
-            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/buttonBefore"
             android:layout_width="wrap_content"
-            android:layout_height="41dp"
-            android:text="One" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:backgroundTint="@color/primary_bronze"
+            android:onClick="onClick2"
+            android:text="(To)"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/buttonAfter" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="53dp"
-        android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
-        app:layout_constraintEnd_toStartOf="@+id/buttonBefore"
-        app:layout_constraintStart_toEndOf="@+id/buttonAfter"
-        app:layout_constraintTop_toTopOf="@+id/buttonAfter"
-        app:srcCompat="@drawable/double_arrow" />
+        <Button
+            android:id="@+id/buttonAfter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="@color/primary_bronze"
+            android:onClick="onClick1"
+            android:text="(From)"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/filterTagView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonAddTag" />
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/filterButtonToggleGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            app:checkedButton="@id/buttonAND"
+            app:layout_constraintBottom_toBottomOf="@+id/textView65"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView65"
+            app:selectionRequired="true"
+            app:singleSelection="true">
+
+            <Button
+                android:id="@+id/buttonAND"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All" />
+
+            <Button
+                android:id="@+id/buttonOR"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="One" />
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="53dp"
+            android:layout_height="25dp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
+            app:layout_constraintEnd_toStartOf="@+id/buttonBefore"
+            app:layout_constraintStart_toEndOf="@+id/buttonAfter"
+            app:layout_constraintTop_toTopOf="@+id/buttonAfter"
+            app:srcCompat="@drawable/double_arrow" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
