@@ -110,21 +110,22 @@ public class ItemAddActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 CharSequence[] items = {"Camera", "Gallery"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(ItemAddActivity.this);
                 builder.setTitle("Choose Image Source");
                 builder.setItems(items, (dialog, which) -> {
                     if (which == 0) {
                         // check camera permissions
-                        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                             requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 0);
-                        } else {
+                        }
                             // start camera activity and grab the image taken
                             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                             fileUri = getOutputMediaFileUri();
                             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
                             startActivityForResult(intent, 100);
-                        }
+
                     } else {
                         // check gallery permissions
                         if (ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
@@ -502,6 +503,8 @@ public class ItemAddActivity extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK){
             String serialNumber = data.getStringExtra("result");
             serialNumberEditText.setText(serialNumber);
+        else {
+            Log.d("Upload", "Failed to upload image to Firestore");
         }
     }
 

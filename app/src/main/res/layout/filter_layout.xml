@@ -6,6 +6,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView65"
+        android:layout_width="138dp"
+        android:layout_height="28dp"
+        android:layout_marginStart="24dp"
+        android:text="Tags Match:"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/filterButtonToggleGroup"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/filterButtonToggleGroup" />
+
     <Button
         android:id="@+id/buttonAddTag"
         android:layout_width="64dp"
@@ -162,13 +174,12 @@
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/filterButtonToggleGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="184dp"
+        android:layout_height="43dp"
+        android:layout_marginEnd="24dp"
         app:checkedButton="@id/buttonAND"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonAddTag"
-        app:layout_constraintTop_toBottomOf="@+id/textView64"
+        app:layout_constraintTop_toBottomOf="@+id/filterTagView"
         app:selectionRequired="true"
         app:singleSelection="true">
 
@@ -177,14 +188,14 @@
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
-            android:text="Match All"/>
+            android:text="All" />
 
         <Button
             android:id="@+id/buttonOR"
             style="?attr/materialButtonOutlinedStyle"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
-            android:text="Match One"/>
+            android:text="One" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
