@@ -49,9 +49,6 @@ The goal is to develop an app that enables users to efficiently record, manage, 
 - **US 06.01.01** - As a user, I want a profile with a unique username.
 
 ## Note
- - The app is currently being developed
- - The Photograph and Scanning functions still need to be implemented
- - This project is open to modifications, additional features, and improvements. 
-It is crucial to engage with the end-users to propose options and trade-offs, 
-ensuring the app meets their needs effectively.
+ - The app is successfully developed
+ - Developers are open to feedback
 
