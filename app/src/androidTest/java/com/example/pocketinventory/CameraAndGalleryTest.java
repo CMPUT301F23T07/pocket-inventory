@@ -92,7 +92,7 @@ import org.junit.runner.RunWith;
         CameraAndGalleryTest.setDate(R.id.date_of_purchase_edit_text, 2023, 9, 15);
         onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("Blue"));
         Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, durable"));
-
+        Espresso.closeSoftKeyboard();
         onView(withId(R.id.upload_image_button)).perform(click());
         // Build an ActivityResult that will return from the camera app and set your extras (if any).
         Intent resultData = new Intent();
@@ -111,6 +111,8 @@ import org.junit.runner.RunWith;
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
 
+        onView(withId(R.id.add_button)).perform(ViewActions.click());
+
     }
 
     //Citation: https://stackoverflow.com/questions/38391739/how-to-mock-intent-action-pick
@@ -124,6 +126,7 @@ import org.junit.runner.RunWith;
         CameraAndGalleryTest.setDate(R.id.date_of_purchase_edit_text, 2020, 1, 22);
         onView(withId(R.id.description_edit_text)).perform(ViewActions.typeText("Red"));
         Espresso.onView(withId(R.id.tag_edit_text)).perform(typeText("expensive, fast, Agile"));
+        Espresso.closeSoftKeyboard();
 
         onView(withId(R.id.upload_image_button)).perform(click());
         // Build an ActivityResult that will return from the camera app and set your extras (if any).
@@ -140,6 +143,8 @@ import org.junit.runner.RunWith;
 
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
+
+        onView(withId(R.id.add_button)).perform(ViewActions.click());
     }
 }
 
