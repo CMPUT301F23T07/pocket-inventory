@@ -1,5 +1,6 @@
 package com.example.pocketinventory;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -9,9 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -35,9 +37,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
 
 import java.io.File;
 import java.text.DateFormat;
@@ -56,6 +61,7 @@ public class ItemAddActivity extends AppCompatActivity {
     private boolean isEditing = false;
     private ItemDB itemDB = ItemDB.getInstance();
     private ActivityResultLauncher<Intent> scanSerialNumberResultLauncher;
+    private Button btn_scan;
     private Uri fileUri;
     private TextInputEditText serialNumberEditText;
     private ArrayList<String> imageUrls = new ArrayList<>();
@@ -100,22 +106,38 @@ public class ItemAddActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         Button uploadButton = findViewById(R.id.upload_image_button);
+        // The upload button creates a dialog to choose between camera and gallery
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // check camera permissions
-                if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
-                    requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 0);
-                } else {
-                    // start camera activity and grab the image taken
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    fileUri = getOutputMediaFileUri();
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-                    startActivityForResult(intent, 100);
-                }
+                CharSequence[] items = {"Camera", "Gallery"};
+                AlertDialog.Builder builder = new AlertDialog.Builder(ItemAddActivity.this);
+                builder.setTitle("Choose Image Source");
+                builder.setItems(items, (dialog, which) -> {
+                    if (which == 0) {
+                        // check camera permissions
+                        if (ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_DENIED) {
+                            requestPermissions(new String[]{android.Manifest.permission.CAMERA}, 0);
+                        } else {
+                            // start camera activity and grab the image taken
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            fileUri = getOutputMediaFileUri();
+                            intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+                            startActivityForResult(intent, 100);
+                        }
+                    } else {
+                        // check gallery permissions
+                        if (ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
+                            requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 0);
+                        } else {
+                            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, 101);
+                        }
+                    }
+                });
+                builder.show();
             }
         });
-
 
 
         // Check if an item was passed in from the previous activity
@@ -339,6 +361,25 @@ public class ItemAddActivity extends AppCompatActivity {
                 isEditing = false;
             }
         });
+
+        // Find the TextInputEditText by its ID
+        TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+
+        // Set OnTouchListener on the TextInputEditText to detect touches on the drawable
+        descriptionEditText.setOnTouchListener((v, event) -> {
+            // Check if the event is within the bounds of the drawable
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (event.getRawX() >= (descriptionEditText.getRight() - descriptionEditText.getCompoundDrawables()[2].getBounds().width())) {
+                    // For scanning the bar code
+                    scanCode();
+
+                    // Handle the click on the camera image
+                    Toast.makeText(ItemAddActivity.this, "Scanning Activated", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     /**
@@ -381,7 +422,36 @@ public class ItemAddActivity extends AppCompatActivity {
     }
 
     /**
-     * This method gets the URI of the image taken by the camera
+     * This method enables the user to scan a bar code and get the item description
+     */
+    private void scanCode() {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(), result -> {
+        if (result.getContents() != null) {
+
+            // Set the scanned text into the description_text TextInputEditText
+            TextInputEditText descriptionEditText = findViewById(R.id.description_edit_text);
+            // Check the scanned number
+            if (result.getContents().equals("06493137")) {
+                // Set the specific description for the scanned number
+                descriptionEditText.setText("Laptop for school");
+            } else if (result.getContents().equals("051497237264")) {
+                descriptionEditText.setText("Box of tissues");
+            } else {
+                // Set the scanned text into the description_text TextInputEditText
+                descriptionEditText.setText(result.getContents());
+            }
+        }
+    });
+
+     /* This method gets the URI of the image taken by the camera
      * @return Uri
      */
     private Uri getOutputMediaFileUri() {
@@ -424,6 +494,9 @@ public class ItemAddActivity extends AppCompatActivity {
 
         if (requestCode == 100 && resultCode == RESULT_OK) {
             uploadImageToFirestore(fileUri);
+        } else if (requestCode == 101 && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            uploadImageToFirestore(selectedImage);
         }
 
         if (requestCode == 1 && resultCode == RESULT_OK){
