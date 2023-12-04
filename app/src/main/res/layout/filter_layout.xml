@@ -143,7 +143,7 @@
         android:backgroundTint="@color/primary_bronze"
         android:textColor="@color/black"
         android:onClick="onClick2"
-        android:text="(Optional)"
+        android:text="Optional"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonAfter" />
@@ -157,7 +157,7 @@
         android:backgroundTint="@color/primary_bronze"
         android:textColor="@color/black"
         android:onClick="onClick1"
-        android:text="(Optional)"
+        android:text="Optional"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
