@@ -71,7 +71,10 @@ public class HomePageTest {
         ItemDB.getInstance().deleteAllItems();
     }
 
-    //use onView(isRoot()).perform(waitFor(5000)) to wait for 5 seconds
+    /*use onView(isRoot()).perform(waitFor(5000)) to wait for 5 seconds
+     *   Source: https://stackoverflow.com/a/52831832
+     */
+
     public static ViewAction waitFor(long delay) {
         return new ViewAction() {
             @Override public Matcher<View> getConstraints() {
