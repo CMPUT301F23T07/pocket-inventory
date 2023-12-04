@@ -56,7 +56,8 @@ public class UserProfileActivity extends AppCompatActivity {
         // This controls the navigation between the different activities
         bottomNavigationView.setOnItemSelectedListener(item -> {
             if (item.getItemId() == R.id.navigation_home) {
-                startActivity(new Intent(UserProfileActivity.this, HomePageActivity.class));
+                //startActivity(new Intent(UserProfileActivity.this, HomePageActivity.class));
+                finish();
                 return true;
             } else if (item.getItemId() == R.id.navigation_profile) {
                 return true;
@@ -64,4 +65,5 @@ public class UserProfileActivity extends AppCompatActivity {
             return false;
         });
     }
+
 }

@@ -188,7 +188,7 @@ public class ItemFilterFragment extends DialogFragment {
      * @return Date Object
      */
     public static Date parseDate(@Nullable String date) {
-        if (date == null || date.isEmpty() || date.compareTo("(Optional)") == 0) {
+        if (date == null || date.isEmpty() || date.compareTo("(From)") == 0 || date.compareTo("(To)") == 0) {
             return null;
         }
         DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
@@ -245,12 +245,12 @@ public class ItemFilterFragment extends DialogFragment {
             beforeDate = temp;
         }
 
-        if (!fc.after.isEmpty() && fc.after.compareTo("(Optional)") != 0) {
+        if (!fc.after.isEmpty() && fc.after.compareTo("(From)") != 0) {
             final Date finalAfterDate = afterDate;
             filteredList.removeIf(expense -> expense.getDate().compareTo(finalAfterDate) < 0);
             changed = true;
         }
-        if (!fc.before.isEmpty() && fc.before.compareTo("(Optional)") != 0) {
+        if (!fc.before.isEmpty() && fc.before.compareTo("(To)") != 0) {
             final Date finalBeforeDate = beforeDate;
             filteredList.removeIf(expense -> expense.getDate().compareTo(finalBeforeDate) > 0);
             changed = true;
