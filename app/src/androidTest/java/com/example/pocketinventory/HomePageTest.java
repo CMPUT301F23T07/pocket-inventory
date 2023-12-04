@@ -330,6 +330,7 @@ public class HomePageTest {
         onView(withId(R.id.filterTagAutoComplete)).perform(ViewActions.typeText("mytag2"));
         onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
         onView(withId(android.R.id.button1)).perform(click());
+        onView(isRoot()).perform(waitFor(1500));
         onView(withId(R.id.buttonOR)).perform(click());
         onView(withId(android.R.id.button1)).perform(click());
         onView(isRoot()).perform(waitFor(500));
@@ -487,6 +488,7 @@ public class HomePageTest {
 
         // Add tags wanted to the tags EditText
         onView(withId(R.id.tagSelectedEditText)).perform(ViewActions.typeText("Durable, No Warranty"));
+        onView(isRoot()).perform(ViewActions.closeSoftKeyboard());
         onView(withText("Confirm")).perform(click());
 
         onView(isRoot()).perform(waitFor(500));
