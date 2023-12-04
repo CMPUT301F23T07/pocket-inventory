@@ -63,6 +63,7 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1") {
         exclude(module = "protobuf-lite")
     }
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.5.1")
     // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.5.0"))
     // Declare the dependency for the Cloud Firestore library
