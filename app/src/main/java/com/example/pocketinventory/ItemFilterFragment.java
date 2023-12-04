@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,7 +90,7 @@ public class ItemFilterFragment extends DialogFragment {
         ItemFilterFragment self = this;
         buttonAdd.setOnClickListener(v -> {
             ItemFilterFragment_TagFragment fragment = new ItemFilterFragment_TagFragment(self, tagsUsed);
-            fragment.show(getFragmentManager(), "AddTag");
+            fragment.show(getChildFragmentManager(), "AddTag");
         });
 
         //Set up tag list
@@ -100,26 +101,38 @@ public class ItemFilterFragment extends DialogFragment {
 
         //Set up multiselect button
         MaterialButtonToggleGroup toggleGroup = (MaterialButtonToggleGroup) view.findViewById(R.id.filterButtonToggleGroup);
-        view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
-        ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.black));
-        view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
-        ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.white));
+        view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.primary_bronze, null));
+        ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.black, null));
+        view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.transparent, null));
+        ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.white, null));
+        refreshMultiSelect();
         toggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 //Change color
                 if (checkedId == R.id.buttonAND) {
-                    view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
-                    ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.black));
-                    view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
-                    ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.white));
+                    view.findViewById(R.id.buttonAND).setBackgroundColor(
+                            getResources().getColor(R.color.primary_bronze, null));
+                    ((Button)view.findViewById(R.id.buttonAND)).setTextColor(
+                            getResources().getColor(R.color.black, null));
+                    view.findViewById(R.id.buttonOR).setBackgroundColor(
+                            getResources().getColor(R.color.transparent, null));
+                    ((Button)view.findViewById(R.id.buttonOR)).setTextColor(
+                            getResources().getColor(R.color.white, null));
                 } else {
-                    view.findViewById(R.id.buttonOR).setBackgroundColor(getResources().getColor(R.color.md_theme_light_inversePrimary));
-                    ((Button)view.findViewById(R.id.buttonOR)).setTextColor(getResources().getColor(R.color.black));
-                    view.findViewById(R.id.buttonAND).setBackgroundColor(getResources().getColor(R.color.md_theme_dark_surfaceVariant));
-                    ((Button)view.findViewById(R.id.buttonAND)).setTextColor(getResources().getColor(R.color.white));
+                    view.findViewById(R.id.buttonOR).setBackgroundColor(
+                            getResources().getColor(R.color.primary_bronze, null));
+                    ((Button)view.findViewById(R.id.buttonOR)).setTextColor(
+                            getResources().getColor(R.color.black, null));
+                    view.findViewById(R.id.buttonAND).setBackgroundColor(
+                            getResources().getColor(R.color.transparent, null));
+                    ((Button)view.findViewById(R.id.buttonAND)).setTextColor(
+                            getResources().getColor(R.color.white, null));
                 }
             }
         });
+        refreshMultiSelect();
+
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder = builder
@@ -158,12 +171,14 @@ public class ItemFilterFragment extends DialogFragment {
         //make a copy of the list
         ArrayList<Item> filteredList = new ArrayList<Item>(list);
         String logic;
-        if (((MaterialButtonToggleGroup)view.findViewById(R.id.filterButtonToggleGroup)).getCheckedButtonId() == R.id.buttonAND) {
+        if (((MaterialButtonToggleGroup)view.findViewById(R.id.filterButtonToggleGroup)).getCheckedButtonId()
+                == R.id.buttonAND) {
             logic = "and";
         } else {
             logic = "or";
         }
-        FilterContext fc = new FilterContext(after, before, description.toString(), make.toString(), tags, logic, homePageActivity);
+        FilterContext fc = new FilterContext(after, before, description.toString(), make.toString(),
+                tags, logic, homePageActivity);
         filter(fc);
     }
 
@@ -191,7 +206,8 @@ public class ItemFilterFragment extends DialogFragment {
      * @param which
      */
     public void setDate(Calendar calendar, String which) {
-        String date = (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.YEAR);
+        String date = (calendar.get(Calendar.MONTH) + 1) + "/" + calendar.get(Calendar.DAY_OF_MONTH)
+                + "/" + calendar.get(Calendar.YEAR);
         if (which == "after") {
             ((TextView)view.findViewById(R.id.buttonAfter)).setText(date);
         } else {
@@ -272,6 +288,27 @@ public class ItemFilterFragment extends DialogFragment {
         }
         return changed;
     }
+    /**
+     * Start a repeated task to hide/show multiselect based on the number of tags.
+     *
+     */
+    private void refreshMultiSelect() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (tags.size() <= 1) {
+                    view.findViewById(R.id.textView65).setVisibility(View.GONE);
+                    view.findViewById(R.id.filterButtonToggleGroup).setVisibility(View.GONE);
+                } else {
+                    view.findViewById(R.id.textView65).setVisibility(View.VISIBLE);
+                    view.findViewById(R.id.filterButtonToggleGroup).setVisibility(View.VISIBLE);
+                }
+                handler.postDelayed(this, 500);
+            }
+        }, 0);
+    }
+
+
 
     /**
     * A simple class to record filter settings
@@ -284,7 +321,8 @@ public class ItemFilterFragment extends DialogFragment {
         private final ArrayList<String> tags;
         private final String logic;
         private final HomePageActivity homePageActivity;
-        public FilterContext(String after, String before, String description, String make,ArrayList<String> tags,String logic, HomePageActivity homePageActivity) {
+        public FilterContext(String after, String before, String description, String make,
+                             ArrayList<String> tags,String logic, HomePageActivity homePageActivity) {
             this.after = after;
             this.before = before;
             this.description = description;
@@ -294,5 +332,6 @@ public class ItemFilterFragment extends DialogFragment {
             this.homePageActivity = homePageActivity;
         }
     }
+
 
 }

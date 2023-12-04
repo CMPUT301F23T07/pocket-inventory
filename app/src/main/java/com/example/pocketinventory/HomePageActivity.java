@@ -150,7 +150,9 @@ public class HomePageActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 itemFilterFragment.setDate(myCalendar, "after");
             };
-            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH));
+            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,
+                    date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
@@ -171,7 +173,9 @@ public class HomePageActivity extends AppCompatActivity {
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 itemFilterFragment.setDate(myCalendar, "before");
             };
-            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),myCalendar.get(Calendar.DAY_OF_MONTH));
+            DatePickerDialog datePickerDialog = new DatePickerDialog(HomePageActivity.this,
+                    date,myCalendar.get(Calendar.YEAR),myCalendar.get(Calendar.MONTH),
+                    myCalendar.get(Calendar.DAY_OF_MONTH));
             datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             datePickerDialog.show();
         }
