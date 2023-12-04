@@ -162,7 +162,7 @@
                 android:id="@+id/description_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/ic_baseline_camera_alt_24"/>
+                android:drawableEnd="@drawable/baseline_document_scanner_24"/>
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
