@@ -1,11 +1,16 @@
 package com.example.pocketinventory;
 
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import android.app.Activity;
 import android.annotation.SuppressLint;
 import android.Manifest;
 import android.app.AlertDialog;
@@ -20,6 +25,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.DatePicker;
@@ -54,9 +60,10 @@ public class ItemAddActivity extends AppCompatActivity {
 
     private boolean isEditing = false;
     private ItemDB itemDB = ItemDB.getInstance();
+    private ActivityResultLauncher<Intent> scanSerialNumberResultLauncher;
     private Button btn_scan;
-
     private Uri fileUri;
+    private TextInputEditText serialNumberEditText;
     private ArrayList<String> imageUrls = new ArrayList<>();
 
 
@@ -74,6 +81,8 @@ public class ItemAddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_add);
 
+        Context itemAddActivityContext = getApplicationContext();
+
         Button cancelButton = findViewById(R.id.cancel_button);
         Button addButton = findViewById(R.id.add_button);
         Button deleteButton = findViewById(R.id.delete_button);
@@ -86,6 +95,7 @@ public class ItemAddActivity extends AppCompatActivity {
         TextInputLayout makeInput = findViewById(R.id.make_text);
         TextInputLayout modelInput = findViewById(R.id.model_text);
         TextInputLayout serialInput = findViewById(R.id.serial_number_text);
+        serialNumberEditText = findViewById(R.id.serial_number_edit_text);
         TextInputLayout estimatedValueInput = findViewById(R.id.estimated_value_text);
         TextInputLayout dateOfPurchaseInput = findViewById(R.id.date_of_purchase_text);
         TextInputLayout descriptionInput = findViewById(R.id.description_text);
@@ -166,6 +176,38 @@ public class ItemAddActivity extends AppCompatActivity {
             String tagsString = tagsStringBuilder.toString();
             // Set the String of tags (comma seperating them) to the EditText associated with the tags
             tagsInput.getEditText().setText(tagsString);
+
+
+
+
+            // Used the source ChatGPT 3.5 with prompt "How to access the image from edit text and make it a button clickable" on Nov 28, 2023 for the next 5 lines of code
+
+            // When scan icon is clicked within the serial number edit text
+            serialInput.getEditText().setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    // Check if the event is within the bounds of the scan icon
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
+                        if (event.getRawX() >= (serialNumberEditText.getRight() - serialNumberEditText.getCompoundDrawables()[2].getBounds().width())) {
+                            // Handle the click on the scan icon
+                            // Start the scanning serial number activity
+                            Intent intent1 = new Intent(itemAddActivityContext, ScanSerialNumberActivity.class);
+                            intent1.putExtra("item", item);
+                            scanSerialNumberLauncher.launch(intent1);
+                        }
+                        else
+                        {
+                            // Handle the click on the edit text
+                            // Allow for editing the edit text when clicked anywhere within the edit text excluding the scan icon
+                            serialNumberEditText.requestFocus();
+                            serialNumberEditText.setSelection(serialNumberEditText.getText().length());
+                            InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            manager.showSoftInput(serialNumberEditText, InputMethodManager.SHOW_IMPLICIT);
+                        }
+                    }
+                    return true;
+                }
+            });
 
             imageUrls = item.getImageUrls();
 
@@ -457,6 +499,10 @@ public class ItemAddActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
             uploadImageToFirestore(selectedImage);
         }
+
+        if (requestCode == 1 && resultCode == RESULT_OK){
+            String serialNumber = data.getStringExtra("result");
+            serialNumberEditText.setText(serialNumber);
         else {
             Log.d("Upload", "Failed to upload image to Firestore");
         }
@@ -508,4 +554,25 @@ public class ItemAddActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    /**
+     * ActivityResultLauncher to handle the result of starting the scanSerialNumberActivity.
+     * This launcher captures the result of the scanSerialNumberActivity, which is initiated
+     * to capture an image of the serial number using the device's camera.
+     */
+    private ActivityResultLauncher<Intent> scanSerialNumberLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+
+                // Callback method invoked when the result of the scanSerialNumberActivity is received.
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    // If the image is successfully captured by the camera
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Set the captured serial number text to the EditText
+                        serialNumberEditText.setText(result.getData().getStringExtra("serialNumber"));
+                    }
+                }
+            }
+    );
 }

@@ -77,8 +77,13 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/serial_number_edit_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:drawableEnd="@drawable/baseline_document_scanner_24" />
+
+
         </com.google.android.material.textfield.TextInputLayout>
+
+
     </LinearLayout>
 
 

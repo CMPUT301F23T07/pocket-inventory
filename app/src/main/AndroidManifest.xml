@@ -33,8 +33,7 @@
         </provider>
         <activity
             android:name=".ItemAddActivity"
-            android:exported="false" >
-
+            android:exported="false">
         </activity>
         <activity
             android:name=".HomePageActivity"
@@ -68,6 +67,12 @@
         </activity>
         <activity
             android:name=".CameraActivity"
+            android:exported="false">
+
+        </activity>
+
+        <activity
+            android:name=".ScanSerialNumberActivity"
             android:exported="false">
 
         </activity>
