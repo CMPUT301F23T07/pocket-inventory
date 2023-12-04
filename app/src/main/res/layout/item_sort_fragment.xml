@@ -11,16 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/Sortby"
-        android:textSize="25dp"
-        android:text="    Sort by\n    __________________________"
-        android:textColor="@color/white"/>
+        android:textSize="30dp"
+        android:text="    Sort by\n  ______________________"
+        android:textColor="@color/white"
+        android:paddingTop="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/Date"
         android:text="   Date"
-        android:textSize="30dp"
+        android:textSize="25dp"
         android:padding="5dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/Sortby"
@@ -54,8 +55,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/Description"
         android:text="   Description"
-        android:textSize="30dp"
-        android:padding="5dp"
+        android:textSize="25dp"
+        android:paddingTop="15dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/Date"
         android:textColor="@color/white" />
@@ -90,8 +91,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/Make"
         android:text="   Make"
-        android:textSize="30dp"
-        android:padding="5dp"
+        android:textSize="25dp"
+        android:paddingTop="15dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/Description"
         android:textColor="@color/white" />
@@ -126,8 +127,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/Value"
         android:text="   Value"
-        android:textSize="30dp"
-        android:padding="5dp"
+        android:textSize="25dp"
+        android:paddingTop="15dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/Make"
         android:textColor="@color/white" />
@@ -162,8 +163,8 @@
         android:layout_height="wrap_content"
         android:id="@+id/Tag"
         android:text="   Tag"
-        android:textSize="30dp"
-        android:padding="5dp"
+        android:textSize="25dp"
+        android:paddingTop="15dp"
         android:layout_marginTop="10dp"
         android:layout_below="@+id/Value"
         android:textColor="@color/white" />

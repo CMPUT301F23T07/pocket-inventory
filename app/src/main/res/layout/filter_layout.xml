@@ -131,6 +131,7 @@
         android:onClick="onClick2"
         android:text="(To)"
         android:textColor="@color/black"
+        android:text="Optional"
         app:layout_constraintBottom_toBottomOf="@+id/buttonAfter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/buttonAfter" />
@@ -145,6 +146,7 @@
         android:onClick="onClick1"
         android:text="(From)"
         android:textColor="@color/black"
+        android:text="Optional"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
