@@ -13,7 +13,7 @@
         android:orientation="vertical"
         tools:context=".ItemAddActivity">
         <!-- First Row: Model and Make -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -24,12 +24,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/make_text"
                 style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:hint="Make"
                 app:expandedHintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/model_text"
                 app:placeholderText="Make">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -41,11 +43,14 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/model_text"
                 style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:hint="Model"
                 app:expandedHintEnabled="false"
+                app:layout_constraintEnd_toStartOf="@+id/make_text"
+                app:layout_constraintStart_toStartOf="parent"
                 app:placeholderText="Model">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -53,7 +58,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         c
 
@@ -89,7 +94,7 @@
 
 
         <!-- Third Row: Estimated Value and Date of Purchase -->
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -100,12 +105,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/estimated_value_text"
                 style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="16dp"
                 android:layout_weight="1"
                 android:hint="Estimated Value"
                 app:expandedHintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/date_of_purchase_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:placeholderText="$0.00">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -121,11 +130,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/date_of_purchase_text"
                 style="@style/TextInputLayoutStyle"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_weight="1"
                 android:hint="Date Of Purchase"
                 app:expandedHintEnabled="false"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/estimated_value_text"
+                app:layout_constraintTop_toTopOf="parent"
                 app:placeholderText="MM/DD/YYYY">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -136,7 +150,7 @@
                     android:onClick="showDatePickerDialog" />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Fourth Row: Description -->
         <LinearLayout
