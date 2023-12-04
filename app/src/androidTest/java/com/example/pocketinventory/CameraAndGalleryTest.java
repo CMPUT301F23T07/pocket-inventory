@@ -3,6 +3,7 @@ package com.example.pocketinventory;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -25,6 +26,7 @@ import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.intent.Intents;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -78,7 +80,7 @@ import org.junit.runner.RunWith;
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(year, monthOfYear, dayOfMonth));
         onView(withText("OK")).perform(click());
     }
-
+    //Citation: Image capture test: https://stackoverflow.com/questions/38391739/how-to-mock-intent-action-pick
     @Test
     public void testCameraIntent() {
         onView(withId(R.id.add_item)).perform(click());
@@ -109,12 +111,9 @@ import org.junit.runner.RunWith;
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
 
-        onView(withId(R.id.add_button)).perform(click());
-
-
     }
 
-
+    //Citation: https://stackoverflow.com/questions/38391739/how-to-mock-intent-action-pick
     @Test
     public void testGalleryIntent() {
         onView(withId(R.id.add_item)).perform(click());
@@ -141,9 +140,6 @@ import org.junit.runner.RunWith;
 
         // Check that the image is displayed
         Espresso.onView(withId(R.id.carousel_recycler_view)).check(matches(isDisplayed()));
-
-        onView(withId(R.id.add_button)).perform(click());
-
     }
 }
 
