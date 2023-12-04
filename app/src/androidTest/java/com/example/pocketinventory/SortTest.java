@@ -7,9 +7,11 @@ import androidx.test.espresso.contrib.RecyclerViewActions;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.isRoot;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static com.example.pocketinventory.HomePageTest.waitFor;
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.is;
 
@@ -96,7 +98,7 @@ public class SortTest {
                 .perform(PickerActions.setDate(2020, 10, 12));
         onView(withText("OK")).perform(click());
         onView(withId(R.id.add_button)).perform(click());
-
+        onView(isRoot()).perform(waitFor(1000));
     }
 
 
