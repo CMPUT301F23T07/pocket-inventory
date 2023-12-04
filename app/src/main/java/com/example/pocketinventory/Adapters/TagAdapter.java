@@ -1,4 +1,4 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pocketinventory.R;
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Fragments;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,20 +9,19 @@ import android.util.Log;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
-import com.google.android.material.textfield.TextInputEditText;
+import com.example.pocketinventory.Activities.HomePageActivity;
+import com.example.pocketinventory.Item;
+import com.example.pocketinventory.ItemDB;
+import com.example.pocketinventory.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Objects;
 
 /**
  * This class represents a dialog fragment for adding tags to items in the inventory

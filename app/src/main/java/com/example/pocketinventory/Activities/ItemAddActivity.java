@@ -1,4 +1,4 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Activities;
 
 
 import androidx.activity.result.ActivityResult;
@@ -29,10 +29,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 
+import com.example.pocketinventory.Interfaces.AddItemCallback;
+import com.example.pocketinventory.CaptureAct;
+import com.example.pocketinventory.Adapters.CarouselAdapter;
+import com.example.pocketinventory.Item;
+import com.example.pocketinventory.ItemDB;
+import com.example.pocketinventory.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.textfield.TextInputEditText;

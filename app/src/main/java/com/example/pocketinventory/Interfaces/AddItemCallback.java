@@ -1,4 +1,6 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Interfaces;
+
+import com.example.pocketinventory.Item;
 
 /**
  * A callback interface to handle the result of adding an item.

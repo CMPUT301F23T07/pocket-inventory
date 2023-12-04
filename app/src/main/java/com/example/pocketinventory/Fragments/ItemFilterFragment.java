@@ -1,4 +1,4 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,12 +9,8 @@ import android.os.Handler;
 import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -22,9 +18,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.button.MaterialButton;
+import com.example.pocketinventory.Activities.HomePageActivity;
+import com.example.pocketinventory.Item;
+import com.example.pocketinventory.Adapters.ItemAdapter;
+import com.example.pocketinventory.R;
+import com.example.pocketinventory.Adapters.TagAdapter;
 import com.google.android.material.button.MaterialButtonToggleGroup;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.DateFormat;

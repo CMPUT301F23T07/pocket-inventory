@@ -1,9 +1,8 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Adapters;
 
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,30 +10,29 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.fragment.app.FragmentActivity;
 
-import com.google.android.material.chip.Chip;
+import com.example.pocketinventory.Activities.HomePageActivity;
+import com.example.pocketinventory.Activities.ItemAddActivity;
 
-import com.google.android.material.chip.Chip;
+import com.example.pocketinventory.Fragments.ItemAddTagsFragment;
+import com.example.pocketinventory.Item;
+import com.example.pocketinventory.ItemDB;
+import com.example.pocketinventory.R;
+import com.example.pocketinventory.SelectionViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 

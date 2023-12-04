@@ -1,4 +1,4 @@
-package com.example.pocketinventory;
+package com.example.pocketinventory.Activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -25,6 +25,9 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+
+import com.example.pocketinventory.Item;
+import com.example.pocketinventory.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
