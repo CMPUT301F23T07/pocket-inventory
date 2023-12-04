@@ -132,6 +132,7 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ((BottomNavigationView)findViewById(R.id.nav_view)).setSelectedItemId(R.id.navigation_home);
         updateItemData();
     }
 
@@ -140,8 +141,8 @@ public class HomePageActivity extends AppCompatActivity {
      */
     public void onClick1 (View view) {
         Button button = (Button) view;
-        if (button.getText().toString().compareTo("(Optional)") != 0) {
-            button.setText("(Optional)");
+        if (button.getText().toString().compareTo("(From)") != 0) {
+            button.setText("(From)");
         } else {
             Calendar myCalendar = Calendar.getInstance();
             DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {
@@ -163,8 +164,8 @@ public class HomePageActivity extends AppCompatActivity {
      */
     public void onClick2 (View view) {
         Button button = (Button) view;
-        if (button.getText().toString().compareTo("(Optional)") != 0) {
-            button.setText("(Optional)");
+        if (button.getText().toString().compareTo("(To)") != 0) {
+            button.setText("(To)");
         } else {
             Calendar myCalendar = Calendar.getInstance();
             DatePickerDialog.OnDateSetListener date = (view1, year, month, dayOfMonth) -> {

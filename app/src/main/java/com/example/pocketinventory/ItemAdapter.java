@@ -11,6 +11,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -49,6 +51,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private boolean isSelectAll = false;
     private ArrayList<Item> selectItems = new ArrayList<>();
     private FloatingActionButton addItemButton;
+    private ImageButton filterButton;
+    private ImageButton sortButton;
 
     /**
      * Constructor for the adapter
@@ -122,6 +126,11 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
                             // Set the visibility of the add item floating button to gone
                             addItemButton = ((HomePageActivity)context).findViewById(R.id.add_item);
                             addItemButton.setVisibility(View.GONE);
+                            filterButton = ((HomePageActivity)context).findViewById(R.id.filterButton);
+                            filterButton.setVisibility(View.GONE);
+                            sortButton = ((HomePageActivity)context).findViewById(R.id.sorterButton);
+                            sortButton.setVisibility(View.GONE);
+
 
                             return true;
                             // Return true to indicate that the Action Mode has been created successfully.
@@ -240,6 +249,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
                             // Set the visibility of the add item floating button back to visible
                             addItemButton.setVisibility(View.VISIBLE);
+                            filterButton.setVisibility(View.VISIBLE);
+                            sortButton.setVisibility(View.VISIBLE);
 
                             // Notify the adapter to refresh the UI
                             notifyDataSetChanged();

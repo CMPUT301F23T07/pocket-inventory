@@ -128,8 +128,10 @@ public class ItemAddActivity extends AppCompatActivity {
 
                     } else {
                         // check gallery permissions
-                        if (ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_DENIED) {
+                        if (!(ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                        || ContextCompat.checkSelfPermission(ItemAddActivity.this, Manifest.permission.READ_MEDIA_IMAGES) == PackageManager.PERMISSION_GRANTED)) {
                             requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES}, 0);
+                            requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
                         } else {
                             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                             startActivityForResult(intent, 101);
